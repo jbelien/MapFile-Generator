@@ -1,0 +1,14 @@
+.layer {
+  margin-left: 25px;
+}
+.layer > div:first-child {
+  margin-bottom: 10px;
+}
+.layer h3 {
+  margin: 0;
+  line-height: 34px;
+}
+
+.tab-pane {
+  padding-top: 15px;
+}
