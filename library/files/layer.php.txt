@@ -1,33 +1,26 @@
 <?php
+/**
+ * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview).
+ * PHP Version 5.3+
+ * @link https://github.com/jbelien/MapFile-Generator
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @copyright 2015 Jonathan Beliën
+ * @license GNU General Public License, version 2
+ * @note This project is still in development. Please use with caution !
+ */
 namespace MapFile;
 
 require_once('class.php');
 
+
+/**
+ * MapFile Generator - Layer (LAYER) Class.
+ * [MapFile LAYER clause](http://mapserver.org/mapfile/layer.html).
+ * @package MapFile
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @link http://mapserver.org/mapfile/layer.html
+ */
 class Layer {
-  private $metadata = array();
-
-  private $_classes = array();
-
-  public $connection;
-  public $connectiontype = self::CONNECTIONTYPE_LOCAL;
-  public $classitem;
-  public $data;
-  public $filter;
-  public $filteritem;
-  public $group;
-  public $labelitem;
-  public $maxscaledenom;
-  public $minscaledenom;
-  public $name;
-  public $opacity;
-  public $projection;
-  public $status = self::STATUS_OFF;
-  public $tileitem = 'location';
-  public $tolerance;
-  public $tolereanceunits = self::UNITS_PIXELS;
-  public $type = self::TYPE_POINT;
-  public $units;
-
   const CONNECTIONTYPE_CONTOUR = 0;
   const CONNECTIONTYPE_LOCAL = 1;
   const CONNECTIONTYPE_OGR = 2;
@@ -61,43 +54,190 @@ class Layer {
   const UNITS_PIXELS = 6;
   const UNITS_NAUTICALMILES = 8;
 
+  /** @var string[] List of metadata's. */
+  private $metadata = array();
+
+  /** @var \MapFile\LayerClass[] List of classes. */
+  private $_classes = array();
+
+  /** @var string Database connection string to retrieve remote data. */
+  public $connection;
+  /**
+  * @var integer Type of connection.
+  * @note Use :
+  * * self::CONNECTIONTYPE_CONTOUR
+  * * self::CONNECTIONTYPE_LOCAL
+  * * self::CONNECTIONTYPE_OGR
+  * * self::CONNECTIONTYPE_ORACLESPATIAL
+  * * self::CONNECTIONTYPE_PLUGIN
+  * * self::CONNECTIONTYPE_POSTGIS
+  * * self::CONNECTIONTYPE_SDE
+  * * self::CONNECTIONTYPE_UNION
+  * * self::CONNECTIONTYPE_UVRASTER
+  * * self::CONNECTIONTYPE_WFS
+  * * self::CONNECTIONTYPE_WMS
+  */
+  public $connectiontype = self::CONNECTIONTYPE_LOCAL;
+  /** @var string Item name in attribute table to use for class lookups. */
+  public $classitem;
+  /** @var string Full filename of the spatial data to process. */
+  public $data;
+  /** @var string Data specific attribute filtering. */
+  public $filter;
+  /** @var string Item to use with simple FILTER expressions. */
+  public $filteritem;
+  /** @var string Name of a group that this layer belongs to. */
+  public $group;
+  /** @var string Item name in attribute table to use for labeling. */
+  public $labelitem;
+  /**
+  * @var float Maximum scale denominator.
+  * @see http://geography.about.com/cs/maps/a/mapscale.htm
+  */
+  public $maxscaledenom;
+  /**
+  * @var float Minimum scale denominator.
+  * @see http://geography.about.com/cs/maps/a/mapscale.htm
+  */
+  public $minscaledenom;
+  /** @var string Short name for this layer. */
+  public $name;
+  /**
+  * @var integer Opacity.
+  * @note 0 = transparent - 100 = opaque
+  */
+  public $opacity;
+  /**
+  * @var string MapFile EPSG Projection.
+  * @link http://spatialreference.org/ref/epsg/
+  */
+  public $projection;
+  /**
+  * @var integer Layer Status (Is the layer active ?).
+  * @note Use :
+  * * self::STATUS_ON
+  * * self::STATUS_OFF
+  */
+  public $status = self::STATUS_OFF;
+  /** @var string Item that contains the location of an individual tile. */
+  public $tileitem = 'location';
+  /** @var float Sensitivity for point based queries (given in TOLERANCEUNITS). */
+  public $tolerance;
+  /**
+  * @var integer Units of the TOLERANCE value.
+  * @note Use :
+  * * self::UNITS_INCHES
+  * * self::UNITS_FEET
+  * * self::UNITS_MILES
+  * * self::UNITS_METERS
+  * * self::UNITS_KILOMETERS
+  * * self::UNITS_DD
+  * * self::UNITS_PIXELS
+  * * self::UNITS_NAUTICALMILES
+  */
+  public $tolereanceunits = self::UNITS_PIXELS;
+  /**
+  * @var integer Specifies how the data should be drawn.
+  * @note Use :
+  * * self::TYPE_POINT
+  * * self::TYPE_LINE
+  * * self::TYPE_POLYGON
+  * * self::TYPE_RASTER
+  * * self::TYPE_QUERY
+  * * self::TYPE_CIRCLE
+  * * self::TYPE_TILEINDEX
+  * * self::TYPE_CHART
+  */
+  public $type = self::TYPE_POINT;
+  /**
+  * @var integer Units of the layer.
+  * @note Use :
+  * * self::UNITS_INCHES
+  * * self::UNITS_FEET
+  * * self::UNITS_MILES
+  * * self::UNITS_METERS
+  * * self::UNITS_KILOMETERS
+  * * self::UNITS_DD
+  * * self::UNITS_PIXELS
+  * * self::UNITS_NAUTICALMILES
+  */
+  public $units;
+
+  /**
+  * Constructor.
+  * @param string[] $layer Array containing MapFile LAYER clause.
+  * @todo Must read a MapFile LAYER clause without passing by an Array.
+  */
   public function __construct($layer = NULL) {
     if (!is_null($layer)) $this->read($layer);
   }
 
+  /**
+  * Set a `metadata` property.
+  * @param string $key
+  * @param string $value
+  */
   public function setMetadata($key, $value) {
     $this->metadata[$key] = $value;
   }
 
+  /**
+  * Return the list of the classes.
+  * @return \MapFile\LayerClass[]
+  */
   public function getClasses() {
     return $this->_classes;
   }
+  /**
+  * Return the class matching the index sent as parameter.
+  * @param integer $i Class Index.
+  * @return \MapFile\LayerClass|false false if the index is not found.
+  */
   public function getClass($i) {
     return (isset($this->_classes[$i]) ? $this->_classes[$i] : FALSE);
   }
+  /**
+  * Return the metadata matching the key sent as parameter.
+  * @param string $key Metadata Key.
+  * @return string|false false if the key is not found
+  */
   public function getMetadata($key) {
     return (isset($this->metadata[$key]) ? $this->metadata[$key] : FALSE);
   }
 
+  /**
+  * Remove the metadata matching the key sent as parameter.
+  * @param string $key Metadata Key.
+  */
   public function removeMetadata($key) {
     if (isset($this->metadata[$key])) unset($this->metadata[$key]);
   }
 
+  /**
+  * Add a new \MapFile\LayerClass to the Layer.
+  * @param \MapFile\LayerClass $class New Class.
+  * @return \MapFile\LayerClass New Class.
+  */
   public function addClass($class = NULL) {
     if (is_null($class)) $class = new LayerClass();
     $count = array_push($this->_classes, $class);
     return $this->_classes[$count-1];
   }
 
+  /**
+  * Write a valid MapFile LAYER clause.
+  * @return string
+  * @uses \MapFile\LayerClass::write()
+  */
   public function write() {
     $layer  = '  LAYER'.PHP_EOL;
-    $layer .= '    STATUS '.$this->convertStatus().PHP_EOL;
+    $layer .= '    STATUS '.self::convertStatus($this->status).PHP_EOL;
     if (!empty($this->group)) $layer .= '    GROUP "'.$this->group.'"'.PHP_EOL;
     if (!empty($this->name)) $layer .= '    NAME "'.$this->name.'"'.PHP_EOL;
-    $layer .= '    TYPE '.$this->convertType().PHP_EOL;
-    if (!empty($this->units)) $layer .= '    UNITS '.$this->convertUnits().PHP_EOL;
+    $layer .= '    TYPE '.self::convertType($this->type).PHP_EOL;
+    if (!empty($this->units)) $layer .= '    UNITS '.self::convertUnits($this->units).PHP_EOL;
     if (!empty($this->connectiontype) && $this->connectiontype != self::CONNECTIONTYPE_LOCAL && !empty($this->connection)) {
-      $layer .= '    CONNECTIONTYPE '.$this->convertConnectiontype().PHP_EOL;
+      $layer .= '    CONNECTIONTYPE '.self::convertConnectiontype($this->connectiontype).PHP_EOL;
       $layer .= '    CONNECTION "'.$this->connection.'"'.PHP_EOL;
     }
     if (!empty($this->data)) $layer .= '    DATA "'.$this->data.'"'.PHP_EOL;
@@ -124,6 +264,12 @@ class Layer {
     return $layer;
   }
 
+  /**
+  * Read a valid MapFile LAYER clause (as array).
+  * @param string[] $array MapFile LAYER clause splitted in an array.
+  * @uses \MapFile\LayerClass::read()
+  * @todo Must read a MapFile LAYER clause without passing by an Array.
+  */
   private function read($array) {
     $layer = FALSE; $layer_projection = FALSE; $layer_class = FALSE; $layer_metadata = FALSE;
 
@@ -166,7 +312,12 @@ class Layer {
     }
   }
 
-  private function convertConnectiontype($c = NULL) {
+  /**
+  * Convert `connectiontype` property to the text value or to the constant matching the text value.
+  * @param string|integer $c
+  * @return integer|string
+  */
+  private static function convertConnectiontype($c = NULL) {
     $connectiontypes = array(
       self::CONNECTIONTYPE_CONTOUR => 'CONTOUR',
       self::CONNECTIONTYPE_LOCAL => 'LOCAL',
@@ -181,11 +332,15 @@ class Layer {
       self::CONNECTIONTYPE_WMS => 'WMS',
     );
 
-    if (is_null($c)) return $connectiontypes[$this->connectiontype];
-    else if (is_numeric($c)) return (isset($connectiontypes[$c]) ? $connectiontypes[$c] : FALSE);
+    if (is_numeric($c)) return (isset($connectiontypes[$c]) ? $connectiontypes[$c] : FALSE);
     else return array_search($c, $connectiontypes);
   }
-  private function convertStatus($s = NULL) {
+  /**
+  * Convert `status` property to the text value or to the constant matching the text value.
+  * @param string|integer $s
+  * @return integer|string
+  */
+  private static function convertStatus($s = NULL) {
     $statuses = array(
       self::STATUS_ON  => 'ON',
       self::STATUS_OFF => 'OFF'
@@ -195,7 +350,12 @@ class Layer {
     else if (is_numeric($s)) return (isset($statuses[$s]) ? $statuses[$s] : FALSE);
     else return array_search($s, $statuses);
   }
-  private function convertType($t = NULL) {
+  /**
+  * Convert `type` property to the text value or to the constant matching the text value.
+  * @param string|integer $t
+  * @return integer|string
+  */
+  private static function convertType($t = NULL) {
     $types = array(
       self::TYPE_POINT => 'POINT',
       self::TYPE_LINE => 'LINE',
@@ -207,11 +367,15 @@ class Layer {
       self::TYPE_CHART => 'CHART',
     );
 
-    if (is_null($t)) return $types[$this->type];
-    else if (is_numeric($t)) return (isset($types[$t]) ? $types[$t] : FALSE);
+    if (is_numeric($t)) return (isset($types[$t]) ? $types[$t] : FALSE);
     else return array_search($t, $types);
   }
-  private function convertUnits($u = NULL) {
+  /**
+  * Convert `units` property to the text value or to the constant matching the text value.
+  * @param string|integer $u
+  * @return integer|string
+  */
+  private static function convertUnits($u = NULL) {
     $units = array(
       self::UNITS_INCHES        => 'INCHES',
       self::UNITS_FEET          => 'FEET',
@@ -223,8 +387,7 @@ class Layer {
       self::UNITS_NAUTICALMILES => 'NAUTICALMILES'
     );
 
-    if (is_null($u)) return $units[$this->units];
-    else if (is_numeric($u)) return (isset($units[$u]) ? $units[$u] : FALSE);
+    if (is_numeric($u)) return (isset($units[$u]) ? $units[$u] : FALSE);
     else return array_search($u, $units);
   }
 }

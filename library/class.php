@@ -1,46 +1,115 @@
 <?php
+/**
+ * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview).
+ * PHP Version 5.3+
+ * @link https://github.com/jbelien/MapFile-Generator
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @copyright 2015 Jonathan Beliën
+ * @license GNU General Public License, version 2
+ * @note This project is still in development. Please use with caution !
+ */
 namespace MapFile;
 
+require_once('label.php');
 require_once('style.php');
 
+/**
+ * MapFile Generator - LayerClass (CLASS) Class.
+ * [MapFile CLASS clause](http://mapserver.org/mapfile/class.html).
+ * @package MapFile
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @link http://mapserver.org/mapfile/class.html
+ */
 class LayerClass {
+  /** @var \MapFile\Label[] List of labels. */
   private $_labels = array();
+  /** @var \MapFile\Style[] List of styles. */
   private $_styles = array();
 
+  /** @var string Defines which class a feature belongs to. */
   public $expression;
+  /**
+  * @var float Maximum scale denominator.
+  * @see http://geography.about.com/cs/maps/a/mapscale.htm
+  */
   public $maxscaledenom;
+  /**
+  * @var float Minimum scale denominator.
+  * @see http://geography.about.com/cs/maps/a/mapscale.htm
+  */
   public $minscaledenom;
+  /** @var string Name to use in legends for this class. */
   public $name;
+  /** @var string Text to label features in this class with. */
   public $text;
 
+  /**
+  * Constructor.
+  * @param string[] $class Array containing MapFile CLASS clause.
+  * @todo Must read a MapFile CLASS clause without passing by an Array.
+  */
   public function __construct($class = NULL) {
     if (!is_null($class)) $this->read($class);
   }
 
+  /**
+  * Return the list of the labels.
+  * @return \MapFile\Label[]
+  */
   public function getLabels() {
     return $this->_labels;
   }
+  /**
+  * Return the label matching the index sent as parameter.
+  * @param integer $i Label Index.
+  * @return \MapFile\Label|false false if the index is not found.
+  */
   public function getLabel($i) {
     return (isset($this->_labels[$i]) ? $this->_labels[$i] : FALSE);
   }
+  /**
+  * Return the list of the styles.
+  * @return \MapFile\Style[]
+  */
   public function getStyles() {
     return $this->_styles;
   }
+  /**
+  * Return the style matching the index sent as parameter.
+  * @param integer $i Style Index.
+  * @return \MapFile\Style|false false if the index is not found.
+  */
   public function getStyle($i) {
     return (isset($this->_styles[$i]) ? $this->_styles[$i] : FALSE);
   }
 
+  /**
+  * Add a new \MapFile\Label to the Class.
+  * @param \MapFile\Label $label New Label.
+  * @return \MapFile\Label New Label.
+  */
   public function addLabel($label = NULL) {
     if (is_null($label)) $label = new Label();
     $count = array_push($this->_labels, $label);
     return $this->_labels[$count-1];
   }
+  /**
+  * Add a new \MapFile\Style to the Class.
+  * @param \MapFile\Style $style New Style.
+  * @return \MapFile\Style New Style.
+  */
   public function addStyle($style = NULL) {
     if (is_null($style)) $style = new Style();
     $count = array_push($this->_styles, $style);
     return $this->_styles[$count-1];
   }
 
+  /**
+  * Write a valid MapFile CLASS clause.
+  * @return string
+  * @uses \MapFile\Label::write()
+  * @uses \MapFile\Style::write()
+  */
   public function write() {
     $class  = '    CLASS'.PHP_EOL;
     if (!empty($this->name)) $class .= '      NAME "'.$this->name.'"'.PHP_EOL;
@@ -54,6 +123,13 @@ class LayerClass {
     return $class;
   }
 
+  /**
+  * Read a valid MapFile CLASS clause (as array).
+  * @param string[] $array MapFile CLASS clause splitted in an array.
+  * @uses \MapFile\Label::read()
+  * @uses \MapFile\Style::read()
+  * @todo Must read a MapFile CLASS clause without passing by an Array.
+  */
   private function read($array) {
     $class = FALSE; $class_label = FALSE; $class_style = FALSE;
 

@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>API Documentation</title>
+    <title>MapFile Generator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">API Documentation</a>
+            <a class="brand" href="../index.html">MapFile Generator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">221</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-130024940"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-360939796"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-130024940" class="accordion-body collapse in">
+            <div id="namespace-360939796" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2027868556"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1752666332"></a>
                                 <a href="../namespaces/MapFile.html" style="margin-left: 30px; padding-left: 0">MapFile</a>
             </div>
-            <div id="namespace-2027868556" class="accordion-body collapse ">
+            <div id="namespace-1752666332" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -195,8 +195,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\MapFile</small>Scalebar</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>MapFile Generator - Scalebar (SCALEBAR) Class.</em></p>
+                    <p><a href="http://mapserver.org/mapfile/scalebar.html">MapFile SCALEBAR clause</a>.</p>
                     
                                         
                     <section id="summary">
@@ -272,7 +272,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/scalebar.html"><div class="path-wrapper">scalebar.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">MapFile</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\MapFile\Scalebar</div>
@@ -281,11 +281,20 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href="http://mapserver.org/mapfile/scalebar.html"><div class="namespace-wrapper">http://mapserver.org/mapfile/scalebar.html</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Jonathan Beliën <a href="mailto:jbe@geo6.be">jbe@geo6.be</a></p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -522,13 +531,13 @@
             <a id="property_intervals" name="property_intervals" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$intervals</h3>
-                <pre class="signature">$intervals : </pre>
+                <pre class="signature">$intervals : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Number of intervals to break the scalebar into.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -546,13 +555,13 @@
             <a id="property_status" name="property_status" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$status</h3>
-                <pre class="signature">$status : </pre>
+                <pre class="signature">$status : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Scalebar Status (Is the scalebar active ?).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -560,7 +569,18 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::STATUS_ON</li>
+<li>self::STATUS_OFF</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -570,13 +590,13 @@
             <a id="property_units" name="property_units" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$units</h3>
-                <pre class="signature">$units : </pre>
+                <pre class="signature">$units : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Units of the map coordinates.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -584,7 +604,24 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::UNITS_INCHES</li>
+<li>self::UNITS_FEET</li>
+<li>self::UNITS_MILES</li>
+<li>self::UNITS_METERS</li>
+<li>self::UNITS_KILOMETERS</li>
+<li>self::UNITS_DD</li>
+<li>self::UNITS_PIXELS</li>
+<li>self::UNITS_NAUTICALMILES</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -594,13 +631,13 @@
             <a id="property_label" name="property_label" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$label</h3>
-                <pre class="signature">$label : </pre>
+                <pre class="signature">$label : \MapFile\Label</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                <a href="../classes/MapFile.Label.html">\MapFile\Label</a>
+                &mdash; Scalebar Label object.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -618,13 +655,13 @@
             <a id="property_color" name="property_color" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$color</h3>
-                <pre class="signature">$color : </pre>
+                <pre class="signature">$color : array&lt;mixed,integer&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,integer&gt;
+                &mdash; Color (RGB Format).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -632,7 +669,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Index <code>0</code> = Red [0-255], Index <code>1</code> = Green [0-255], Index <code>2</code> = Blue [0-255]</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -642,13 +686,13 @@
             <a id="property_outlinecolor" name="property_outlinecolor" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$outlinecolor</h3>
-                <pre class="signature">$outlinecolor : </pre>
+                <pre class="signature">$outlinecolor : array&lt;mixed,integer&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,integer&gt;
+                &mdash; Outline color (RGB Format).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -656,7 +700,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Index <code>0</code> = Red [0-255], Index <code>1</code> = Green [0-255], Index <code>2</code> = Blue [0-255]</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -674,16 +725,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$scalebar = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(array&lt;mixed,string&gt;  <span class="argument">$scalebar = NULL</span>) </pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$scalebar </td>
-                                <td></td>
+                                <td><p>Array containing MapFile SCALEBAR clause.</p></td>
                             </tr>
                                             </table>
                 
@@ -697,7 +748,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile SCALEBAR clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -708,29 +766,34 @@
             <article class="method">
                 <h3 class="public ">setColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setColor(  <span class="argument">$r</span>,   <span class="argument">$g</span>,   <span class="argument">$b</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setColor(integer  <span class="argument">$r</span>, integer  <span class="argument">$g</span>, integer  <span class="argument">$b</span>) </pre>
+                <p><em>Set the `color` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$r </td>
-                                <td></td>
+                                <td><p>Red component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$g </td>
-                                <td></td>
+                                <td><p>Green component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$b </td>
-                                <td></td>
+                                <td><p>Blue component [0-255].</p></td>
                             </tr>
                                             </table>
                 
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\MapFile\Exception</dt>
+                            <dd><p>if any component is lower &lt; 0 or &gt; 255</p></dd>
+                                                                    </dl>
                 
                 				
                             </article>
@@ -752,29 +815,34 @@
             <article class="method">
                 <h3 class="public ">setOutlineColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setOutlineColor(  <span class="argument">$r</span>,   <span class="argument">$g</span>,   <span class="argument">$b</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setOutlineColor(integer  <span class="argument">$r</span>, integer  <span class="argument">$g</span>, integer  <span class="argument">$b</span>) </pre>
+                <p><em>Set the `outlinecolor` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$r </td>
-                                <td></td>
+                                <td><p>Red component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$g </td>
-                                <td></td>
+                                <td><p>Green component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$b </td>
-                                <td></td>
+                                <td><p>Blue component [0-255].</p></td>
                             </tr>
                                             </table>
                 
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\MapFile\Exception</dt>
+                            <dd><p>if any component is lower &lt; 0 or &gt; 255</p></dd>
+                                                                    </dl>
                 
                 				
                             </article>
@@ -796,19 +864,23 @@
             <article class="method">
                 <h3 class="public ">write()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">write() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">write() : string</pre>
+                <p><em>Write a valid MapFile SCALEBAR clause.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Label::write()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -822,16 +894,16 @@
             <article class="method">
                 <h3 class="private ">read()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">read(  <span class="argument">$array</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">read(array&lt;mixed,string&gt;  <span class="argument">$array</span>) </pre>
+                <p><em>Read a valid MapFile SCALEBAR clause (as array).</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$array </td>
-                                <td></td>
+                                <td><p>MapFile SCALEBAR clause splitted in an array.</p></td>
                             </tr>
                                             </table>
                 
@@ -842,10 +914,19 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Label::read()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile SCALEBAR clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -856,25 +937,28 @@
             <article class="method">
                 <h3 class="private ">convertStatus()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertStatus(  <span class="argument">$s = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertStatus(string|integer  <span class="argument">$s = NULL</span>) : integer|string</pre>
+                <p><em>Convert `status` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$s </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -890,25 +974,28 @@
             <article class="method">
                 <h3 class="private ">convertUnits()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertUnits(  <span class="argument">$u = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertUnits(string|integer  <span class="argument">$u = NULL</span>) : integer|string</pre>
+                <p><em>Convert `units` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$u </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -968,7 +1055,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on April 14th, 2015 at 11:32.
+                    on April 14th, 2015 at 16:33.
                 </section>
             </section>
         </section>

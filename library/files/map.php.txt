@@ -1,6 +1,6 @@
 <?php
 /**
- * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview)
+ * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview).
  * PHP Version 5.3+
  * @link https://github.com/jbelien/MapFile-Generator
  * @author Jonathan Beliën <jbe@geo6.be>
@@ -19,40 +19,15 @@ require_once('scalebar.php');
 require_once('style.php');
 
 /**
- * MapFile Generator - Map Class
+ * MapFile Generator - Map (MAP) Class.
+ * [MapFile MAP clause](http://mapserver.org/mapfile/map.html).
  * @package MapFile
  * @author Jonathan Beliën <jbe@geo6.be>
+ * @link http://mapserver.org/mapfile/map.html
+ * @uses \MapFile\Legend
+ * @uses \MapFile\Scalebar
  */
 class Map {
-  /**
-  * Path to fontset file
-  * @type string
-  */
-  private $fontsetfilename;
-  /**
-  * Path to symbolset file
-  * @type string
-  */
-  private $symbolsetfilename;
-  /**
-  * List of metadata's
-  * @type array
-  */
-  private $metadata = array();
-
-  private $_layers = array();
-
-  public $extent = array(-1, -1, -1, -1);
-  public $height = 500;
-  public $name = 'MYMAP';
-  public $projection;
-  public $status = self::STATUS_ON;
-  public $units = self::UNITS_METERS;
-  public $width = 500;
-
-  public $legend;
-  public $scalebar;
-
   const STATUS_ON = 1;
   const STATUS_OFF = 0;
 
@@ -65,6 +40,63 @@ class Map {
   const UNITS_PIXELS = 6;
   const UNITS_NAUTICALMILES = 8;
 
+  /** @var string Path to fontset file. */
+  private $fontsetfilename;
+  /** @var string Path to symbolset file. */
+  private $symbolsetfilename;
+  /** @var string[] List of metadata's. */
+  private $metadata = array();
+
+  /** @var \MapFile\Layer[] List of layers. */
+  private $_layers = array();
+
+  /** @var float[] Spatial extent.*/
+  public $extent = array(-1, -1, -1, -1);
+  /** @var integer Size Y (height) in pixels of the output image. */
+  public $height = 500;
+  /** @var string MapFile name. */
+  public $name = 'MYMAP';
+  /**
+  * @var string MapFile EPSG Projection.
+  * @link http://spatialreference.org/ref/epsg/
+  */
+  public $projection;
+  /**
+  * @var integer MapFile Status (Is the map active ?).
+  * @note Use :
+  * * self::STATUS_ON
+  * * self::STATUS_OFF
+  */
+  public $status = self::STATUS_ON;
+  /**
+  * @var integer Units of the map coordinates.
+  * @note Use :
+  * * self::UNITS_INCHES
+  * * self::UNITS_FEET
+  * * self::UNITS_MILES
+  * * self::UNITS_METERS
+  * * self::UNITS_KILOMETERS
+  * * self::UNITS_DD
+  * * self::UNITS_PIXELS
+  * * self::UNITS_NAUTICALMILES
+  */
+  public $units = self::UNITS_METERS;
+  /** @var integer Size X (width) in pixels of the output image. */
+  public $width = 500;
+
+  /**
+  * @var \MapFile\Legend Map Legend object.
+  */
+  public $legend;
+  /**
+  * @var \MapFile\Scalebar Map Scalebar object.
+  */
+  public $scalebar;
+
+  /**
+  * Constructor.
+  * @param string $mapfile Path to a valid .map MapFile.
+  */
   public function __construct($mapfile = NULL) {
     if (!is_null($mapfile) && file_exists($mapfile)) $this->read($mapfile);
 
@@ -72,54 +104,109 @@ class Map {
     if (is_null($this->scalebar)) $this->scalebar = new Scalebar();
   }
 
+  /**
+  * Set the `extent` property.
+  * @param float $minx
+  * @param float $miny
+  * @param float $maxx
+  * @param float $maxy
+  */
   public function setExtent($minx, $miny, $maxx, $maxy) {
     $this->extent = array($minx, $miny, $maxx, $maxy);
   }
+  /**
+  * Set the `fontsetfilename` property.
+  * @param string $filename Path to a valid fontset file.
+  */
   public function setFontSet($filename) {
     if (file_exists($filename)) $this->fontsetfilename = $filename; else throw new Exception('FontSet file does not exists.');
   }
+  /**
+  * Set a `metadata` property.
+  * @param string $key
+  * @param string $value
+  */
   public function setMetadata($key, $value) {
     $this->metadata[$key] = $value;
   }
+  /**
+  * Set `height` and `width` properties.
+  * @param integer $width Width in pixels of the output image.
+  * @param integer $height Height in pixels of the output image.
+  */
   public function setSize($width, $height) {
     $this->width = intval($width);
     $this->height = intval($height);
   }
+  /**
+  * Set the `symbolsetfilename` property.
+  * @param string $filename Path to a valid symbolset file.
+  */
   public function setSymbolSet($filename) {
     if (file_exists($filename)) $this->symbolsetfilename = $filename; else throw new Exception('SymbolSet file does not exists.');
   }
 
+  /**
+  * Return the list of the layers.
+  * @return \MapFile\Layer[]
+  */
   public function getLayers() {
     return $this->_layers;
   }
+  /**
+  * Return the layer matching the index sent as parameter.
+  * @param integer $i Layer Index.
+  * @return \MapFile\Layer|false false if the index is not found.
+  */
   public function getLayer($i) {
     return (isset($this->_layers[$i]) ? $this->_layers[$i] : FALSE);
   }
+  /**
+  * Return the metadata matching the key sent as parameter.
+  * @param string $key Metadata Key.
+  * @return string|false false if the key is not found
+  */
   public function getMetadata($key) {
     return (isset($this->metadata[$key]) ? $this->metadata[$key] : FALSE);
   }
 
+  /**
+  * Remove the metadata matching the key sent as parameter.
+  * @param string $key Metadata Key.
+  */
   public function removeMetadata($key) {
     if (isset($this->metadata[$key])) unset($this->metadata[$key]);
   }
 
+  /**
+  * Add a new \MapFile\Layer to the MapFile.
+  * @param \MapFile\Layer $layer New Layer.
+  * @return \MapFile\Layer New layer.
+  */
   public function addLayer($layer = NULL) {
     if (is_null($layer)) $layer = new Layer();
     $count = array_push($this->_layers, $layer);
     return $this->_layers[$count-1];
   }
 
+  /**
+  * Write the \MapFile\Map object to a MapFile.
+  * @param string $filename Path to the new MapFile.
+  * @uses \MapFile\Layer::write()
+  * @uses \MapFile\Legend::write()
+  * @uses \MapFile\Scalebar::write()
+  */
   public function save($filename) {
     $f = fopen($filename, 'w');
     fwrite($f, 'MAP'.PHP_EOL);
 
-    fwrite($f, '  STATUS '.$this->convertStatus().PHP_EOL);
+    fwrite($f, '  STATUS '.self::convertStatus($this->status).PHP_EOL);
     fwrite($f, '  NAME "'.$this->name.'"'.PHP_EOL);
     if (!empty($this->extent) && array_sum($this->extent) >= 0) fwrite($f, '  EXTENT '.implode(' ',$this->extent).PHP_EOL);
     if (!empty($this->fontsetfilename)) fwrite($f, '  FONTSET "'.$this->fontsetfilename.'"'.PHP_EOL);
     if (!empty($this->symbolsetfilename)) fwrite($f, '  SYMBOLSET "'.$this->symbolsetfilename.'"'.PHP_EOL);
     if (!empty($this->width) && !empty($this->height)) fwrite($f, '  SIZE '.$this->width.' '.$this->height.PHP_EOL);
-    if (!is_null($this->units)) fwrite($f, '  UNITS '.$this->convertUnits().PHP_EOL);
+    if (!is_null($this->units)) fwrite($f, '  UNITS '.self::convertUnits($this->units).PHP_EOL);
 
     if (!empty($this->projection)) {
       fwrite($f, PHP_EOL);
@@ -152,6 +239,13 @@ class Map {
     fclose($f);
   }
 
+  /**
+  * Read a valid MapFile.
+  * @param string $mapfile Path to the MapFile to read.
+  * @uses \MapFile\Layer::read()
+  * @uses \MapFile\Legend::read()
+  * @uses \MapFile\Scalebar::read()
+  */
   private function read($mapfile) {
     $map = FALSE; $map_projection = FALSE; $map_outputformat = FALSE; $map_querymap = FALSE; $map_legend = FALSE; $map_scalebar = FALSE; $map_layer = FALSE; $map_web = FALSE; $map_metadata = FALSE;
 
@@ -204,17 +298,26 @@ class Map {
     fclose($h);
   }
 
-  private function convertStatus($s = NULL) {
+  /**
+  * Convert `status` property to the text value or to the constant matching the text value.
+  * @param string|integer $s
+  * @return integer|string
+  */
+  private static function convertStatus($s = NULL) {
     $statuses = array(
       self::STATUS_ON  => 'ON',
       self::STATUS_OFF => 'OFF'
     );
 
-    if (is_null($s)) return $statuses[$this->status];
-    else if (is_numeric($s)) return (isset($statuses[$s]) ? $statuses[$s] : FALSE);
+    if (is_numeric($s)) return (isset($statuses[$s]) ? $statuses[$s] : FALSE);
     else return array_search($s, $statuses);
   }
-  private function convertUnits($u = NULL) {
+  /**
+  * Convert `units` property to the text value or to the constant matching the text value.
+  * @param string|integer $u
+  * @return integer|string
+  */
+  private static function convertUnits($u = NULL) {
     $units = array(
       self::UNITS_INCHES        => 'INCHES',
       self::UNITS_FEET          => 'FEET',
@@ -226,8 +329,7 @@ class Map {
       self::UNITS_NAUTICALMILES => 'NAUTICALMILES'
     );
 
-    if (is_null($u)) return $units[$this->units];
-    else if (is_numeric($u)) return (isset($units[$u]) ? $units[$u] : FALSE);
+    if (is_numeric($u)) return (isset($units[$u]) ? $units[$u] : FALSE);
     else return array_search($u, $units);
   }
 }

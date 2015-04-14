@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>API Documentation</title>
+    <title>MapFile Generator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">API Documentation</a>
+            <a class="brand" href="../index.html">MapFile Generator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">221</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-575327723"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1843972105"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-575327723" class="accordion-body collapse in">
+            <div id="namespace-1843972105" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-733946956"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1800423596"></a>
                                 <a href="../namespaces/MapFile.html" style="margin-left: 30px; padding-left: 0">MapFile</a>
             </div>
-            <div id="namespace-733946956" class="accordion-body collapse ">
+            <div id="namespace-1800423596" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -195,8 +195,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\MapFile</small>Layer</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>MapFile Generator - Layer (LAYER) Class.</em></p>
+                    <p><a href="http://mapserver.org/mapfile/layer.html">MapFile LAYER clause</a>.</p>
                     
                                         
                     <section id="summary">
@@ -312,7 +312,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/layer.html"><div class="path-wrapper">layer.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">MapFile</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\MapFile\Layer</div>
@@ -321,11 +321,20 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href="http://mapserver.org/mapfile/layer.html"><div class="namespace-wrapper">http://mapserver.org/mapfile/layer.html</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Jonathan Beliën <a href="mailto:jbe@geo6.be">jbe@geo6.be</a></p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -961,13 +970,13 @@
             <a id="property_connection" name="property_connection" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$connection</h3>
-                <pre class="signature">$connection : </pre>
+                <pre class="signature">$connection : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Database connection string to retrieve remote data.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -985,13 +994,13 @@
             <a id="property_connectiontype" name="property_connectiontype" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$connectiontype</h3>
-                <pre class="signature">$connectiontype : </pre>
+                <pre class="signature">$connectiontype : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Type of connection.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -999,7 +1008,27 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::CONNECTIONTYPE_CONTOUR</li>
+<li>self::CONNECTIONTYPE_LOCAL</li>
+<li>self::CONNECTIONTYPE_OGR</li>
+<li>self::CONNECTIONTYPE_ORACLESPATIAL</li>
+<li>self::CONNECTIONTYPE_PLUGIN</li>
+<li>self::CONNECTIONTYPE_POSTGIS</li>
+<li>self::CONNECTIONTYPE_SDE</li>
+<li>self::CONNECTIONTYPE_UNION</li>
+<li>self::CONNECTIONTYPE_UVRASTER</li>
+<li>self::CONNECTIONTYPE_WFS</li>
+<li>self::CONNECTIONTYPE_WMS</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1009,13 +1038,13 @@
             <a id="property_classitem" name="property_classitem" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$classitem</h3>
-                <pre class="signature">$classitem : </pre>
+                <pre class="signature">$classitem : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Item name in attribute table to use for class lookups.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1033,13 +1062,13 @@
             <a id="property_data" name="property_data" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$data</h3>
-                <pre class="signature">$data : </pre>
+                <pre class="signature">$data : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Full filename of the spatial data to process.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1057,13 +1086,13 @@
             <a id="property_filter" name="property_filter" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$filter</h3>
-                <pre class="signature">$filter : </pre>
+                <pre class="signature">$filter : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Data specific attribute filtering.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1081,13 +1110,13 @@
             <a id="property_filteritem" name="property_filteritem" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$filteritem</h3>
-                <pre class="signature">$filteritem : </pre>
+                <pre class="signature">$filteritem : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Item to use with simple FILTER expressions.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1105,13 +1134,13 @@
             <a id="property_group" name="property_group" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$group</h3>
-                <pre class="signature">$group : </pre>
+                <pre class="signature">$group : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Name of a group that this layer belongs to.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1129,13 +1158,13 @@
             <a id="property_labelitem" name="property_labelitem" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$labelitem</h3>
-                <pre class="signature">$labelitem : </pre>
+                <pre class="signature">$labelitem : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Item name in attribute table to use for labeling.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1153,18 +1182,20 @@
             <a id="property_maxscaledenom" name="property_maxscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$maxscaledenom</h3>
-                <pre class="signature">$maxscaledenom : </pre>
+                <pre class="signature">$maxscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Maximum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1177,18 +1208,20 @@
             <a id="property_minscaledenom" name="property_minscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$minscaledenom</h3>
-                <pre class="signature">$minscaledenom : </pre>
+                <pre class="signature">$minscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Minimum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1201,13 +1234,13 @@
             <a id="property_name" name="property_name" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$name</h3>
-                <pre class="signature">$name : </pre>
+                <pre class="signature">$name : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Short name for this layer.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1225,13 +1258,13 @@
             <a id="property_opacity" name="property_opacity" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$opacity</h3>
-                <pre class="signature">$opacity : </pre>
+                <pre class="signature">$opacity : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Opacity.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1239,7 +1272,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>0 = transparent - 100 = opaque</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1249,18 +1289,20 @@
             <a id="property_projection" name="property_projection" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$projection</h3>
-                <pre class="signature">$projection : </pre>
+                <pre class="signature">$projection : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; MapFile EPSG Projection.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">http://spatialreference.org/ref/epsg/</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1273,13 +1315,13 @@
             <a id="property_status" name="property_status" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$status</h3>
-                <pre class="signature">$status : </pre>
+                <pre class="signature">$status : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Layer Status (Is the layer active ?).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1287,7 +1329,18 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::STATUS_ON</li>
+<li>self::STATUS_OFF</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1297,13 +1350,13 @@
             <a id="property_tileitem" name="property_tileitem" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$tileitem</h3>
-                <pre class="signature">$tileitem : </pre>
+                <pre class="signature">$tileitem : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Item that contains the location of an individual tile.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1321,13 +1374,13 @@
             <a id="property_tolerance" name="property_tolerance" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$tolerance</h3>
-                <pre class="signature">$tolerance : </pre>
+                <pre class="signature">$tolerance : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Sensitivity for point based queries (given in TOLERANCEUNITS).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1345,13 +1398,13 @@
             <a id="property_tolereanceunits" name="property_tolereanceunits" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$tolereanceunits</h3>
-                <pre class="signature">$tolereanceunits : </pre>
+                <pre class="signature">$tolereanceunits : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Units of the TOLERANCE value.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1359,7 +1412,24 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::UNITS_INCHES</li>
+<li>self::UNITS_FEET</li>
+<li>self::UNITS_MILES</li>
+<li>self::UNITS_METERS</li>
+<li>self::UNITS_KILOMETERS</li>
+<li>self::UNITS_DD</li>
+<li>self::UNITS_PIXELS</li>
+<li>self::UNITS_NAUTICALMILES</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1369,13 +1439,13 @@
             <a id="property_type" name="property_type" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$type</h3>
-                <pre class="signature">$type : </pre>
+                <pre class="signature">$type : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Specifies how the data should be drawn.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1383,7 +1453,24 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::TYPE_POINT</li>
+<li>self::TYPE_LINE</li>
+<li>self::TYPE_POLYGON</li>
+<li>self::TYPE_RASTER</li>
+<li>self::TYPE_QUERY</li>
+<li>self::TYPE_CIRCLE</li>
+<li>self::TYPE_TILEINDEX</li>
+<li>self::TYPE_CHART</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1393,13 +1480,13 @@
             <a id="property_units" name="property_units" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$units</h3>
-                <pre class="signature">$units : </pre>
+                <pre class="signature">$units : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Units of the layer.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1407,7 +1494,24 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::UNITS_INCHES</li>
+<li>self::UNITS_FEET</li>
+<li>self::UNITS_MILES</li>
+<li>self::UNITS_METERS</li>
+<li>self::UNITS_KILOMETERS</li>
+<li>self::UNITS_DD</li>
+<li>self::UNITS_PIXELS</li>
+<li>self::UNITS_NAUTICALMILES</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1417,13 +1521,13 @@
             <a id="property_metadata" name="property_metadata" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$metadata</h3>
-                <pre class="signature">$metadata : </pre>
+                <pre class="signature">$metadata : array&lt;mixed,string&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,string&gt;
+                &mdash; List of metadata&#039;s.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1441,13 +1545,13 @@
             <a id="property__classes" name="property__classes" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$_classes</h3>
-                <pre class="signature">$_classes : </pre>
+                <pre class="signature">$_classes : array&lt;mixed,\MapFile\LayerClass&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,<a href="../classes/MapFile.LayerClass.html">\MapFile\LayerClass</a>&gt;
+                &mdash; List of classes.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1473,16 +1577,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$layer = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(array&lt;mixed,string&gt;  <span class="argument">$layer = NULL</span>) </pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$layer </td>
-                                <td></td>
+                                <td><p>Array containing MapFile LAYER clause.</p></td>
                             </tr>
                                             </table>
                 
@@ -1496,7 +1600,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile LAYER clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1507,19 +1618,19 @@
             <article class="method">
                 <h3 class="public ">setMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setMetadata(  <span class="argument">$key</span>,   <span class="argument">$value</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setMetadata(string  <span class="argument">$key</span>, string  <span class="argument">$value</span>) </pre>
+                <p><em>Set a `metadata` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$value </td>
                                 <td></td>
                             </tr>
@@ -1546,13 +1657,15 @@
             <article class="method">
                 <h3 class="public ">getClasses()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getClasses() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getClasses() : array&lt;mixed,\MapFile\LayerClass&gt;</pre>
+                <p><em>Return the list of the classes.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/MapFile.LayerClass.html">\MapFile\LayerClass</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1572,21 +1685,24 @@
             <article class="method">
                 <h3 class="public ">getClass()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getClass(  <span class="argument">$i</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getClass(integer  <span class="argument">$i</span>) : \MapFile\LayerClass|false</pre>
+                <p><em>Return the class matching the index sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$i </td>
-                                <td></td>
+                                <td><p>Class Index.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.LayerClass.html">\MapFile\LayerClass</a>|false
+                                            &mdash; <p>false if the index is not found.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1606,21 +1722,24 @@
             <article class="method">
                 <h3 class="public ">getMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getMetadata(  <span class="argument">$key</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getMetadata(string  <span class="argument">$key</span>) : string|false</pre>
+                <p><em>Return the metadata matching the key sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
-                                <td></td>
+                                <td><p>Metadata Key.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string|false
+                                            &mdash; <p>false if the key is not found</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1640,16 +1759,16 @@
             <article class="method">
                 <h3 class="public ">removeMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">removeMetadata(  <span class="argument">$key</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">removeMetadata(string  <span class="argument">$key</span>) </pre>
+                <p><em>Remove the metadata matching the key sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
-                                <td></td>
+                                <td><p>Metadata Key.</p></td>
                             </tr>
                                             </table>
                 
@@ -1674,21 +1793,24 @@
             <article class="method">
                 <h3 class="public ">addClass()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addClass(  <span class="argument">$class = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">addClass(\MapFile\LayerClass  <span class="argument">$class = NULL</span>) : \MapFile\LayerClass</pre>
+                <p><em>Add a new \MapFile\LayerClass to the Layer.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/MapFile.LayerClass.html">\MapFile\LayerClass</a></td>
                                 <td>$class </td>
-                                <td></td>
+                                <td><p>New Class.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.LayerClass.html">\MapFile\LayerClass</a>
+                                            &mdash; <p>New Class.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1708,19 +1830,23 @@
             <article class="method">
                 <h3 class="public ">write()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">write() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">write() : string</pre>
+                <p><em>Write a valid MapFile LAYER clause.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\LayerClass::write()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1734,16 +1860,16 @@
             <article class="method">
                 <h3 class="private ">read()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">read(  <span class="argument">$array</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">read(array&lt;mixed,string&gt;  <span class="argument">$array</span>) </pre>
+                <p><em>Read a valid MapFile LAYER clause (as array).</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$array </td>
-                                <td></td>
+                                <td><p>MapFile LAYER clause splitted in an array.</p></td>
                             </tr>
                                             </table>
                 
@@ -1754,10 +1880,19 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\LayerClass::read()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile LAYER clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1768,25 +1903,28 @@
             <article class="method">
                 <h3 class="private ">convertConnectiontype()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertConnectiontype(  <span class="argument">$c = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertConnectiontype(string|integer  <span class="argument">$c = NULL</span>) : integer|string</pre>
+                <p><em>Convert `connectiontype` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$c </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1802,25 +1940,28 @@
             <article class="method">
                 <h3 class="private ">convertStatus()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertStatus(  <span class="argument">$s = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertStatus(string|integer  <span class="argument">$s = NULL</span>) : integer|string</pre>
+                <p><em>Convert `status` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$s </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1836,25 +1977,28 @@
             <article class="method">
                 <h3 class="private ">convertType()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertType(  <span class="argument">$t = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertType(string|integer  <span class="argument">$t = NULL</span>) : integer|string</pre>
+                <p><em>Convert `type` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$t </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1870,25 +2014,28 @@
             <article class="method">
                 <h3 class="private ">convertUnits()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertUnits(  <span class="argument">$u = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertUnits(string|integer  <span class="argument">$u = NULL</span>) : integer|string</pre>
+                <p><em>Convert `units` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$u </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1948,7 +2095,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on April 14th, 2015 at 11:32.
+                    on April 14th, 2015 at 16:33.
                 </section>
             </section>
         </section>

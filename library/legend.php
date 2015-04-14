@@ -1,31 +1,72 @@
 <?php
+/**
+ * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview).
+ * PHP Version 5.3+
+ * @link https://github.com/jbelien/MapFile-Generator
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @copyright 2015 Jonathan Beliën
+ * @license GNU General Public License, version 2
+ * @note This project is still in development. Please use with caution !
+ */
 namespace MapFile;
 
 require_once('label.php');
 
+/**
+ * MapFile Generator - Legend (LEGEND) Class.
+ * [MapFile LEGEND clause](http://mapserver.org/mapfile/legend.html).
+ * @package MapFile
+ * @author Jonathan Beliën <jbe@geo6.be>
+ * @link http://mapserver.org/mapfile/legend.html
+ */
 class Legend {
-  public $status = self::STATUS_OFF;
-
-  public $label;
-
   const STATUS_ON = 1;
   const STATUS_OFF = 0;
 
+  /**
+  * @var integer Legend Status (Is the legend active ?).
+  * @note Use :
+  * * self::STATUS_ON
+  * * self::STATUS_OFF
+  */
+  public $status = self::STATUS_OFF;
+
+  /**
+  * @var \MapFile\Label Scalebar Label object.
+  */
+  public $label;
+
+  /**
+  * Constructor.
+  * @param string[] $legend Array containing MapFile LEGEND clause.
+  * @todo Must read a MapFile LEGEND clause without passing by an Array.
+  */
   public function __construct($legend = NULL) {
     if (!is_null($legend)) $this->read($legend);
 
     if (is_null($this->label)) $this->label = new Label();
   }
 
+  /**
+  * Write a valid MapFile LEGEND clause.
+  * @return string
+  * @uses \MapFile\Label::write()
+  */
   public function write() {
     $legend  = '  LEGEND'.PHP_EOL;
-    $legend .= '    STATUS '.$this->convertStatus().PHP_EOL;
+    $legend .= '    STATUS '.self::convertStatus($this->status).PHP_EOL;
     $legend .= $this->label->write(2);
     $legend .= '  END # LEGEND'.PHP_EOL;
 
     return $legend;
   }
 
+  /**
+  * Read a valid MapFile LEGEND clause (as array).
+  * @param string[] $array MapFile LEGEND clause splitted in an array.
+  * @uses \MapFile\Label::read()
+  * @todo Must read a MapFile LEGEND clause without passing by an Array.
+  */
   private function read($array) {
     $legend = FALSE; $legend_label = FALSE;
 
@@ -43,14 +84,18 @@ class Legend {
     }
   }
 
-  private function convertStatus($s = NULL) {
+  /**
+  * Convert `status` property to the text value or to the constant matching the text value.
+  * @param string|integer $s
+  * @return integer|string
+  */
+  private static function convertStatus($s = NULL) {
     $statuses = array(
       self::STATUS_ON  => 'ON',
       self::STATUS_OFF => 'OFF'
     );
 
-    if (is_null($s)) return $statuses[$this->status];
-    else if (is_numeric($s)) return (isset($statuses[$s]) ? $statuses[$s] : FALSE);
+    if (is_numeric($s)) return (isset($statuses[$s]) ? $statuses[$s] : FALSE);
     else return array_search($s, $statuses);
   }
 }

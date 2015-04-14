@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>API Documentation</title>
+    <title>MapFile Generator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">API Documentation</a>
+            <a class="brand" href="../index.html">MapFile Generator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">221</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-555095755"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1079746477"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-555095755" class="accordion-body collapse in">
+            <div id="namespace-1079746477" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-328467070"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1587209585"></a>
                                 <a href="../namespaces/MapFile.html" style="margin-left: 30px; padding-left: 0">MapFile</a>
             </div>
-            <div id="namespace-328467070" class="accordion-body collapse ">
+            <div id="namespace-1587209585" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -195,8 +195,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\MapFile</small>LayerClass</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>MapFile Generator - LayerClass (CLASS) Class.</em></p>
+                    <p><a href="http://mapserver.org/mapfile/class.html">MapFile CLASS clause</a>.</p>
                     
                                         
                     <section id="summary">
@@ -266,7 +266,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/class.html"><div class="path-wrapper">class.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">MapFile</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\MapFile\LayerClass</div>
@@ -275,11 +275,20 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href="http://mapserver.org/mapfile/class.html"><div class="namespace-wrapper">http://mapserver.org/mapfile/class.html</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Jonathan Beliën <a href="mailto:jbe@geo6.be">jbe@geo6.be</a></p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -298,13 +307,13 @@
             <a id="property_expression" name="property_expression" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$expression</h3>
-                <pre class="signature">$expression : </pre>
+                <pre class="signature">$expression : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Defines which class a feature belongs to.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -322,18 +331,20 @@
             <a id="property_maxscaledenom" name="property_maxscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$maxscaledenom</h3>
-                <pre class="signature">$maxscaledenom : </pre>
+                <pre class="signature">$maxscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Maximum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -346,18 +357,20 @@
             <a id="property_minscaledenom" name="property_minscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$minscaledenom</h3>
-                <pre class="signature">$minscaledenom : </pre>
+                <pre class="signature">$minscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Minimum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -370,13 +383,13 @@
             <a id="property_name" name="property_name" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$name</h3>
-                <pre class="signature">$name : </pre>
+                <pre class="signature">$name : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Name to use in legends for this class.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -394,13 +407,13 @@
             <a id="property_text" name="property_text" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$text</h3>
-                <pre class="signature">$text : </pre>
+                <pre class="signature">$text : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Text to label features in this class with.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -418,13 +431,13 @@
             <a id="property__labels" name="property__labels" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$_labels</h3>
-                <pre class="signature">$_labels : </pre>
+                <pre class="signature">$_labels : array&lt;mixed,\MapFile\Label&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,<a href="../classes/MapFile.Label.html">\MapFile\Label</a>&gt;
+                &mdash; List of labels.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -442,13 +455,13 @@
             <a id="property__styles" name="property__styles" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$_styles</h3>
-                <pre class="signature">$_styles : </pre>
+                <pre class="signature">$_styles : array&lt;mixed,\MapFile\Style&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,<a href="../classes/MapFile.Style.html">\MapFile\Style</a>&gt;
+                &mdash; List of styles.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -474,16 +487,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$class = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(array&lt;mixed,string&gt;  <span class="argument">$class = NULL</span>) </pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$class </td>
-                                <td></td>
+                                <td><p>Array containing MapFile CLASS clause.</p></td>
                             </tr>
                                             </table>
                 
@@ -497,7 +510,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile CLASS clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -508,13 +528,15 @@
             <article class="method">
                 <h3 class="public ">getLabels()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getLabels() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getLabels() : array&lt;mixed,\MapFile\Label&gt;</pre>
+                <p><em>Return the list of the labels.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/MapFile.Label.html">\MapFile\Label</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -534,21 +556,24 @@
             <article class="method">
                 <h3 class="public ">getLabel()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getLabel(  <span class="argument">$i</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getLabel(integer  <span class="argument">$i</span>) : \MapFile\Label|false</pre>
+                <p><em>Return the label matching the index sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$i </td>
-                                <td></td>
+                                <td><p>Label Index.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Label.html">\MapFile\Label</a>|false
+                                            &mdash; <p>false if the index is not found.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -568,13 +593,15 @@
             <article class="method">
                 <h3 class="public ">getStyles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getStyles() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getStyles() : array&lt;mixed,\MapFile\Style&gt;</pre>
+                <p><em>Return the list of the styles.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/MapFile.Style.html">\MapFile\Style</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -594,21 +621,24 @@
             <article class="method">
                 <h3 class="public ">getStyle()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getStyle(  <span class="argument">$i</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getStyle(integer  <span class="argument">$i</span>) : \MapFile\Style|false</pre>
+                <p><em>Return the style matching the index sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$i </td>
-                                <td></td>
+                                <td><p>Style Index.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Style.html">\MapFile\Style</a>|false
+                                            &mdash; <p>false if the index is not found.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -628,21 +658,24 @@
             <article class="method">
                 <h3 class="public ">addLabel()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addLabel(  <span class="argument">$label = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">addLabel(\MapFile\Label  <span class="argument">$label = NULL</span>) : \MapFile\Label</pre>
+                <p><em>Add a new \MapFile\Label to the Class.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/MapFile.Label.html">\MapFile\Label</a></td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>New Label.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Label.html">\MapFile\Label</a>
+                                            &mdash; <p>New Label.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -662,21 +695,24 @@
             <article class="method">
                 <h3 class="public ">addStyle()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addStyle(  <span class="argument">$style = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">addStyle(\MapFile\Style  <span class="argument">$style = NULL</span>) : \MapFile\Style</pre>
+                <p><em>Add a new \MapFile\Style to the Class.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/MapFile.Style.html">\MapFile\Style</a></td>
                                 <td>$style </td>
-                                <td></td>
+                                <td><p>New Style.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Style.html">\MapFile\Style</a>
+                                            &mdash; <p>New Style.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -696,19 +732,24 @@
             <article class="method">
                 <h3 class="public ">write()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">write() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">write() : string</pre>
+                <p><em>Write a valid MapFile CLASS clause.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Label::write()</dd>
+                                            <dd>\MapFile\Style::write()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -722,16 +763,16 @@
             <article class="method">
                 <h3 class="private ">read()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">read(  <span class="argument">$array</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">read(array&lt;mixed,string&gt;  <span class="argument">$array</span>) </pre>
+                <p><em>Read a valid MapFile CLASS clause (as array).</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$array </td>
-                                <td></td>
+                                <td><p>MapFile CLASS clause splitted in an array.</p></td>
                             </tr>
                                             </table>
                 
@@ -742,10 +783,20 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Label::read()</dd>
+                                            <dd>\MapFile\Style::read()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile CLASS clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -800,7 +851,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on April 14th, 2015 at 11:32.
+                    on April 14th, 2015 at 16:33.
                 </section>
             </section>
         </section>

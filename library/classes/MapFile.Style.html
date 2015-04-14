@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>API Documentation</title>
+    <title>MapFile Generator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">API Documentation</a>
+            <a class="brand" href="../index.html">MapFile Generator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">221</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-798337345"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-739489059"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-798337345" class="accordion-body collapse in">
+            <div id="namespace-739489059" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-882922638"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-49890858"></a>
                                 <a href="../namespaces/MapFile.html" style="margin-left: 30px; padding-left: 0">MapFile</a>
             </div>
-            <div id="namespace-882922638" class="accordion-body collapse ">
+            <div id="namespace-49890858" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -195,8 +195,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\MapFile</small>Style</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>MapFile Generator - Style (STYLE) Class.</em></p>
+                    <p><a href="http://mapserver.org/mapfile/style.html">MapFile STYLE clause</a>.</p>
                     
                                         
                     <section id="summary">
@@ -229,7 +229,6 @@
                                                                     <a href="../classes/MapFile.Style.html#property_minscaledenom" class="">$minscaledenom</a><br />
                                                                     <a href="../classes/MapFile.Style.html#property_opacity" class="">$opacity</a><br />
                                                                     <a href="../classes/MapFile.Style.html#property_outlinewidth" class="">$outlinewidth</a><br />
-                                                                    <a href="../classes/MapFile.Style.html#property_pattern" class="">$pattern</a><br />
                                                                     <a href="../classes/MapFile.Style.html#property_size" class="">$size</a><br />
                                                                     <a href="../classes/MapFile.Style.html#property_symbolname" class="">$symbolname</a><br />
                                                                     <a href="../classes/MapFile.Style.html#property_width" class="">$width</a><br />
@@ -270,7 +269,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/style.html"><div class="path-wrapper">style.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">MapFile</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\MapFile\Style</div>
@@ -279,11 +278,20 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href="http://mapserver.org/mapfile/style.html"><div class="namespace-wrapper">http://mapserver.org/mapfile/style.html</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Jonathan Beliën <a href="mailto:jbe@geo6.be">jbe@geo6.be</a></p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -302,13 +310,13 @@
             <a id="property_angle" name="property_angle" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$angle</h3>
-                <pre class="signature">$angle : </pre>
+                <pre class="signature">$angle : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Angle (in degrees).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -326,18 +334,20 @@
             <a id="property_maxscaledenom" name="property_maxscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$maxscaledenom</h3>
-                <pre class="signature">$maxscaledenom : </pre>
+                <pre class="signature">$maxscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Maximum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -350,18 +360,20 @@
             <a id="property_minscaledenom" name="property_minscaledenom" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$minscaledenom</h3>
-                <pre class="signature">$minscaledenom : </pre>
+                <pre class="signature">$minscaledenom : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Minimum scale denominator.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://geography.about.com/cs/maps/a/mapscale.htm"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -374,13 +386,13 @@
             <a id="property_opacity" name="property_opacity" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$opacity</h3>
-                <pre class="signature">$opacity : </pre>
+                <pre class="signature">$opacity : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Opacity.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -388,7 +400,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>0 = transparent - 100 = opaque</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -398,37 +417,13 @@
             <a id="property_outlinewidth" name="property_outlinewidth" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$outlinewidth</h3>
-                <pre class="signature">$outlinewidth : </pre>
+                <pre class="signature">$outlinewidth : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_pattern" name="property_pattern" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$pattern</h3>
-                <pre class="signature">$pattern : </pre>
-                <p><em></em></p>
-                
-
-                                <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Outline width (in pixles).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -446,13 +441,13 @@
             <a id="property_size" name="property_size" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$size</h3>
-                <pre class="signature">$size : </pre>
+                <pre class="signature">$size : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Height (in layer SIZEUNITS) or the symbol/pattern.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -470,13 +465,13 @@
             <a id="property_symbolname" name="property_symbolname" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$symbolname</h3>
-                <pre class="signature">$symbolname : </pre>
+                <pre class="signature">$symbolname : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Symbol name (must be defined in Symbol Set file).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -494,13 +489,13 @@
             <a id="property_width" name="property_width" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$width</h3>
-                <pre class="signature">$width : </pre>
+                <pre class="signature">$width : float</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                float
+                &mdash; Width (in layer SIZEUNITS).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -518,13 +513,13 @@
             <a id="property_color" name="property_color" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$color</h3>
-                <pre class="signature">$color : </pre>
+                <pre class="signature">$color : array&lt;mixed,integer&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,integer&gt;
+                &mdash; Color (RGB Format).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -532,7 +527,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Index <code>0</code> = Red [0-255], Index <code>1</code> = Green [0-255], Index <code>2</code> = Blue [0-255]</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -542,13 +544,13 @@
             <a id="property_outlinecolor" name="property_outlinecolor" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$outlinecolor</h3>
-                <pre class="signature">$outlinecolor : </pre>
+                <pre class="signature">$outlinecolor : array&lt;mixed,integer&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,integer&gt;
+                &mdash; Outline color (RGB Format).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -556,7 +558,14 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Index <code>0</code> = Red [0-255], Index <code>1</code> = Green [0-255], Index <code>2</code> = Blue [0-255]</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -574,16 +583,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$style = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(array&lt;mixed,string&gt;  <span class="argument">$style = NULL</span>) </pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$style </td>
-                                <td></td>
+                                <td><p>Array containing MapFile STYLE clause.</p></td>
                             </tr>
                                             </table>
                 
@@ -597,7 +606,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile STYLE clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -608,29 +624,34 @@
             <article class="method">
                 <h3 class="public ">setColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setColor(  <span class="argument">$r</span>,   <span class="argument">$g</span>,   <span class="argument">$b</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setColor(integer  <span class="argument">$r</span>, integer  <span class="argument">$g</span>, integer  <span class="argument">$b</span>) </pre>
+                <p><em>Set the `color` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$r </td>
-                                <td></td>
+                                <td><p>Red component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$g </td>
-                                <td></td>
+                                <td><p>Green component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$b </td>
-                                <td></td>
+                                <td><p>Blue component [0-255].</p></td>
                             </tr>
                                             </table>
                 
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\MapFile\Exception</dt>
+                            <dd><p>if any component is lower &lt; 0 or &gt; 255</p></dd>
+                                                                    </dl>
                 
                 				
                             </article>
@@ -652,29 +673,34 @@
             <article class="method">
                 <h3 class="public ">setOutlineColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setOutlineColor(  <span class="argument">$r</span>,   <span class="argument">$g</span>,   <span class="argument">$b</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setOutlineColor(integer  <span class="argument">$r</span>, integer  <span class="argument">$g</span>, integer  <span class="argument">$b</span>) </pre>
+                <p><em>Set the `outlinecolor` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$r </td>
-                                <td></td>
+                                <td><p>Red component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$g </td>
-                                <td></td>
+                                <td><p>Green component [0-255].</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$b </td>
-                                <td></td>
+                                <td><p>Blue component [0-255].</p></td>
                             </tr>
                                             </table>
                 
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\MapFile\Exception</dt>
+                            <dd><p>if any component is lower &lt; 0 or &gt; 255</p></dd>
+                                                                    </dl>
                 
                 				
                             </article>
@@ -696,13 +722,15 @@
             <article class="method">
                 <h3 class="public ">getColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getColor() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getColor() : array&lt;mixed,integer&gt;</pre>
+                <p><em>Get the `color` property.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -722,13 +750,15 @@
             <article class="method">
                 <h3 class="public ">getOutlineColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getOutlineColor() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getOutlineColor() : array&lt;mixed,integer&gt;</pre>
+                <p><em>Get the `outlinecolor` property.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -749,7 +779,7 @@
                 <h3 class="public ">unsetColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">unsetColor() </pre>
-                <p><em></em></p>
+                <p><em>Unset `color` property.</em></p>
                 
 
                 
@@ -775,7 +805,7 @@
                 <h3 class="public ">unsetOutlineColor()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">unsetOutlineColor() </pre>
-                <p><em></em></p>
+                <p><em>Unset `outlinecolor` property.</em></p>
                 
 
                 
@@ -800,13 +830,15 @@
             <article class="method">
                 <h3 class="public ">write()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">write() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">write() : string</pre>
+                <p><em>Write a valid MapFile STYLE clause.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -826,16 +858,16 @@
             <article class="method">
                 <h3 class="private ">read()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">read(  <span class="argument">$array</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">read(array&lt;mixed,string&gt;  <span class="argument">$array</span>) </pre>
+                <p><em>Read a valid MapFile STYLE clause (as array).</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$array </td>
-                                <td></td>
+                                <td><p>MapFile STYLE clause splitted in an array.</p></td>
                             </tr>
                                             </table>
                 
@@ -849,7 +881,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Must read a MapFile STYLE clause without passing by an Array.</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -904,7 +943,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on April 14th, 2015 at 11:32.
+                    on April 14th, 2015 at 16:33.
                 </section>
             </section>
         </section>

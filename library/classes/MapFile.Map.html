@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>API Documentation</title>
+    <title>MapFile Generator</title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
@@ -83,7 +83,7 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">API Documentation</a>
+            <a class="brand" href="../index.html">MapFile Generator</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">221</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-625923967"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1779841459"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-625923967" class="accordion-body collapse in">
+            <div id="namespace-1779841459" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1244337563"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-485069126"></a>
                                 <a href="../namespaces/MapFile.html" style="margin-left: 30px; padding-left: 0">MapFile</a>
             </div>
-            <div id="namespace-1244337563" class="accordion-body collapse ">
+            <div id="namespace-485069126" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -195,8 +195,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\MapFile</small>Map</h1>
-                    <p><em>MapFile Generator - Map Class</em></p>
-                    
+                    <p><em>MapFile Generator - Map (MAP) Class.</em></p>
+                    <p><a href="http://mapserver.org/mapfile/map.html">MapFile MAP clause</a>.</p>
                     
                                         
                     <section id="summary">
@@ -296,7 +296,9 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href="http://mapserver.org/mapfile/map.html"><div class="namespace-wrapper">http://mapserver.org/mapfile/map.html</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -306,6 +308,15 @@
                             </th>
                             <td>
                                                                     <p>Jonathan Beliën <a href="mailto:jbe@geo6.be">jbe@geo6.be</a></p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                uses
+                            </th>
+                            <td>
+                                                                    
+                                                                    
                                                             </td>
                         </tr>
                                         </table>
@@ -544,13 +555,13 @@
             <a id="property_extent" name="property_extent" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$extent</h3>
-                <pre class="signature">$extent : </pre>
+                <pre class="signature">$extent : array&lt;mixed,float&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,float&gt;
+                &mdash; Spatial extent.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -568,13 +579,13 @@
             <a id="property_height" name="property_height" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$height</h3>
-                <pre class="signature">$height : </pre>
+                <pre class="signature">$height : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Size Y (height) in pixels of the output image.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -592,13 +603,13 @@
             <a id="property_name" name="property_name" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$name</h3>
-                <pre class="signature">$name : </pre>
+                <pre class="signature">$name : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; MapFile name.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -616,18 +627,20 @@
             <a id="property_projection" name="property_projection" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$projection</h3>
-                <pre class="signature">$projection : </pre>
+                <pre class="signature">$projection : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; MapFile EPSG Projection.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">http://spatialreference.org/ref/epsg/</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -640,13 +653,13 @@
             <a id="property_status" name="property_status" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$status</h3>
-                <pre class="signature">$status : </pre>
+                <pre class="signature">$status : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; MapFile Status (Is the map active ?).                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -654,7 +667,18 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::STATUS_ON</li>
+<li>self::STATUS_OFF</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -664,13 +688,13 @@
             <a id="property_units" name="property_units" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$units</h3>
-                <pre class="signature">$units : </pre>
+                <pre class="signature">$units : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Units of the map coordinates.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -678,7 +702,24 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            note
+                        </th>
+                        <td>
+                                                            <p>Use :</p>
+<ul>
+<li>self::UNITS_INCHES</li>
+<li>self::UNITS_FEET</li>
+<li>self::UNITS_MILES</li>
+<li>self::UNITS_METERS</li>
+<li>self::UNITS_KILOMETERS</li>
+<li>self::UNITS_DD</li>
+<li>self::UNITS_PIXELS</li>
+<li>self::UNITS_NAUTICALMILES</li>
+</ul>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -688,13 +729,13 @@
             <a id="property_width" name="property_width" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$width</h3>
-                <pre class="signature">$width : </pre>
+                <pre class="signature">$width : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Size X (width) in pixels of the output image.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -712,13 +753,13 @@
             <a id="property_legend" name="property_legend" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$legend</h3>
-                <pre class="signature">$legend : </pre>
+                <pre class="signature">$legend : \MapFile\Legend</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                <a href="../classes/MapFile.Legend.html">\MapFile\Legend</a>
+                &mdash; Map Legend object.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -736,13 +777,13 @@
             <a id="property_scalebar" name="property_scalebar" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$scalebar</h3>
-                <pre class="signature">$scalebar : </pre>
+                <pre class="signature">$scalebar : \MapFile\Scalebar</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                <a href="../classes/MapFile.Scalebar.html">\MapFile\Scalebar</a>
+                &mdash; Map Scalebar object.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -760,13 +801,13 @@
             <a id="property_fontsetfilename" name="property_fontsetfilename" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$fontsetfilename</h3>
-                <pre class="signature">$fontsetfilename : </pre>
-                <p><em>Path to fontset file</em></p>
+                <pre class="signature">$fontsetfilename : string</pre>
+                <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Path to fontset file.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -774,14 +815,7 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            type
-                        </th>
-                        <td>
-                                                            <p>string</p>
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -791,13 +825,13 @@
             <a id="property_symbolsetfilename" name="property_symbolsetfilename" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$symbolsetfilename</h3>
-                <pre class="signature">$symbolsetfilename : </pre>
-                <p><em>Path to symbolset file</em></p>
+                <pre class="signature">$symbolsetfilename : string</pre>
+                <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Path to symbolset file.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -805,14 +839,7 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            type
-                        </th>
-                        <td>
-                                                            <p>string</p>
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -822,13 +849,13 @@
             <a id="property_metadata" name="property_metadata" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$metadata</h3>
-                <pre class="signature">$metadata : </pre>
-                <p><em>List of metadata&#039;s</em></p>
+                <pre class="signature">$metadata : array&lt;mixed,string&gt;</pre>
+                <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,string&gt;
+                &mdash; List of metadata&#039;s.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -836,14 +863,7 @@
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            type
-                        </th>
-                        <td>
-                                                            <p>array</p>
-                                                    </td>
-                    </tr>
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -853,13 +873,13 @@
             <a id="property__layers" name="property__layers" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$_layers</h3>
-                <pre class="signature">$_layers : </pre>
+                <pre class="signature">$_layers : array&lt;mixed,\MapFile\Layer&gt;</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array&lt;mixed,<a href="../classes/MapFile.Layer.html">\MapFile\Layer</a>&gt;
+                &mdash; List of layers.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -885,16 +905,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$mapfile = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$mapfile = NULL</span>) </pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$mapfile </td>
-                                <td></td>
+                                <td><p>Path to a valid .map MapFile.</p></td>
                             </tr>
                                             </table>
                 
@@ -919,29 +939,29 @@
             <article class="method">
                 <h3 class="public ">setExtent()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setExtent(  <span class="argument">$minx</span>,   <span class="argument">$miny</span>,   <span class="argument">$maxx</span>,   <span class="argument">$maxy</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setExtent(float  <span class="argument">$minx</span>, float  <span class="argument">$miny</span>, float  <span class="argument">$maxx</span>, float  <span class="argument">$maxy</span>) </pre>
+                <p><em>Set the `extent` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>float</td>
                                 <td>$minx </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>float</td>
                                 <td>$miny </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>float</td>
                                 <td>$maxx </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>float</td>
                                 <td>$maxy </td>
                                 <td></td>
                             </tr>
@@ -968,16 +988,16 @@
             <article class="method">
                 <h3 class="public ">setFontSet()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setFontSet(  <span class="argument">$filename</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setFontSet(string  <span class="argument">$filename</span>) </pre>
+                <p><em>Set the `fontsetfilename` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$filename </td>
-                                <td></td>
+                                <td><p>Path to a valid fontset file.</p></td>
                             </tr>
                                             </table>
                 
@@ -1002,19 +1022,19 @@
             <article class="method">
                 <h3 class="public ">setMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setMetadata(  <span class="argument">$key</span>,   <span class="argument">$value</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setMetadata(string  <span class="argument">$key</span>, string  <span class="argument">$value</span>) </pre>
+                <p><em>Set a `metadata` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$value </td>
                                 <td></td>
                             </tr>
@@ -1041,21 +1061,21 @@
             <article class="method">
                 <h3 class="public ">setSize()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setSize(  <span class="argument">$width</span>,   <span class="argument">$height</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setSize(integer  <span class="argument">$width</span>, integer  <span class="argument">$height</span>) </pre>
+                <p><em>Set `height` and `width` properties.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$width </td>
-                                <td></td>
+                                <td><p>Width in pixels of the output image.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$height </td>
-                                <td></td>
+                                <td><p>Height in pixels of the output image.</p></td>
                             </tr>
                                             </table>
                 
@@ -1080,16 +1100,16 @@
             <article class="method">
                 <h3 class="public ">setSymbolSet()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setSymbolSet(  <span class="argument">$filename</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setSymbolSet(string  <span class="argument">$filename</span>) </pre>
+                <p><em>Set the `symbolsetfilename` property.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$filename </td>
-                                <td></td>
+                                <td><p>Path to a valid symbolset file.</p></td>
                             </tr>
                                             </table>
                 
@@ -1114,13 +1134,15 @@
             <article class="method">
                 <h3 class="public ">getLayers()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getLayers() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getLayers() : array&lt;mixed,\MapFile\Layer&gt;</pre>
+                <p><em>Return the list of the layers.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/MapFile.Layer.html">\MapFile\Layer</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1140,21 +1162,24 @@
             <article class="method">
                 <h3 class="public ">getLayer()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getLayer(  <span class="argument">$i</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getLayer(integer  <span class="argument">$i</span>) : \MapFile\Layer|false</pre>
+                <p><em>Return the layer matching the index sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$i </td>
-                                <td></td>
+                                <td><p>Layer Index.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Layer.html">\MapFile\Layer</a>|false
+                                            &mdash; <p>false if the index is not found.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1174,21 +1199,24 @@
             <article class="method">
                 <h3 class="public ">getMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getMetadata(  <span class="argument">$key</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getMetadata(string  <span class="argument">$key</span>) : string|false</pre>
+                <p><em>Return the metadata matching the key sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
-                                <td></td>
+                                <td><p>Metadata Key.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string|false
+                                            &mdash; <p>false if the key is not found</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1208,16 +1236,16 @@
             <article class="method">
                 <h3 class="public ">removeMetadata()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">removeMetadata(  <span class="argument">$key</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">removeMetadata(string  <span class="argument">$key</span>) </pre>
+                <p><em>Remove the metadata matching the key sent as parameter.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$key </td>
-                                <td></td>
+                                <td><p>Metadata Key.</p></td>
                             </tr>
                                             </table>
                 
@@ -1242,21 +1270,24 @@
             <article class="method">
                 <h3 class="public ">addLayer()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addLayer(  <span class="argument">$layer = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">addLayer(\MapFile\Layer  <span class="argument">$layer = NULL</span>) : \MapFile\Layer</pre>
+                <p><em>Add a new \MapFile\Layer to the MapFile.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/MapFile.Layer.html">\MapFile\Layer</a></td>
                                 <td>$layer </td>
-                                <td></td>
+                                <td><p>New Layer.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/MapFile.Layer.html">\MapFile\Layer</a>
+                                            &mdash; <p>New layer.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1276,16 +1307,16 @@
             <article class="method">
                 <h3 class="public ">save()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">save(  <span class="argument">$filename</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">save(string  <span class="argument">$filename</span>) </pre>
+                <p><em>Write the \MapFile\Map object to a MapFile.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$filename </td>
-                                <td></td>
+                                <td><p>Path to the new MapFile.</p></td>
                             </tr>
                                             </table>
                 
@@ -1296,7 +1327,11 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Layer::write()</dd>
+                                            <dd>\MapFile\Legend::write()</dd>
+                                            <dd>\MapFile\Scalebar::write()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1310,16 +1345,16 @@
             <article class="method">
                 <h3 class="private ">read()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">read(  <span class="argument">$mapfile</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">read(string  <span class="argument">$mapfile</span>) </pre>
+                <p><em>Read a valid MapFile.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$mapfile </td>
-                                <td></td>
+                                <td><p>Path to the MapFile to read.</p></td>
                             </tr>
                                             </table>
                 
@@ -1330,7 +1365,11 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>\MapFile\Layer::read()</dd>
+                                            <dd>\MapFile\Legend::read()</dd>
+                                            <dd>\MapFile\Scalebar::read()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1344,25 +1383,28 @@
             <article class="method">
                 <h3 class="private ">convertStatus()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertStatus(  <span class="argument">$s = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertStatus(string|integer  <span class="argument">$s = NULL</span>) : integer|string</pre>
+                <p><em>Convert `status` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$s </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1378,25 +1420,28 @@
             <article class="method">
                 <h3 class="private ">convertUnits()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">convertUnits(  <span class="argument">$u = NULL</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">convertUnits(string|integer  <span class="argument">$u = NULL</span>) : integer|string</pre>
+                <p><em>Convert `units` property to the text value or to the constant matching the text value.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|integer</td>
                                 <td>$u </td>
                                 <td></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer|string
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -1456,7 +1501,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on April 14th, 2015 at 11:32.
+                    on April 14th, 2015 at 16:33.
                 </section>
             </section>
         </section>
