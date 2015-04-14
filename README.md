@@ -41,3 +41,6 @@ Example :
 
 Go to [Documentation wiki page](https://github.com/jbelien/MapFile-Generator/wiki/Documentation).
 
+## Libraries
+
+If [PHP MapScript](http://www.mapserver.org/mapscript/index.html) is not enabled, this application use internal library to read and write the MapFile.
