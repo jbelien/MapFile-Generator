@@ -2,7 +2,6 @@
 /**
  * MapFile Generator - MapServer .MAP Generator (Read, Write & Preview)
  * PHP Version 5.3+
- * @package MapFile
  * @link https://github.com/jbelien/MapFile-Generator
  * @author Jonathan Beliën <jbe@geo6.be>
  * @copyright 2015 Jonathan Beliën
@@ -21,11 +20,24 @@ require_once('style.php');
 
 /**
  * MapFile Generator - Map Class
+ * @package MapFile
  * @author Jonathan Beliën <jbe@geo6.be>
  */
 class Map {
+  /**
+  * Path to fontset file
+  * @type string
+  */
   private $fontsetfilename;
+  /**
+  * Path to symbolset file
+  * @type string
+  */
   private $symbolsetfilename;
+  /**
+  * List of metadata's
+  * @type array
+  */
   private $metadata = array();
 
   private $_layers = array();
