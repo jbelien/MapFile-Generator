@@ -58,6 +58,7 @@ class Map {
   public $name = 'MYMAP';
   /**
   * @var string MapFile EPSG Projection.
+  * @link http://epsg.io/
   * @link http://spatialreference.org/ref/epsg/
   */
   public $projection;
