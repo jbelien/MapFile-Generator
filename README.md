@@ -1,6 +1,8 @@
 # MapFile Generator
 ## MapServer .MAP Generator (Read, Write & Preview)
 
+![Screenshot](capture.png)
+
 Still in development ! Use with caution.
 
 **Feel free to test it, criticize it and make any suggestion !** :)
