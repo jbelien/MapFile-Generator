@@ -169,6 +169,9 @@ if (isset($_POST['layers']) && is_array($_POST['layers'])) {
       }
     }
   }
+
+  $count = count($map->getLayers());
+  for ($i = 0; $i < $count; $i++) { if (!isset($_POST['layers'][$i]) || empty($_POST['layers'][$i])) $map->removeLayer($i); }
 }
 
 $map->save($mapfile);

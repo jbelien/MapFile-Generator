@@ -117,6 +117,7 @@ class Map {
   /**
   * Set the `fontsetfilename` property.
   * @param string $filename Path to a valid fontset file.
+  * @throws \MapFile\Exception if filename does not exists.
   */
   public function setFontSet($filename) {
     if (file_exists($filename)) $this->fontsetfilename = $filename; else throw new Exception('FontSet file does not exists.');
@@ -141,6 +142,7 @@ class Map {
   /**
   * Set the `symbolsetfilename` property.
   * @param string $filename Path to a valid symbolset file.
+  * @throws \MapFile\Exception if filename does not exists.
   */
   public function setSymbolSet($filename) {
     if (file_exists($filename)) $this->symbolsetfilename = $filename; else throw new Exception('SymbolSet file does not exists.');
@@ -187,6 +189,14 @@ class Map {
     if (is_null($layer)) $layer = new Layer();
     $count = array_push($this->_layers, $layer);
     return $this->_layers[$count-1];
+  }
+
+  /**
+  * Remove the \MapFile\Layer the index sent as parameter.
+  * @param integer $i Index.
+  */
+  public function removeLayer($i) {
+    if (isset($this->_layers[$i])) { unset($this->_layers[$i]); $this->_layers = array_values($this->_layers); }
   }
 
   /**

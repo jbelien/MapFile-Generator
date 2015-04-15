@@ -379,7 +379,7 @@ if ($mapscript) {
                             <li class="wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a href="#delete"><i class="fa fa-trash-o"></i> Delete</a></li>
-                            <li><a href="#duplicate"><i class="fa fa-files-o"></i> Duplicate</a></li>
+                            <!--<li><a href="#duplicate"><i class="fa fa-files-o"></i> Duplicate</a></li>-->
                           </ul>
                         </div>
                       </td>

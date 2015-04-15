@@ -29,18 +29,6 @@ $(document).ready(function() {
     }
   });
 
-  $('#editor tbody > tr:last input').on('change', function(event) {
-    var l = $('#editor .layer').length;
-    var _tr = $('#editor .layer:last');
-
-    var tr = $(_tr).clone().appendTo('#editor tbody');
-    $(tr).attr('id', 'layer'+l);
-    $(tr).find('input').attr({ id: 'inputLayer'+l+'Name', name: 'layers['+l+'][name]' }).val('');
-    $(tr).find('select').attr({ id: 'selectLayer'+l+'Type', name: 'layers['+l+'][type]' }).find('option:not(:disabled):first').prop('selected', true);
-
-    $(_tr).find('.dropdown-toggle.disabled').removeClass('disabled');
-  });
-
   $('#editor form input, #editor form select').on('change', function() {
     $('#editor form').trigger('submit');
   });
@@ -48,29 +36,51 @@ $(document).ready(function() {
     event.preventDefault();
     update();
   });
-
-  $('a[href="#delete"]').on('click', function(event) {
-    event.preventDefault();
-    var id = $(this).closest('.layer').remove();
-    update();
-  });
-
-  $('a[href="#duplicate"]').on('click', function(event) {
-    event.preventDefault();
-
-    var l = $('#editor .layer').length;
-    var data = $(this).closest('.layer').data();
-
-    var tr = $(this).closest('.layer').clone().data(data).insertBefore('#editor tbody > tr:last');
-    $(tr).attr('id', 'layer'+l);
-    $(tr).find('input').attr({ id: 'inputLayer'+l+'Name', name: 'layers['+l+'][name]' });
-    $(tr).find('select').attr({ id: 'selectLayer'+l+'Type', name: 'layers['+l+'][type]' });
-
-    update();
-  });
 });
 
-/* ***********************************************
+/**
+ *
+ */
+$(document).on('change', '#editor tbody > tr:last input', function(event) {
+  var l = $('#editor .layer').length;
+  var _tr = $('#editor .layer:last');
+
+  var tr = $(_tr).clone().appendTo('#editor tbody');
+  $(tr).attr('id', 'layer'+l);
+  $(tr).find('input').attr({ id: 'inputLayer'+l+'Name', name: 'layers['+l+'][name]' }).val('');
+  $(tr).find('select').attr({ id: 'selectLayer'+l+'Type', name: 'layers['+l+'][type]' }).find('option:not(:disabled):first').prop('selected', true);
+
+  $(_tr).find('.dropdown-toggle.disabled').removeClass('disabled');
+});
+
+/**
+ *
+ */
+$(document).on('click', 'a[href="#delete"]', function(event) {
+  event.preventDefault();
+  var id = $(this).closest('.layer').remove();
+  update();
+});
+
+/**
+ *
+ */
+$(document).on('click', 'a[href="#duplicate"]', function(event) {
+  event.preventDefault();
+
+  var l = $('#editor .layer').length;
+  var data = $(this).closest('.layer').data();
+
+  var tr = $(this).closest('.layer').clone().data(data).insertBefore('#editor tbody > tr:last');
+  $(tr).attr('id', 'layer'+l);
+  $(tr).find('input').attr({ id: 'inputLayer'+l+'Name', name: 'layers['+l+'][name]' });
+  $(tr).find('select').attr({ id: 'selectLayer'+l+'Type', name: 'layers['+l+'][type]' });
+
+  update();
+});
+
+
+/**
  *
  */
 function update(callback) {
@@ -79,9 +89,11 @@ function update(callback) {
   var data = $('#editor form').serializeObject();
 
   $('.layer').each(function(i) {
-    var n = data.layers[i].name, t = data.layers[i].type;
-    $.extend(data.layers[i], $(this).data());
-    data.layers[i].name = n; data.layers[i].type = t;
+    if (typeof(data.layers[i]) != 'undefined') {
+      var n = data.layers[i].name, t = data.layers[i].type;
+      $.extend(data.layers[i], $(this).data());
+      data.layers[i].name = n; data.layers[i].type = t;
+    }
   });
 
   $.post((mapscript ? 'mapscript.php' : 'library.php'), data, function(map) {

@@ -10,6 +10,7 @@ Still in development ! Use with caution.
 * Web Server ([Apache](http://httpd.apache.org/), [NGINX](http://nginx.org/), ...)
 * [PHP](http://php.net/) 5.3+
 * [MapServer](http://mapserver.org/)
+* [[MapScript](http://www.mapserver.org/mapscript/index.html)]
 
 --------------------------------------------------
 
