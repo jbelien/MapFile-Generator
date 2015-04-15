@@ -3,6 +3,8 @@
 
 Still in development ! Use with caution.
 
+**Feel free to test it, criticize it and make any suggestion !** :)
+
 --------------------------------------------------
 
 ## Required :
@@ -45,3 +47,5 @@ Go to [Documentation wiki page](https://github.com/jbelien/MapFile-Generator/wik
 ## Libraries
 
 If [PHP MapScript](http://www.mapserver.org/mapscript/index.html) is not enabled, this application use internal library to read and write the MapFile.
+
+Documentation of the internal library : <http://jbelien.github.io/MapFile-Generator/library/>
