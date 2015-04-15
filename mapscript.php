@@ -7,17 +7,17 @@ $mapfile = $_SESSION['mapfile-generator']['mapfile'];
 
 $map = new mapObj($mapfile);
 
-$map->setSize(500, 500);
-$map->setFontSet($settings['fontset']);
-$map->setSymbolSet($settings['symbolset']);
-
-if (!empty($_POST['name'])) $map->name = trim($_POST['name']);
-
 $map->setProjection($_POST['projection'], MS_TRUE);
 
 if (strlen($_POST['extentminx']) > 0 && strlen($_POST['extentminy']) > 0 && strlen($_POST['extentmaxx']) > 0 && strlen($_POST['extentmaxy']) > 0) {
   $map->setExtent($_POST['extentminx'], $_POST['extentminy'], $_POST['extentmaxx'], $_POST['extentmaxy']);
 }
+
+$map->setSize(500, 500);
+$map->setFontSet($settings['fontset']);
+$map->setSymbolSet($settings['symbolset']);
+
+if (!empty($_POST['name'])) $map->name = trim($_POST['name']);
 
 if (isset($_POST['wms']) && $_POST['wms'] == 1) {
   $map->setMetaData('wms_enable_request', '*');
