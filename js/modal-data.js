@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $('#modal-data').on('show.bs.modal', function(event) {
-    var id = $(event.relatedTarget).closest('.layer').attr('id');
+    var id = $(event.relatedTarget).closest('.layer').index('.layer');
     var data = $(event.relatedTarget).closest('.layer').data();
 
     $(this).data('_id', id);

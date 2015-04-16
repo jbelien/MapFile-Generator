@@ -10,13 +10,13 @@
           <fieldset class="style" id="style0">
             <legend>Style #1</legend>
             <div class="form-group">
-              <label for="inputStyle0Color" class="col-sm-3 control-label">Color</label>
+              <label class="col-sm-3 control-label">Color</label>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0ColorR" name="style[0][color][r]"></div>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0ColorG" name="style[0][color][g]"></div>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0ColorB" name="style[0][color][b]"></div>
             </div>
             <div class="form-group">
-              <label for="inputStyle0OutlineColor" class="col-sm-3 control-label">Outline color</label>
+              <label class="col-sm-3 control-label">Outline color</label>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0OutlineColorR" name="style[0][outlinecolor][r]"></div>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0OutlineColorG" name="style[0][outlinecolor][g]"></div>
               <div class="col-sm-3"><input type="text" class="form-control" id="inputStyle0OutlineColorB" name="style[0][outlinecolor][b]"></div>

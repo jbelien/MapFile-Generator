@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('#modal-class').on('show.bs.modal', function(event) {
-    var id = $(event.relatedTarget).closest('.layer').attr('id');
-    var data = $('#'+id).data();
+    var id = $(event.relatedTarget).closest('.layer').index('.layer');
+    var data = $(event.relatedTarget).closest('.layer').data();
 
     $(this).data('_id', id);
     if (data.minscaledenom) $('#inputLayerMinScaleDenom').val(data.minscaledenom);

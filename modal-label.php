@@ -35,19 +35,19 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="inputLabelColor" class="col-sm-3 control-label">Color</label>
+            <label class="col-sm-3 control-label">Color</label>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelColorR" name="label[color][r]"></div>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelColorG" name="label[color][g]"></div>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelColorB" name="label[color][b]"></div>
           </div>
           <div class="form-group">
-            <label for="inputLabelOutlineColor" class="col-sm-3 control-label">Outline color</label>
+            <label class="col-sm-3 control-label">Outline color</label>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelOutlineColorR" name="label[outlinecolor][r]"></div>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelOutlineColorG" name="label[outlinecolor][g]"></div>
             <div class="col-sm-3"><input type="text" class="form-control" id="inputLabelOutlineColorB" name="label[outlinecolor][b]"></div>
           </div>
           <div class="form-group">
-            <label for="inputLabelScaleDenom" class="col-sm-3 control-label">Display range</label>
+            <label class="col-sm-3 control-label">Display range</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" placeholder="Min. Scale Denom." id="inputLabelMinScaleDenom" name="label[minscaledenom]">
             </div>

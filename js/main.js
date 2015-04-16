@@ -22,20 +22,20 @@ $(document).ready(function() {
   $('#selectProj').on('change', function() {
     var data = $(this).find('option:selected').data();
     if (typeof(data.minx) != 'undefined' && typeof(data.miny) != 'undefined' && typeof(data.maxx) != 'undefined' && typeof(data.maxy) != 'undefined') {
-      $('#inputExtentMinX').val(data.minx);
-      $('#inputExtentMinY').val(data.miny);
-      $('#inputExtentMaxX').val(data.maxx);
-      $('#inputExtentMaxY').val(data.maxy);
+      $('#inputExtentMinX').val(data.minx); $('#inputExtentMinY').val(data.miny);
+      $('#inputExtentMaxX').val(data.maxx); $('#inputExtentMaxY').val(data.maxy);
     }
   });
 
-  $('#editor form input, #editor form select').on('change', function() {
+  $('#editor > form input, #editor > form select').on('change', function() {
     $('#editor form').trigger('submit');
   });
-  $('#editor form').on('submit', function(event) {
+  $('#editor > form').on('submit', function(event) {
     event.preventDefault();
     update();
   });
+
+  //if ($('#inputExtentMinX').val() == -1 && $('#inputExtentMinY').val() == -1 && $('#inputExtentMaxX').val() == -1 && $('#inputExtentMaxY').val() == -1) $('#selectProj').trigger('change');
 });
 
 /**
@@ -46,9 +46,8 @@ $(document).on('change', '#editor tbody > tr:last input', function(event) {
   var _tr = $('#editor .layer:last');
 
   var tr = $(_tr).clone().appendTo('#editor tbody');
-  $(tr).attr('id', 'layer'+l);
-  $(tr).find('input').attr({ id: 'inputLayer'+l+'Name', name: 'layers['+l+'][name]' }).val('');
-  $(tr).find('select').attr({ id: 'selectLayer'+l+'Type', name: 'layers['+l+'][type]' }).find('option:not(:disabled):first').prop('selected', true);
+  $(tr).find('input').val('');
+  $(tr).find('select').find('option:not(:disabled):first').prop('selected', true);
 
   $(_tr).find('.dropdown-toggle.disabled').removeClass('disabled');
 });
@@ -56,15 +55,71 @@ $(document).on('change', '#editor tbody > tr:last input', function(event) {
 /**
  *
  */
-$(document).on('click', 'a[href="#delete"]', function(event) {
+$(document).on('click', 'a[href="#move-up"]', function(event) {
   event.preventDefault();
-  var id = $(this).closest('.layer').remove();
-  update();
+  var layers = $('#editor .layer');
+  var l = $(this).closest('.layer'), i = $(layers).index(l);
+
+  if (i > 0) {
+    $.post((mapscript ? 'mapscript.php' : 'library.php'), { up: i }, function(map) {
+      $('#mapfile > pre').text(map);
+      $('#mapfile > .text-info:last').text('Last update : '+new Date().toLocaleString())
+
+      $('#map img:first').attr('src', $('#map').data('url')+'&mode=map&layers=all&'+Date.now());
+      $('#map-scalebar').attr('src', $('#map').data('url')+'&mode=scalebar&layers=all&'+Date.now());
+      $('#map-legend').attr('src', $('#map').data('url')+'&mode=legend&layers=all&'+Date.now());
+
+      l.insertBefore($(layers).get(i-1));
+    });
+  }
 });
 
 /**
  *
  */
+$(document).on('click', 'a[href="#move-down"]', function(event) {
+  event.preventDefault();
+  var layers = $('#editor .layer');
+  var l = $(this).closest('.layer'), i = $(layers).index(l);
+
+  if (i < (layers.length-2)) {
+    $.post((mapscript ? 'mapscript.php' : 'library.php'), { down: i }, function(map) {
+      $('#mapfile > pre').text(map);
+      $('#mapfile > .text-info:last').text('Last update : '+new Date().toLocaleString())
+
+      $('#map img:first').attr('src', $('#map').data('url')+'&mode=map&layers=all&'+Date.now());
+      $('#map-scalebar').attr('src', $('#map').data('url')+'&mode=scalebar&layers=all&'+Date.now());
+      $('#map-legend').attr('src', $('#map').data('url')+'&mode=legend&layers=all&'+Date.now());
+
+      l.insertAfter($(layers).get(i+1));
+    });
+  }
+});
+
+/**
+ *
+ */
+$(document).on('click', 'a[href="#delete"]', function(event) {
+  event.preventDefault();
+  var layers = $('#editor .layer');
+  var l = $(this).closest('.layer'), i = $(layers).index(l);
+
+  $.post((mapscript ? 'mapscript.php' : 'library.php'), { delete: i }, function(map) {
+    $('#mapfile > pre').text(map);
+    $('#mapfile > .text-info:last').text('Last update : '+new Date().toLocaleString())
+
+    $('#map img:first').attr('src', $('#map').data('url')+'&mode=map&layers=all&'+Date.now());
+    $('#map-scalebar').attr('src', $('#map').data('url')+'&mode=scalebar&layers=all&'+Date.now());
+    $('#map-legend').attr('src', $('#map').data('url')+'&mode=legend&layers=all&'+Date.now());
+
+    $(l).remove();
+  });
+});
+
+/**
+ *
+ */
+/*
 $(document).on('click', 'a[href="#duplicate"]', function(event) {
   event.preventDefault();
 
@@ -78,7 +133,7 @@ $(document).on('click', 'a[href="#duplicate"]', function(event) {
 
   update();
 });
-
+*/
 
 /**
  *
@@ -86,14 +141,12 @@ $(document).on('click', 'a[href="#duplicate"]', function(event) {
 function update(callback) {
   modified = true;
 
-  var data = $('#editor form').serializeObject();
-
+  var data = $('#editor > form').serializeObject(); console.log(data);
+  data.layers = new Array();
   $('.layer').each(function(i) {
-    if (typeof(data.layers[i]) != 'undefined') {
-      var n = data.layers[i].name, t = data.layers[i].type;
-      $.extend(data.layers[i], $(this).data());
-      data.layers[i].name = n; data.layers[i].type = t;
-    }
+    data.layers[i] = $(this).data();
+    data.layers[i].name = $(this).find('input[name=layer_name]').val();
+    data.layers[i].type = $(this).find('input[name=layer_type]').val();
   });
 
   $.post((mapscript ? 'mapscript.php' : 'library.php'), data, function(map) {

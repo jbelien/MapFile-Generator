@@ -8,7 +8,7 @@
       <div class="modal-body">
         <form autocomplete="off" class="form-horizontal">
           <div class="form-group">
-            <label for="inputLayerScaleDenom" class="col-sm-3 control-label">Display range</label>
+            <label class="col-sm-3 control-label">Display range</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" id="inputLayerMinScaleDenom" name="minscaledenom" placeholder="Min. Scale Denom.">
             </div>
@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="selectLayerOpacity" class="col-sm-3 control-label">Opacity</label>
+            <label for="inputLayerOpacity" class="col-sm-3 control-label">Opacity</label>
             <div class="col-sm-9">
               <input type="range" class="form-control" id="inputLayerOpacity" min="0" max="100" step="10" name="opacity" value="100">
             </div>

@@ -13,6 +13,7 @@ $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
 if (isset($_GET['save'], $_SESSION['mapfile-generator']['mapfile'], $_SESSION['mapfile-generator']['source'])) {
+  copy($_SESSION['mapfile-generator']['source'], $_SESSION['mapfile-generator']['source'].'.bak');
   copy($_SESSION['mapfile-generator']['mapfile'], $_SESSION['mapfile-generator']['source']);
 }
 if (isset($_GET['export'], $_SESSION['mapfile-generator']['mapfile'])) {
@@ -260,10 +261,10 @@ if ($mapscript) {
                 <div class="form-group form-group-lg col-sm-6">
                   <label for="selectProj">Map projection</label>
                   <select class="form-control" id="selectProj" name="projection">
-                    <option value="epsg:3857"<?= ($map_projection == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
+                    <option value="epsg:3857" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($map_projection == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
                     <option value="epsg:4326" data-minx="-180.0" data-miny="-90.0" data-maxx="180.0" data-maxy="90.0"<?= ($map_projection == 'epsg:4326' ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
                     <option value="epsg:31370" data-minx="0" data-miny="0" data-maxx="300000" data-maxy="300000"<?= ($map_projection == 'epsg:31370' ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
-                    <option value="epsg:900913"<?= ($map_projection == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
+                    <option value="epsg:900913" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($map_projection == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
                   </select>
                 </div>
               </div>
@@ -341,12 +342,12 @@ if ($mapscript) {
                   foreach ($layers_json as $k => $json) {
                     $data = json_decode($json, TRUE);
                   ?>
-                    <tr class="layer" id="layer<?= $k ?>">
+                    <tr class="layer">
                       <td>
-                        <input type="text" class="form-control" id="inputLayer<?= $k ?>Name" name="layers[<?= $k ?>][name]" value="<?= $data['name'] ?>" required="required">
+                        <input type="text" class="form-control" name="layer_name" value="<?= $data['name'] ?>" required="required">
                       </td>
                       <td>
-                        <select class="form-control" id="selectLayer<?= $k ?>Type" name="layers[<?= $k ?>][type]">
+                        <select class="form-control" name="layer_type">
                           <?php if ($mapscript) { ?>
                           <option value="<?= MS_LAYER_CHART ?>"<?= ($data['type'] == MS_LAYER_CHART ? ' selected="selected"' : '') ?> disabled="disabled">Chart (not yet supported)</option>
                           <option value="<?= MS_LAYER_CIRCLE ?>"<?= ($data['type'] == MS_LAYER_CIRCLE ? ' selected="selected"' : '') ?> disabled="disabled">Circle (not yet supported)</option>
@@ -378,6 +379,8 @@ if ($mapscript) {
                             <li><a href="#modal-class" data-toggle="modal"><i class="fa fa-paint-brush"></i> Label &amp; Style</a></li>
                             <li class="wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
                             <li role="presentation" class="divider"></li>
+                            <li><a href="#move-up"><i class="fa fa-arrow-up"></i> Move up</a></li>
+                            <li><a href="#move-down"><i class="fa fa-arrow-down"></i> Move down</a></li>
                             <li><a href="#delete"><i class="fa fa-trash-o"></i> Delete</a></li>
                             <!--<li><a href="#duplicate"><i class="fa fa-files-o"></i> Duplicate</a></li>-->
                           </ul>
@@ -389,12 +392,12 @@ if ($mapscript) {
 
                   $count = count($layers_json);
                   ?>
-                    <tr class="layer" id="layer<?= $count ?>">
+                    <tr class="layer">
                       <td>
-                        <input type="text" class="form-control" id="inputLayer<?= $count ?>Name" name="layers[<?= $count ?>][name]" required="required">
+                        <input type="text" class="form-control" name="layer_name" required="required">
                       </td>
                       <td>
-                        <select class="form-control" id="selectLayer<?= $count ?>Type" name="layers[<?= $count ?>][type]">
+                        <select class="form-control" name="layer_type">
                           <?php if ($mapscript) { ?>
                           <option value="<?= MS_LAYER_CHART ?>" disabled="disabled">Chart (not yet supported)</option>
                           <option value="<?= MS_LAYER_CIRCLE ?>" disabled="disabled">Circle (not yet supported)</option>
@@ -426,8 +429,10 @@ if ($mapscript) {
                             <li><a href="#modal-class" data-toggle="modal"><i class="fa fa-paint-brush"></i> Label &amp; Style</a></li>
                             <li class="wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
                             <li role="presentation" class="divider"></li>
+                            <li><a href="#move-up"><i class="fa fa-arrow-up"></i> Move up</a></li>
+                            <li><a href="#move-down"><i class="fa fa-arrow-down"></i> Move down</a></li>
                             <li><a href="#delete"><i class="fa fa-trash-o"></i> Delete</a></li>
-                            <li><a href="#duplicate"><i class="fa fa-files-o"></i> Duplicate</a></li>
+                            <!--<li><a href="#duplicate"><i class="fa fa-files-o"></i> Duplicate</a></li>-->
                           </ul>
                         </div>
                       </td>
@@ -513,7 +518,7 @@ if ($mapscript) {
     <script>
       var mapfile = '<?= $_SESSION['mapfile-generator']['mapfile'] ?>';
       var mapscript = <?= ($mapscript ? 'true' : 'false') ?>;
-      <?php echo '$(document).ready(function(){'; foreach($layers_json as $k => $json) { echo "$('#layer".$k."').data(".$json.");"; } echo '});'.PHP_EOL; ?>
+      <?php echo '$(document).ready(function(){'; foreach($layers_json as $k => $json) { echo "$('.layer:eq(".$k.")').data(".$json.");"; } echo '});'.PHP_EOL; ?>
     </script>
     <script src="js/main.js"></script>
     <script src="js/modal-data.js"></script>
