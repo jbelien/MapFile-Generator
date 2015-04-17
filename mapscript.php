@@ -142,9 +142,9 @@ else {
 
               $style->free(); unset($style);
             }
-
-            for ($i = 0; $i < $class->numstyles; $i++) { if (!isset($_style[$i]) || empty($_style[$i])) $class->removeStyle($i); }
           }
+          for ($i = 0; $i < $class->numstyles; $i++) { if (!isset($_class['style'][$i]) || empty($_class['style'][$i])) $class->removeStyle($i); }
+
           if (isset($_class['label'])) {
             $_label = $_class['label'];
 
@@ -171,13 +171,13 @@ else {
         }
       }
 
-      for ($i = 0; $i < $layer->numclasses; $i++) { if (!isset($_layer[$i]) || empty($_layer[$i])) $layer->removeClass($i); }
+      for ($i = 0; $i < $layer->numclasses; $i++) { if (!isset($_layer['class'][$i]) || empty($_layer['class'][$i])) $layer->removeClass($i); }
 
       $layer->free(); unset($layer);
     }
-
-    for ($i = 0; $i < $map->numlayers; $i++) { if (!isset($_POST['layers'][$i]) || empty($_POST['layers'][$i])) $map->removeLayer($i); }
   }
+
+  for ($i = 0; $i < $map->numlayers; $i++) { if (!isset($_POST['layers'][$i]) || empty($_POST['layers'][$i])) $map->removeLayer($i); }
 }
 
 $map->save($mapfile);

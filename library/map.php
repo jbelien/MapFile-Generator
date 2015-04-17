@@ -193,11 +193,33 @@ class Map {
   }
 
   /**
-  * Remove the \MapFile\Layer the index sent as parameter.
+  * Remove the \MapFile\Layer matching the index sent as parameter.
   * @param integer $i Index.
   */
   public function removeLayer($i) {
     if (isset($this->_layers[$i])) { unset($this->_layers[$i]); $this->_layers = array_values($this->_layers); }
+  }
+  /**
+  * Move the \MapFile\Layer matching the index sent as parameter up.
+  * @param integer $i Index.
+  */
+  public function moveLayerUp($i) {
+    if (isset($this->_layers[$i]) && $i > 0) {
+      $tmp = $this->_layers[$i-1];
+      $this->_layers[$i-1] = $this->_layers[$i];
+      $this->_layers[$i] = $tmp;
+    }
+  }
+  /**
+  * Move the \MapFile\Layer matching the index sent as parameter down.
+  * @param integer $i Index.
+  */
+  public function moveLayerDown($i) {
+    if (isset($this->_layers[$i]) && $i < (count($this->_layers)-1)) {
+      $tmp = $this->_layers[$i+1];
+      $this->_layers[$i+1] = $this->_layers[$i];
+      $this->_layers[$i] = $tmp;
+    }
   }
 
   /**
