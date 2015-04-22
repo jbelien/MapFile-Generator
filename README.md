@@ -1,7 +1,7 @@
 # MapFile Generator
 ## MapServer .MAP Generator (Read, Write & Preview)
 
-![Screenshot](capture.png)
+Screenshots : <https://github.com/jbelien/MapFile-Generator/wiki/Screenshots>
 
 Still in development ! Use with caution.
 
