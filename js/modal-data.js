@@ -20,7 +20,7 @@ $(document).ready(function() {
     var id = $('#modal-data').data('_id');
     var data = $('#modal-data form').serializeObject();
 
-    $('#'+id).data(data);
+    $('.layer:eq('+id+')').data(data);
 
     update(function() { $('#modal-data').modal('hide'); });
   });

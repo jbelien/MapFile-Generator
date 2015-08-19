@@ -4,6 +4,7 @@ $(document).ready(function() {
     var data = $(event.relatedTarget).closest('.layer').data();
 
     $(this).data('_id', id);
+
     if (data.minscaledenom) $('#inputLayerMinScaleDenom').val(data.minscaledenom);
     if (data.maxscaledenom) $('#inputLayerMaxScaleDenom').val(data.maxscaledenom);
     if (data.opacity) $('#inputLayerOpacity').val(data.opacity);
@@ -50,17 +51,19 @@ $(document).ready(function() {
     var data = $('#modal-class form').serializeObject();
 
     //var l = $('#'+id).index('.layer');
-    var _data = $('#'+id).data();
+    var _data = $('.layer:eq('+id+')').data();
     _data.minscaledenom = data.minscaledenom;
     _data.maxscaledenom = data.maxscaledenom;
     _data.opacity = data.opacity;
     _data.labelitem = data.labelitem;
     _data.classitem = data.classitem;
+    if (typeof(_data.class) == 'undefined') _data.class = new Array();
     for (var i = 0; i < $('#modal-class .class').length; i++) {
+      if (typeof(_data.class[i]) == 'undefined') _data.class[i] = new Array();
       _data.class[i].name = data.class[i].name;
       _data.class[i].expression = data.class[i].expression;
     }
-    $('#'+id).data(_data);
+    $('.layer:eq('+id+')').data(_data);
 
     update(function() { $('#modal-class').modal('hide'); });
   });

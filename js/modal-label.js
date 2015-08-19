@@ -7,7 +7,7 @@ $(document).ready(function() {
     var c_id = $(event.relatedTarget).closest('.class').attr('id');
     var c = $('#'+c_id).index('.class');
 
-    var data = $('#'+id).data();
+    var data = $('.layer:eq('+id+')').data();
 
     $(this).data('_id', c_id);
 
@@ -38,11 +38,11 @@ $(document).ready(function() {
 
     var data = $('#modal-label form').serializeObject();
 
-    var _data = $('#'+id).data();
+    var _data = $('.layer:eq('+id+')').data();
     if (typeof(_data.class) == 'undefined') _data.class = [];
     if (typeof(_data.class[c]) == 'undefined') _data.class[c] = {};
     _data.class[c].label = data.label;
-    $('#'+id).data(_data);
+    $('.layer:eq('+id+')').data(_data);
 
     update(function() { $('#modal-label').modal('hide'); });
   });

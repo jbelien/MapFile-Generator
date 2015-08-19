@@ -141,12 +141,12 @@ $(document).on('click', 'a[href="#duplicate"]', function(event) {
 function update(callback) {
   modified = true;
 
-  var data = $('#editor > form').serializeObject(); console.log(data);
+  var data = $('#editor > form').serializeObject();
   data.layers = new Array();
   $('.layer').each(function(i) {
     data.layers[i] = $(this).data();
     data.layers[i].name = $(this).find('input[name=layer_name]').val();
-    data.layers[i].type = $(this).find('input[name=layer_type]').val();
+    data.layers[i].type = $(this).find('select[name=layer_type]').val();
   });
 
   $.post((mapscript ? 'mapscript.php' : 'library.php'), data, function(map) {
