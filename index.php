@@ -1,4 +1,6 @@
-<?php
+﻿<?php
+require_once('fn.php');
+
 require_once('library/map.php');
 
 use MapFile\Map;
@@ -65,188 +67,14 @@ if ($mapscript) {
   }
 }
 
+$meta = mapfile_getmeta($_SESSION['mapfile-generator']['mapfile']);
+$layers = mapfile_getlayers($_SESSION['mapfile-generator']['mapfile']);
 
-if ($mapscript) {
-  $map = new mapObj($_SESSION['mapfile-generator']['mapfile']);
+page_header();
 
-  $map_name = $map->name;
-  $map_extent = array($map->extent->minx, $map->extent->miny, $map->extent->maxx, $map->extent->maxy);
-  if (preg_match('/(epsg:[0-9]+)/i', $map->getProjection(), $_p)) $map_projection = $_p[1]; else $map_projection = 'epsg:3857';
-
-  $wms_enabled = (strlen($map->getMetaData('wms_enable_request')) > 0);
-  if ($wms_enabled) {
-    $map_wmstitle = (strlen($map->getMetaData('wms_title')) > 0 ? $map->getMetaData('wms_title') : NULL);
-    $map_wmsabstract = (strlen($map->getMetaData('wms_abstract')) > 0 ? $map->getMetaData('wms_abstract') : NULL);
-  }
-
-  $layers = $map->getAllLayerNames();
-  $layers_json = array();
-  foreach ($layers as $k => $name) {
-    $layer = $map->getLayer($k);
-
-    $data = array();
-
-    $data['name'] = $layer->name;
-    $data['type'] = $layer->type;
-
-    if ($wms_enabled) {
-      $data['wms_title'] = (strlen($layer->getMetaData('wms_title')) > 0 ? $layer->getMetaData('wms_title') : NULL);
-      $data['wms_abstract'] = (strlen($layer->getMetaData('wms_abstract')) > 0 ? $layer->getMetaData('wms_abstract') : NULL);
-      $data['wms_include_items'] = (strlen($layer->getMetaData('wms_include_items')) > 0 ? $layer->getMetaData('wms_include_items') : NULL);
-      $data['wms_exclude_items'] = (strlen($layer->getMetaData('wms_exclude_items')) > 0 ? $layer->getMetaData('wms_exclude_items') : NULL);
-      $data['wms_attribution_title'] = (strlen($layer->getMetaData('wms_attribution_title')) > 0 ? $layer->getMetaData('wms_attribution_title') : NULL);
-      $data['wms_attribution_onlineresource'] = (strlen($layer->getMetaData('wms_attribution_onlineresource')) > 0 ? $layer->getMetaData('wms_attribution_onlineresource') : NULL);
-      $data['wms_enable_request'] = (strlen($layer->getMetaData('wms_enable_request')) > 0 ? $layer->getMetaData('wms_enable_request') : NULL);
-    }
-
-    if (preg_match('/(epsg:[0-9]+)/i', $layer->getProjection(), $_p)) $data['projection'] = $_p[1]; else $data['projection'] = 'epsg:3857';
-    $data['connectiontype'] = $layer->connectiontype;
-    $data['connection'] = $layer->connection;
-    $data['data'] = $layer->data;
-    $data['filteritem'] = $layer->filteritem;
-    $data['filter'] = $layer->getFilterString();
-    $data['group'] = $layer->group;
-    $data['minscaledenom'] = ($layer->minscaledenom != -1 ? $layer->minscaledenom : NULL);
-    $data['maxscaledenom'] = ($layer->maxscaledenom != -1 ? $layer->maxscaledenom : NULL);
-    $data['opacity'] = $layer->opacity;
-    $data['labelitem'] = $layer->labelitem;
-    $data['classitem'] = $layer->classitem;
-
-    $data['class'] = array();
-    for ($c = 0; $c < $layer->numclasses; $c++) {
-      $class = $layer->getClass($c);
-      $data['class'][$c]['name'] = $class->name;
-      $data['class'][$c]['expression'] = $class->getExpressionString();
-      $data['class'][$c]['styles'] = array();
-      if ($class->numstyles > 0) {
-        for ($s = 0; $s < $class->numstyles; $s++) {
-          $style = $class->getStyle($s);
-          $data['class'][$c]['style'][$s]['color'] = array('r' => $style->color->red, 'g' => $style->color->green, 'b' => $style->color->blue);
-          $data['class'][$c]['style'][$s]['outlinecolor'] = array('r' => $style->outlinecolor->red, 'g' => $style->outlinecolor->green, 'b' => $style->outlinecolor->blue);
-          $data['class'][$c]['style'][$s]['width'] = $style->width;
-          $data['class'][$c]['style'][$s]['symbolname'] = $style->symbolname;
-          $data['class'][$c]['style'][$s]['size'] = $style->size;
-        }
-      }
-      $data['class'][$c]['label'] = array();
-      if ($class->numlabels > 0) {
-        //for ($l = 0; $l < $class->numlabels; $l++) {
-          $label = $class->getLabel(0);
-
-          $data['class'][$c]['label']['align'] = $label->align;
-          $data['class'][$c]['label']['position'] = $label->position;
-          $data['class'][$c]['label']['color'] = array('r' => $label->color->red, 'g' => $label->color->green, 'b' => $label->color->blue);
-          $data['class'][$c]['label']['outlinecolor'] = array('r' => $label->outlinecolor->red, 'g' => $label->outlinecolor->green, 'b' => $label->outlinecolor->blue);
-          $data['class'][$c]['label']['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
-          $data['class'][$c]['label']['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
-        //}
-      }
-    }
-
-    $layers_json[$k] = json_encode($data);
-  }
-
-  $map->free(); unset($map);
-} else {
-  $map = new Map($_SESSION['mapfile-generator']['mapfile']);
-
-  $map_name = $map->name;
-  $map_extent = $map->extent;
-  $map_projection = (!is_null($map->projection) ? $map->projection : 'epsg:3857');
-
-  $wms_enabled = ($map->getMetadata('wms_enable_request') !== FALSE);
-  if ($wms_enabled) {
-    $map_wmstitle = ($map->getMetadata('wms_title') !== FALSE ? $map->getMetadata('wms_title') : NULL);
-    $map_wmsabstract = ($map->getMetadata('wms_abstract') !== FALSE ? $map->getMetadata('wms_abstract') : NULL);
-  }
-
-  $layers_json = array();
-  foreach ($map->getLayers() as $k => $layer) {
-    $data = array();
-
-    if ($wms_enabled) {
-      $data['wms_title'] = ($layer->getMetadata('wms_title') !== FALSE ? $layer->getMetadata('wms_title') : NULL);
-      $data['wms_abstract'] = ($layer->getMetadata('wms_abstract') !== FALSE ? $layer->getMetadata('wms_abstract') : NULL);
-      $data['wms_include_items'] = ($layer->getMetadata('wms_include_items') !== FALSE ? $layer->getMetadata('wms_include_items') : NULL);
-      $data['wms_exclude_items'] = ($layer->getMetadata('wms_exclude_items') !== FALSE ? $layer->getMetadata('wms_exclude_items') : NULL);
-      $data['wms_attribution_title'] = ($layer->getMetadata('wms_attribution_title') !== FALSE ? $layer->getMetadata('wms_attribution_title') : NULL);
-      $data['wms_attribution_onlineresource'] = ($layer->getMetadata('wms_attribution_onlineresource') !== FALSE ? $layer->getMetadata('wms_attribution_onlineresource') : NULL);
-      $data['wms_enable_request'] = ($layer->getMetadata('wms_enable_request') !== FALSE ? $layer->getMetadata('wms_enable_request') : NULL);
-    }
-
-    $data['name'] = $layer->name;
-    $data['type'] = $layer->type;
-    $data['connectiontype'] = $layer->connectiontype;
-    $data['connection'] = $layer->connection;
-    $data['data'] = $layer->data;
-    $data['filteritem'] = $layer->filteritem;
-    $data['filter'] = $layer->filter;
-    $data['group'] = $layer->group;
-    $data['minscaledenom'] = $layer->minscaledenom;
-    $data['maxscaledenom'] = $layer->maxscaledenom;
-    $data['opacity'] = $layer->opacity;
-    $data['labelitem'] = $layer->labelitem;
-    $data['classitem'] = $layer->classitem;
-
-    $data['class'] = array(); $_classes = $layer->getClasses();
-    foreach ($_classes as $c => $class) {
-      $data['class'][$c]['name'] = $class->name;
-      $data['class'][$c]['expression'] = $class->expression;
-      $data['class'][$c]['styles'] = array(); $_styles = $class->getStyles();
-      foreach ($_styles as $s => $style) {
-        $data['class'][$c]['style'][$s]['color'] = $style->getColor();
-        $data['class'][$c]['style'][$s]['outlinecolor'] = $style->getOutlineColor();
-        $data['class'][$c]['style'][$s]['width'] = $style->width;
-        $data['class'][$c]['style'][$s]['symbolname'] = $style->symbolname;
-        $data['class'][$c]['style'][$s]['size'] = $style->size;
-      }
-      $data['class'][$c]['label'] = array(); //$_labels = $class->getLabels();
-      //foreach ($_labels as $l => $label) {
-        $label = $class->getLabel(0);
-
-        if ($label) {
-        $data['class'][$c]['label']['align'] = $label->align;
-        $data['class'][$c]['label']['position'] = $label->position;
-        $data['class'][$c]['label']['color'] = $label->getColor();
-        $data['class'][$c]['label']['outlinecolor'] = $label->getOutlineColor();
-        $data['class'][$c]['label']['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
-        $data['class'][$c]['label']['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
-        }
-      //}
-    }
-
-    $layers_json[$k] = json_encode($data);
-  }
-}
+if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.htmlentities($error).'</div>';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MapServer MapFile Generator</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container">
-      <h1>MapServer MapFile Generator</h1>
-      <?php
-      if ($mapscript) echo '<p class="text-success"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
-      else echo '<p class="text-warning"><i class="fa fa-exclamation-triangle"></i> <a href="http://mapserver.org/mapscript/php/index.html" class="text-warning">MapScript</a> support disabled. Use of internal library.</p>';
-      ?>
-      <hr>
-      <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.htmlentities($error).'</div>'; ?>
       <div role="tabpanel">
-
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#editor" role="tab" data-toggle="tab"><i class="fa fa-pencil"></i> Editor</a></li>
-          <li role="presentation"><a href="#mapfile" role="tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> MapFile</a></li>
-          <li role="presentation"><a href="#map" role="tab" data-toggle="tab"><i class="fa fa-globe"></i> Map</a></li>
-        </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
@@ -256,49 +84,49 @@ if ($mapscript) {
               <div class="row">
                 <div class="form-group form-group-lg col-sm-6">
                   <label for="inputName">Map name</label>
-                  <input type="text" class="form-control" id="inputName" name="name" value="<?= $map_name ?>" required="required">
+                  <input type="text" class="form-control" id="inputName" name="name" value="<?= $meta['name'] ?>" required="required">
                 </div>
                 <div class="form-group form-group-lg col-sm-6">
                   <label for="selectProj">Map projection</label>
                   <select class="form-control" id="selectProj" name="projection">
-                    <option value="epsg:3857" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($map_projection == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
-                    <option value="epsg:4326" data-minx="-180.0" data-miny="-90.0" data-maxx="180.0" data-maxy="90.0"<?= ($map_projection == 'epsg:4326' ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
-                    <option value="epsg:31370" data-minx="0" data-miny="0" data-maxx="300000" data-maxy="300000"<?= ($map_projection == 'epsg:31370' ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
-                    <option value="epsg:900913" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($map_projection == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
+                    <option value="epsg:3857" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($meta['projection'] == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
+                    <option value="epsg:4326" data-minx="-180.0" data-miny="-90.0" data-maxx="180.0" data-maxy="90.0"<?= ($meta['projection'] == 'epsg:4326' ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
+                    <option value="epsg:31370" data-minx="0" data-miny="0" data-maxx="300000" data-maxy="300000"<?= ($meta['projection'] == 'epsg:31370' ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
+                    <option value="epsg:900913" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= ($meta['projection'] == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
                   </select>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group form-group-sm col-sm-3">
                   <label for="inputExtentMinX">Map extent : MIN X</label>
-                  <input type="text" class="form-control" id="inputExtentMinX" name="extentminx" value="<?= $map_extent[0] ?>" required="required">
+                  <input type="text" class="form-control" id="inputExtentMinX" name="extentminx" value="<?= $meta['extent'][0] ?>" required="required">
                 </div>
                 <div class="form-group form-group-sm col-sm-3">
                   <label for="inputExtentMinY">Map extent : MIN Y</label>
-                  <input type="text" class="form-control" id="inputExtentMinY" name="extentminy" value="<?= $map_extent[1] ?>" required="required">
+                  <input type="text" class="form-control" id="inputExtentMinY" name="extentminy" value="<?= $meta['extent'][1] ?>" required="required">
                 </div>
                 <div class="form-group form-group-sm col-sm-3">
                   <label for="inputExtentMaxX">Map extent : MAX X</label>
-                  <input type="text" class="form-control" id="inputExtentMaxX" name="extentmaxx" value="<?= $map_extent[2] ?>" required="required">
+                  <input type="text" class="form-control" id="inputExtentMaxX" name="extentmaxx" value="<?= $meta['extent'][2] ?>" required="required">
                 </div>
                 <div class="form-group form-group-sm col-sm-3">
                   <label for="inputExtentMaxY">Map extent : MAX Y</label>
-                  <input type="text" class="form-control" id="inputExtentMaxY" name="extentmaxy" value="<?= $map_extent[3] ?>" required="required">
+                  <input type="text" class="form-control" id="inputExtentMaxY" name="extentmaxy" value="<?= $meta['extent'][3] ?>" required="required">
                 </div>
               </div>
               <div>
-                <div class="checkbox"><label><input type="checkbox" name="wms" value="1"<?= ($wms_enabled ? ' checked="checked"' : '') ?>> Enable WMS</label></div>
-                <div class="form-horizontal wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>>
+                <div class="checkbox"><label><input type="checkbox" name="wms" value="1"<?= ($meta['wms'] ? ' checked="checked"' : '') ?>> Enable WMS</label></div>
+                <div class="form-horizontal wms-control"<?= (!$meta['wms'] ? ' style="display:none;"' : '') ?>>
                   <div class="form-group">
                     <label for="inputWMSTitle" class="col-sm-3 control-label">WMS Title</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="inputWMSTitle" name="wms_title" value="<?= (isset($map_wmstitle) ? $map_wmstitle : '') ?>">
+                      <input type="text" class="form-control" id="inputWMSTitle" name="wms_title" value="<?= (isset($meta['wmstitle']) ? $meta['wmstitle'] : '') ?>">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputWMSAbstract" class="col-sm-3 control-label">WMS Abstract</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="inputWMSAbstract" name="wms_abstract" value="<?= (isset($map_wmsabstract) ? $map_wmsabstract : '') ?>">
+                      <input type="text" class="form-control" id="inputWMSAbstract" name="wms_abstract" value="<?= (isset($meta['wmsabstract']) ? $meta['wmsabstract'] : '') ?>">
                     </div>
                   </div>
                   <div class="form-group">
@@ -332,6 +160,59 @@ if ($mapscript) {
                 <table class="table table-striped">
                   <thead>
                     <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Projection</th>
+                      <!--<th>Data</th>-->
+                      <th>Status</th>
+                      <th colspan="5"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+<?php
+                  foreach ($layers as $k => $data) {
+                    echo '<tr>';
+                      echo '<th>'.htmlentities($data['name']).'</th>';
+                      echo '<td>';
+                        switch($data['type']) {
+                          case ($mapscript ? MS_LAYER_CHART     : Layer::TYPE_CHART    ): echo 'Chart'; break;
+                          case ($mapscript ? MS_LAYER_CIRCLE    : Layer::TYPE_CIRCLE   ): echo 'Circle'; break;
+                          case ($mapscript ? MS_LAYER_LINE      : Layer::TYPE_LINE     ): echo 'Line'; break;
+                          case ($mapscript ? MS_LAYER_POINT     : Layer::TYPE_POINT    ): echo 'Point'; break;
+                          case ($mapscript ? MS_LAYER_POLYGON   : Layer::TYPE_POLYGON  ): echo 'Polygon'; break;
+                          case ($mapscript ? MS_LAYER_QUERY     : Layer::TYPE_QUERY    ): echo 'Query'; break;
+                          case ($mapscript ? MS_LAYER_RASTER    : Layer::TYPE_RASTER   ): echo 'Raster'; break;
+                          case ($mapscript ? MS_LAYER_TILEINDEX : Layer::TYPE_TILEINDEX): echo 'TileIndex'; break;
+                          default: echo '<i class="text-warning">Unkown</i>'; break;
+                        }
+                      echo '</td>';
+                      echo '<td>'.htmlentities(strtoupper($data['projection'])).'</td>';
+                      echo '<!--<td>';
+                        if (!empty($data['data'])) echo htmlentities($data['data']);
+                        else echo htmlentities($data['connection']);
+                      echo '</td>-->';
+                      echo '<td>';
+                        switch($data['status']) {
+                          case ($mapscript ? MS_ON      : Layer::STATUS_ON     ): echo '<i class="fa fa-check"></i> ON'; break;
+                          case ($mapscript ? MS_OFF     : Layer::STATUS_OFF    ): echo '<i class="fa fa-remove"></i> OFF'; break;
+                          case ($mapscript ? MS_DEFAULT : Layer::STATUS_DEFAULT): echo '<i class="fa fa-check"></i> DEFAULT'; break;
+                          default: echo '<i class="text-warning">Unkown</i>'; break;
+                        }
+                      echo '</td>';
+                      echo '<td style="width:75px;"><a style="text-decoration:none;" href="layer.php?map='.urlencode($_SESSION['mapfile-generator']['source']).'&amp;layer='.$k.'"><i class="fa fa-database"></i> Data</a></td>';
+                      echo '<td style="width:150px;"><a style="text-decoration:none;" href="layer-class.php?map='.urlencode($_SESSION['mapfile-generator']['source']).'&amp;layer='.$k.'"><i class="fa fa-paint-brush"></i> Style &amp; Label</a></td>';
+                      echo '<td style="width:20px; text-align:center;">'.($k < (count($layers)-1) ? '<a href="#" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+                      echo '<td style="width:20px; text-align:center;">'.($k > 0 ? '<a href="#" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+                      echo '<td style="width:20px; text-align:center;"><a href="#" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+                    echo '</tr>';
+                  }
+?>
+                  </tbody>
+                </table>
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
                       <th class="col-sm-8">Name</th>
                       <th class="col-sm-3">Type</th>
                       <th class="col-sm-1"></th>
@@ -339,8 +220,7 @@ if ($mapscript) {
                   </thead>
                   <tbody>
                   <?php
-                  foreach ($layers_json as $k => $json) {
-                    $data = json_decode($json, TRUE);
+                  foreach ($layers as $k => $data) {
                   ?>
                     <tr class="layer">
                       <td>
@@ -377,7 +257,7 @@ if ($mapscript) {
                           <ul class="dropdown-menu" role="menu">
                             <li><a href="#modal-data" data-toggle="modal"><i class="fa fa-database"></i> Data</a></li>
                             <li><a href="#modal-class" data-toggle="modal"><i class="fa fa-paint-brush"></i> Label &amp; Style</a></li>
-                            <li class="wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
+                            <li class="wms-control"<?= (!$meta['wms'] ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a href="#move-up"><i class="fa fa-arrow-up"></i> Move up</a></li>
                             <li><a href="#move-down"><i class="fa fa-arrow-down"></i> Move down</a></li>
@@ -390,7 +270,7 @@ if ($mapscript) {
                   <?php
                   }
 
-                  $count = count($layers_json);
+                  $count = count($layers);
                   ?>
                     <tr class="layer">
                       <td>
@@ -427,7 +307,7 @@ if ($mapscript) {
                           <ul class="dropdown-menu" role="menu">
                             <li><a href="#modal-data" data-toggle="modal"><i class="fa fa-database"></i> Data</a></li>
                             <li><a href="#modal-class" data-toggle="modal"><i class="fa fa-paint-brush"></i> Label &amp; Style</a></li>
-                            <li class="wms-control"<?= (!$wms_enabled ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
+                            <li class="wms-control"<?= (!$meta['wms'] ? ' style="display:none;"' : '') ?>><a href="#modal-wms" data-toggle="modal"><i class="fa fa-globe"></i> WMS</a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a href="#move-up"><i class="fa fa-arrow-up"></i> Move up</a></li>
                             <li><a href="#move-down"><i class="fa fa-arrow-down"></i> Move down</a></li>
@@ -518,7 +398,7 @@ if ($mapscript) {
     <script>
       var mapfile = '<?= $_SESSION['mapfile-generator']['mapfile'] ?>';
       var mapscript = <?= ($mapscript ? 'true' : 'false') ?>;
-      <?php echo '$(document).ready(function(){'; foreach($layers_json as $k => $json) { echo "$('.layer:eq(".$k.")').data(".$json.");"; } echo '});'.PHP_EOL; ?>
+      <?php echo '$(document).ready(function(){'; foreach($layers as $k => $data) { echo "$('.layer:eq(".$k.")').data(".json_encode($json).");"; } echo '});'.PHP_EOL; ?>
     </script>
     <script src="js/main.js"></script>
     <script src="js/modal-data.js"></script>

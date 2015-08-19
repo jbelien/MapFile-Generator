@@ -10,13 +10,13 @@
  */
 namespace MapFile;
 
-require_once('class.php');
-require_once('exception.php');
-require_once('label.php');
-require_once('layer.php');
-require_once('legend.php');
-require_once('scalebar.php');
-require_once('style.php');
+//require_once('class.php');
+//require_once('exception.php');
+//require_once('label.php');
+//require_once('layer.php');
+//require_once('legend.php');
+//require_once('scalebar.php');
+//require_once('style.php');
 
 /**
  * MapFile Generator - Map (MAP) Class.
