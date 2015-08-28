@@ -2,7 +2,7 @@
 /*
  *
  */
-function page_header() {
+function page_header($title = '') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,10 +10,12 @@ function page_header() {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MapFile Generator</title>
+    <title>MapFile Generator<?= (!empty($title) ? ' - '.htmlentities($title) : '') ?></title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -30,9 +32,9 @@ function page_header() {
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#editor" data-toggle="tab"><i class="fa fa-pencil"></i> Editor</a></li>
-            <li><a href="#mapfile" data-toggle="tab"><i class="fa fa-file-text-o"></i> MapFile</a></li>
-            <li><a href="#map" data-toggle="tab"><i class="fa fa-globe"></i> Map</a></li>
+            <li<?= (basename($_SERVER['PHP_SELF']) == 'index.php' || substr(basename($_SERVER['PHP_SELF']), 0, 5) == 'layer' ? ' class="active"' : '') ?>><a href="index.php"><i class="fa fa-pencil"></i> Editor</a></li>
+            <li<?= (basename($_SERVER['PHP_SELF']) == 'mapfile.php' ? ' class="active"' : '') ?>><a href="mapfile.php"><i class="fa fa-file-text-o"></i> MapFile</a></li>
+            <li<?= (basename($_SERVER['PHP_SELF']) == 'map.php' ? ' class="active"' : '') ?>><a href="map.php"><i class="fa fa-globe"></i> Map</a></li>
           </ul>
 <?php
           if (extension_loaded('mapscript')) echo '<p class="navbar-text navbar-right text-success" style="color:#3C763D;"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
@@ -41,15 +43,18 @@ function page_header() {
         </div>
       </div>
     </nav>
-    <div class="container">
 <?php
 }
 
 /*
  *
  */
-function page_footer() {
+function page_footer($scripts = NULL) {
 ?>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<?php if (!is_null($scripts) && is_array($scripts)) foreach($scripts as $s) echo '    <script src="'.$s.'"></script>'.PHP_EOL; ?>
+  </body>
+</html>
 <?php
 }
 
@@ -148,7 +153,7 @@ function mapfile_getlayers($fname) {
         $class = $layer->getClass($c);
         $data['class'][$c]['name'] = $class->name;
         $data['class'][$c]['expression'] = $class->getExpressionString();
-        $data['class'][$c]['styles'] = array();
+        $data['class'][$c]['style'] = array();
         if ($class->numstyles > 0) {
           for ($s = 0; $s < $class->numstyles; $s++) {
             $style = $class->getStyle($s);
@@ -161,16 +166,16 @@ function mapfile_getlayers($fname) {
         }
         $data['class'][$c]['label'] = array();
         if ($class->numlabels > 0) {
-          //for ($l = 0; $l < $class->numlabels; $l++) {
-            $label = $class->getLabel(0);
-
-            $data['class'][$c]['label']['align'] = $label->align;
-            $data['class'][$c]['label']['position'] = $label->position;
-            $data['class'][$c]['label']['color'] = array('r' => $label->color->red, 'g' => $label->color->green, 'b' => $label->color->blue);
-            $data['class'][$c]['label']['outlinecolor'] = array('r' => $label->outlinecolor->red, 'g' => $label->outlinecolor->green, 'b' => $label->outlinecolor->blue);
-            $data['class'][$c]['label']['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
-            $data['class'][$c]['label']['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
-          //}
+          for ($l = 0; $l < $class->numlabels; $l++) {
+            $label = $class->getLabel($l);
+            $data['class'][$c]['label'][$l]['size'] = $label->size;
+            $data['class'][$c]['label'][$l]['align'] = $label->align;
+            $data['class'][$c]['label'][$l]['position'] = $label->position;
+            $data['class'][$c]['label'][$l]['color'] = array('r' => $label->color->red, 'g' => $label->color->green, 'b' => $label->color->blue);
+            $data['class'][$c]['label'][$l]['outlinecolor'] = array('r' => $label->outlinecolor->red, 'g' => $label->outlinecolor->green, 'b' => $label->outlinecolor->blue);
+            $data['class'][$c]['label'][$l]['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
+            $data['class'][$c]['label'][$l]['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
+          }
         }
       }
 
@@ -232,18 +237,19 @@ function mapfile_getlayers($fname) {
           $data['class'][$c]['style'][$s]['size'] = $style->size;
         }
         $data['class'][$c]['label'] = array(); //$_labels = $class->getLabels();
-        //foreach ($_labels as $l => $label) {
+        foreach ($_labels as $l => $label) {
           $label = $class->getLabel(0);
 
           if ($label) {
-          $data['class'][$c]['label']['align'] = $label->align;
-          $data['class'][$c]['label']['position'] = $label->position;
-          $data['class'][$c]['label']['color'] = $label->getColor();
-          $data['class'][$c]['label']['outlinecolor'] = $label->getOutlineColor();
-          $data['class'][$c]['label']['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
-          $data['class'][$c]['label']['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
+          $data['class'][$c]['label'][$l]['size'] = $label->size;
+          $data['class'][$c]['label'][$l]['align'] = $label->align;
+          $data['class'][$c]['label'][$l]['position'] = $label->position;
+          $data['class'][$c]['label'][$l]['color'] = $label->getColor();
+          $data['class'][$c]['label'][$l]['outlinecolor'] = $label->getOutlineColor();
+          $data['class'][$c]['label'][$l]['minscaledenom'] = ($label->minscaledenom != -1 ? $label->minscaledenom : NULL);
+          $data['class'][$c]['label'][$l]['maxscaledenom'] = ($label->maxscaledenom != -1 ? $label->maxscaledenom : NULL);
           }
-        //}
+        }
       }
 
       $_layers[$k] = $data;
