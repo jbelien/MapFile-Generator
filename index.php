@@ -14,12 +14,10 @@ if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/
 $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
-if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
+if (isset($_GET['map']) && file_exists($_GET['map'])) {
   $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
   $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
-}
 
-if (isset($_GET['map']) && file_exists($_GET['map'])) {
   if ($mapscript) {
     $_SESSION['mapfile-generator']['source'] = $_GET['map'];
 
@@ -30,7 +28,8 @@ if (isset($_GET['map']) && file_exists($_GET['map'])) {
     } catch (MapScriptException $e) {
       $error = $e->getMessage();
     }
-  } else {
+  }
+  else if (isset($_GET['map'])) {
     $_SESSION['mapfile-generator']['source'] = $_GET['map'];
 
     try {
@@ -41,13 +40,75 @@ if (isset($_GET['map']) && file_exists($_GET['map'])) {
     }
   }
 }
+else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
+  $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
+  $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
 
-if ($mapscript) {
+  unset($_SESSION['mapfile-generator']['source']);
+
+  if ($mapscript) {
+    try {
+      $_map = new mapObj(NULL);
+
+      $map->setProjection('epsg:4326', MS_TRUE);
+      $map->setExtent(-180,-90,180,90);
+      $map->setSize(500, 500);
+
+      $_map->save($_SESSION['mapfile-generator']['mapfile']);
+      $_map->free(); unset($_map);
+    } catch (MapScriptException $e) {
+      $error = $e->getMessage();
+    }
+  }
+  else {
+  }
+}
+
+if (!isset($error) && $mapscript) {
   $map = new mapObj($_SESSION['mapfile-generator']['mapfile']);
+
+  $map->setFontSet($settings['fontset']);
+  $map->setSymbolSet($settings['symbolset']);
+
+  $map->legend->label->type = MS_TRUETYPE;
+  $map->legend->label->font = $settings['font'];
+  $map->legend->label->size = 8.0;
+
+  $map->scalebar->label->type = MS_TRUETYPE;
+  $map->scalebar->label->font = $settings['font'];
+  $map->scalebar->label->size = 8.0;
+  $map->scalebar->units = MS_KILOMETERS;
+  $map->scalebar->color->setRGB(0,0,0);
+  $map->scalebar->outlinecolor->setRGB(0,0,0);
 
   if (isset($_GET['up'])) $map->moveLayerUp(intval($_GET['up']));
   else if (isset($_GET['down'])) $map->moveLayerDown(intval($_GET['down']));
   else if (isset($_GET['remove'])) $map->removeLayer(intval($_GET['remove']));
+  else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+    $map->name = trim($_POST['name']);
+    $map->setProjection($_POST['projection'], MS_FALSE);
+    $map->setExtent($_POST['extentminx'], $_POST['extentminy'], $_POST['extentmaxx'], $_POST['extentmaxy']);
+
+    if (isset($_POST['wms']) && $_POST['wms'] == 1) {
+      $map->setMetaData('wms_enable_request', '*');
+      $map->setMetaData('wms_feature_info_mime_type', 'text/plain application/vnd.ogc.gml');
+      $map->setMetaData('wms_srs', 'EPSG:31370 EPSG:4326 EPSG:3857');
+      $map->setMetaData('wms_title', $_POST['wms_title']);
+      $map->setMetaData('wms_abstract', $_POST['wms_abstract']);
+      $map->setMetaData('wms_attribution_title', $_POST['wms_attribution_title']);
+      $map->setMetaData('wms_attribution_onlineresource', $_POST['wms_attribution_onlineresource']);
+      //$map->setMetaData('wms_encoding', '');
+    } else {
+      if (strlen($map->getMetaData('wms_enable_request')) > 0) $map->removeMetaData('wms_enable_request');
+      if (strlen($map->getMetaData('wms_feature_info_mime_type')) > 0) $map->removeMetaData('wms_feature_info_mime_type');
+      if (strlen($map->getMetaData('wms_srs')) > 0) $map->removeMetaData('wms_srs');
+      if (strlen($map->getMetaData('wms_title')) > 0) $map->removeMetaData('wms_title');
+      if (strlen($map->getMetaData('wms_abstract')) > 0) $map->removeMetaData('wms_abstract');
+      if (strlen($map->getMetaData('wms_attribution_title')) > 0) $map->removeMetaData('wms_attribution_title');
+      if (strlen($map->getMetaData('wms_attribution_onlineresource')) > 0) $map->removeMetaData('wms_attribution_onlineresource');
+      //$map->removeMetaData('wms_encoding');
+    }
+  }
 
   $map->save($_SESSION['mapfile-generator']['mapfile']);
   $map->free(); unset($map);
@@ -71,11 +132,11 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
       </div>
       <div class="form-group form-group-lg col-sm-6">
         <label for="selectProj">Map projection</label>
-        <select class="form-control" id="selectProj" name="projection">
+        <select class="form-control" id="selectProj" name="projection" required="required">
           <option value="epsg:3857" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= (isset($meta) && $meta['projection'] == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
           <option value="epsg:4326" data-minx="-180.0" data-miny="-90.0" data-maxx="180.0" data-maxy="90.0"<?= (isset($meta) && $meta['projection'] == 'epsg:4326' ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
           <option value="epsg:31370" data-minx="0" data-miny="0" data-maxx="300000" data-maxy="300000"<?= (isset($meta) && $meta['projection'] == 'epsg:31370' ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
-          <option value="epsg:900913" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= (isset($meta) && $meta['projection'] == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
+          <!--<option value="epsg:900913" data-minx="-20026376.39" data-miny="-20048966.10" data-maxx="20026376.39" data-maxy="20048966.10"<?= (isset($meta) && $meta['projection'] == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>-->
         </select>
       </div>
     </div>
@@ -115,13 +176,13 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
         <div class="form-group">
           <label for="inputWMSAttributionTitle" class="col-sm-3 control-label">Attribution title</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="inputWMSAttributionTitle" name="wms_attribution_title">
+            <input type="text" class="form-control" id="inputWMSAttributionTitle" name="wms_attribution_title" value="<?= (isset($meta['wmsattributiontitle']) ? $meta['wmsattributiontitle'] : '') ?>">
           </div>
         </div>
         <div class="form-group">
           <label for="inputWMSAttributionOnlineResource" class="col-sm-3 control-label">Attribution online resource</label>
           <div class="col-sm-9">
-            <input type="url" class="form-control" id="inputWMSAttributionOnlineResource" name="wms_attribution_onlineresource">
+            <input type="url" class="form-control" id="inputWMSAttributionOnlineResource" name="wms_attribution_onlineresource" value="<?= (isset($meta['wmsattributiononlineresource']) ? $meta['wmsattributiononlineresource'] : '') ?>">
           </div>
         </div>
         <!--
@@ -138,7 +199,7 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
       </div>
     </div>
     <div class="form-group text-center">
-      <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+      <button type="submit" class="btn btn-primary" name="action" value="save"><i class="fa fa-floppy-o"></i> Save</button>
     </div>
   </form>
 
@@ -195,7 +256,7 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="9" class="text-right"><a href="layer.php" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new layer</a></td>
+        <td colspan="10" class="text-right"><a href="layer.php" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new layer</a></td>
       </tr>
     </tfoot>
   </table>
@@ -206,16 +267,18 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
   var mapfile = '<?= $_SESSION['mapfile-generator']['mapfile'] ?>';
   var mapscript = <?= ($mapscript ? 'true' : 'false') ?>;
 
-  $('a.text-danger').on('click', function(event) { if (!confirm('Are you sure you want to delete this layer ?')) { event.preventDefault(); } });
+  $(document).ready(function() {
+    $('a.text-danger').on('click', function(event) { if (!confirm('Are you sure you want to delete this layer ?')) { event.preventDefault(); } });
 
-  $('input[name=wms]').on('click', function() { if ($(this).prop('checked') == true) $('.wms-control').show(); else { $('.wms-control').hide(); $('.wms-control input').val(''); } });
+    $('input[name=wms]').on('click', function() { if ($(this).prop('checked') == true) $('.wms-control').show(); else { $('.wms-control').hide(); $('.wms-control input').val(''); } });
 
-  $('#selectProj').on('change', function() {
-    var data = $(this).find('option:selected').data();
-    if (typeof(data.minx) != 'undefined' && typeof(data.miny) != 'undefined' && typeof(data.maxx) != 'undefined' && typeof(data.maxy) != 'undefined') {
-      $('#inputExtentMinX').val(data.minx); $('#inputExtentMinY').val(data.miny);
-      $('#inputExtentMaxX').val(data.maxx); $('#inputExtentMaxY').val(data.maxy);
-    }
+    $('#selectProj').on('change', function() {
+      var data = $(this).find('option:selected').data();
+      if (typeof(data.minx) != 'undefined' && typeof(data.miny) != 'undefined' && typeof(data.maxx) != 'undefined' && typeof(data.maxy) != 'undefined') {
+        $('#inputExtentMinX').val(data.minx); $('#inputExtentMinY').val(data.miny);
+        $('#inputExtentMaxX').val(data.maxx); $('#inputExtentMaxY').val(data.maxy);
+      }
+    });
   });
 </script>
 

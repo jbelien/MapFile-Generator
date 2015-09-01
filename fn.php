@@ -2,7 +2,7 @@
 /*
  *
  */
-function page_header($title = '') {
+function page_header($title = '', $styles = NULL) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +14,12 @@ function page_header($title = '') {
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet">
+<?php if (!is_null($styles) && is_array($styles)) foreach($styles as $s) echo '    <link rel="stylesheet" href="'.$s.'">'.PHP_EOL; ?>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
@@ -76,6 +77,8 @@ function mapfile_getmeta($fname) {
     if ($meta['wms']) {
       $meta['wmstitle'] = (strlen($map->getMetaData('wms_title')) > 0 ? $map->getMetaData('wms_title') : NULL);
       $meta['wmsabstract'] = (strlen($map->getMetaData('wms_abstract')) > 0 ? $map->getMetaData('wms_abstract') : NULL);
+      $meta['wmsattributiontitle'] = (strlen($map->getMetaData('wms_attribution_title')) > 0 ? $map->getMetaData('wms_attribution_title') : NULL);
+      $meta['wmsattributiononlineresource'] = (strlen($map->getMetaData('wms_attribution_onlineresource')) > 0 ? $map->getMetaData('wms_attribution_onlineresource') : NULL);
     }
 
     $map->free(); unset($map);
@@ -92,6 +95,8 @@ function mapfile_getmeta($fname) {
     if ($meta['wms']) {
       $meta['wmstitle'] = ($map->getMetadata('wms_title') !== FALSE ? $map->getMetadata('wms_title') : NULL);
       $meta['wmsabstract'] = ($map->getMetadata('wms_abstract') !== FALSE ? $map->getMetadata('wms_abstract') : NULL);
+      $meta['wmsattributiontitle'] = (strlen($map->getMetaData('wms_attribution_title')) > 0 ? $map->getMetaData('wms_attribution_title') : NULL);
+      $meta['wmsattributiononlineresource'] = (strlen($map->getMetaData('wms_attribution_onlineresource')) > 0 ? $map->getMetaData('wms_attribution_onlineresource') : NULL);
     }
   }
 

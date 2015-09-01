@@ -16,35 +16,81 @@ $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
 if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
 
-if (is_null($source) || is_null($mapfile) || !isset($_GET['layer'])) { header('Location:index.php'); exit(); }
+if (/*is_null($source) || */is_null($mapfile) || !isset($_GET['layer'])) { header('Location:index.php'); exit(); }
 
-$meta = mapfile_getmeta($mapfile);
-$layers = mapfile_getlayers($mapfile);
-$layer = $layers[intval($_GET['layer'])];
+if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
+  $map = new mapObj($mapfile);
 
-if (isset($_POST['action']) && $_POST['action'] == 'save') {
-  if ($mapscript) {
-    $map = new mapObj($mapfile);
+  if (isset($_GET['layer']))
+    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
+  else
+    $l = new layerObj($map);
 
-    if (isset($_GET['layer']))
-      try { $layer = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $layer = new layerObj($map); }
-    else
-      $layer = new layerObj($map);
+  $l->minscaledenom = (!empty($_POST['minscaledenom']) ? floatval($_POST['minscaledenom']) : -1);
+  $l->maxscaledenom = (!empty($_POST['maxscaledenom']) ? floatval($_POST['maxscaledenom']) : -1);
+  $l->opacity = intval($_POST['opacity']);
+  $l->labelitem = $_POST['labelitem'];
+  $l->classitem = $_POST['classitem'];
 
-    $layer->minscaledenom = floatval($_POST['minscaledenom']);
-    $layer->maxscaledenom = floatval($_POST['maxscaledenom']);
-    $layer->opacity = intval($_POST['opacity']);
-    $layer->labelitem = $_POST['labelitem'];
-    $layer->classitem = $_POST['classitem'];
+  $l->free(); unset($l);
 
-    $map->save($mapfile);
-    $map->free(); unset($map);
-  } else {
-  }
+  $map->save($mapfile);
+  $map->free(); unset($map);
 
   header('Location: index.php');
   exit();
 }
+else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-class') {
+  $map = new mapObj($mapfile);
+
+  if (isset($_GET['layer']))
+    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
+  else
+    $l = new layerObj($map);
+
+  if (isset($_POST['class']))
+    $c = $l->getClass(intval($_POST['class']));
+  else
+    $c = new classObj($l);
+
+  $c->name = $_POST['name'];
+  $c->setExpression($_POST['expression']);
+
+  $c->free(); unset($c);
+
+  $l->free(); unset($l);
+
+  $map->save($mapfile);
+  $map->free(); unset($map);
+
+  header('Location: layer-class.php?layer='.$_GET['layer']);
+  exit();
+}
+else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove']))) {
+  $map = new mapObj($mapfile);
+
+  if (isset($_GET['layer']))
+    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
+  else
+    $l = new layerObj($map);
+
+  if (isset($_GET['down'])) $l->moveclassdown(intval($_GET['down']));
+  else if (isset($_GET['up'])) $l->moveclassup(intval($_GET['up']));
+  else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
+
+  $l->free(); unset($l);
+
+  $map->save($mapfile);
+  $map->free(); unset($map);
+
+  header('Location: layer-class.php?layer='.$_GET['layer']);
+  exit();
+}
+
+$meta = mapfile_getmeta($mapfile);
+$layers = mapfile_getlayers($mapfile);
+$layer = $layers[intval($_GET['layer'])];
+$class_json = json_encode($layer['class']);
 
 page_header('Layer: '.$layer['name']);
 ?>
@@ -52,7 +98,7 @@ page_header('Layer: '.$layer['name']);
   <h1>Map: <a href="index.php"><?= htmlentities($meta['name']) ?></a></h1>
   <h2>Layer: <?= htmlentities($layer['name']) ?></h2>
 
-  <form class="form-horizontal" action="layer-class.php" method="post">
+  <form class="form-horizontal" action="layer-class.php?layer=<?= $_GET['layer'] ?>" method="post">
     <div class="form-group">
       <label for="inputMinScaleDenom" class="col-sm-2 control-label">Min. Scale Denom.</label>
       <div class="col-sm-10">
@@ -87,7 +133,7 @@ page_header('Layer: '.$layer['name']);
       </div>
     </div>
     <div class="form-group text-center">
-      <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+      <button type="submit" class="btn btn-primary" name="action" value="save"><i class="fa fa-floppy-o"></i> Save</button>
       <a href="index.php" class="btn btn-default"><i class="fa fa-backward"></i> Cancel</a>
     </div>
   </form>
@@ -102,7 +148,7 @@ page_header('Layer: '.$layer['name']);
             <th></th>
             <th>Class</th>
             <th>Expression</th>
-            <th colspan="2"></th>
+            <th colspan="4"></th>
             <th style="border-left: 1px solid #DDD;">Styles</th>
             <th>Labels</th>
           </tr>
@@ -114,14 +160,21 @@ page_header('Layer: '.$layer['name']);
             echo '<td class="text-right">'.($i+1).'.</td>';
             echo '<td>'.htmlentities($c['name']).'</td>';
             echo '<td>'.htmlentities($c['expression']).'</td>';
-            echo '<td style="width:20px; text-align:center;"><a href="#"" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-            echo '<td style="width:20px; text-align:center;"><a href="#" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+            echo '<td style="width:20px; text-align:center;"><a href="#modal-class"" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
+            echo '<td style="width:20px; text-align:center;">'.($i < (count($layer['class'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+            echo '<td style="width:20px; text-align:center;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+            echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '<td style="border-left: 1px solid #DDD;"><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;style" style="text-decoration:none;"><i class="fa fa-paint-brush"></i> '.count($c['style']).' style'.(count($c['style']) > 1 ? 's' : '').'</a></td>';
             echo '<td><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;label" style="text-decoration:none;"><i class="fa fa-font"></i> '.count($c['label']).' label'.(count($c['label']) > 1 ? 's' : '').'</a></td>';
           echo '</tr>'.PHP_EOL;
         }
 ?>
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="9" class="text-right"><a href="#modal-class" data-toggle="modal" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new class</a></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <div class="col-sm-4">
@@ -131,9 +184,61 @@ page_header('Layer: '.$layer['name']);
 
 </div>
 
+<div id="modal-class" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <form action="layer-class.php<?= (isset($_GET['layer']) ? '?layer='.$_GET['layer'] : '') ?>" method="post" class="form-horizontal" autocomplete="off">
+      <input type="hidden" name="class">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputName" class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputName" name="name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputExpression" class="col-sm-3 control-label">Expression</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputExpression" name="expression">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" name="action" value="save-class">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
+  var c = <?= $class_json ?>;
+
   $(document).ready(function() {
     $('input[type=range]').on('change input', function() { $(this).parent('.input-group').find('.input-group-addon').text($(this).val()); });
+
+    $('a.text-danger').on('click', function(event) { if (!confirm('Are you sure you want to delete this class ?')) { event.preventDefault(); } });
+
+    $('#modal-class').on('show.bs.modal', function(event) {
+      $(this).find('form')[0].reset();
+
+      if ($(event.relatedTarget).has('.fa-plus-square').length > 0) {
+        $(this).find('h4').html('<i class="fa fa-plus-square"></i> New class');
+        $(this).find('input[name=class]').prop('disabled', true);
+      } else {
+        var i = $(event.relatedTarget).closest('tr').index();
+        var _class = c[i];
+        $(this).find('h4').html('<i class="fa fa-pencil-square-o"></i> '+_class.name);
+        $(this).find('input[name=class]').prop('disabled', false).val(i);
+        $(this).find('#inputName').val(_class.name);
+        $(this).find('#inputExpression').val(_class.expression);
+      }
+    });
   });
 </script>
 <?php

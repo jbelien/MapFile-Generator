@@ -16,7 +16,7 @@ $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
 if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
 
-if (is_null($source) || is_null($mapfile) || !isset($_GET['layer']) || !isset($_GET['class'])) { header('Location:index.php'); exit(); }
+if (/*is_null($source) || */is_null($mapfile) || !isset($_GET['layer']) || !isset($_GET['class'])) { header('Location:index.php'); exit(); }
 
 $meta = mapfile_getmeta($mapfile);
 $layers = mapfile_getlayers($mapfile);
@@ -47,7 +47,7 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               <th>Width</th>
               <th>Symbol</th>
               <th>Size</th>
-              <th colspan="2"></th>
+              <th colspan="4"></th>
             </tr>
           </thead>
           <tbody>
@@ -63,11 +63,18 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               echo '<td>'.$s['symbolname'].'</td>';
               echo '<td>'.($s['size'] >= 0 ? $s['size'] : '').'</td>';
               echo '<td style="width:20px; text-align:center;"><a href="#"" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-              echo '<td style="width:20px; text-align:center;"><a href="#" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+              echo '<td style="width:20px; text-align:center;">'.($i < (count($class['style'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+              echo '<td style="width:20px; text-align:center;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+              echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '</tr>'.PHP_EOL;
           }
         ?>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="13" class="text-right"><a href="#modal-style" data-toggle="modal" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new style</a></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
       <div role="tabpanel" class="tab-pane<?= (isset($_GET['label']) ? ' active' : '') ?>" id="label">
@@ -79,7 +86,7 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               <th colspan="2">Outline Color</th>
               <th>Size</th>
               <th>Position</th>
-              <th colspan="2"></th>
+              <th colspan="4"></th>
             </tr>
           </thead>
           <tbody>
@@ -94,16 +101,30 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               echo '<td>'.$l['size'].'</td>';
               echo '<td>'.$l['position'].'</td>';
               echo '<td style="width:20px; text-align:center;"><a href="#"" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-              echo '<td style="width:20px; text-align:center;"><a href="#" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+              echo '<td style="width:20px; text-align:center;">'.($i < (count($class['style'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;label-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+              echo '<td style="width:20px; text-align:center;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;label-up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+              echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;label-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '</tr>'.PHP_EOL;
           }
         ?>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="13" class="text-right"><a href="#modal-class" data-toggle="modal" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new class</a></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
   </div>
 
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('a.text-danger').on('click', function(event) { if (!confirm('Are you sure you want to delete this style/label ?')) { event.preventDefault(); } });
+  });
+</script>
+
 <?php
 page_footer();

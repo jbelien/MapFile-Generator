@@ -16,35 +16,36 @@ $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
 if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
 
-if (is_null($source) || is_null($mapfile)) { header('Location:index.php'); exit(); }
+if (/*is_null($source) || */is_null($mapfile)) { header('Location:index.php'); exit(); }
 
 $meta = mapfile_getmeta($mapfile);
 $layers = mapfile_getlayers($mapfile);
 
 if (isset($_GET['layer'])) $layer = $layers[intval($_GET['layer'])];
 
-if (isset($_POST['action']) && $_POST['action'] == 'save') {
-  if ($mapscript) {
-    $map = new mapObj($mapfile);
+if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
+  $map = new mapObj($mapfile);
 
-    if (isset($_GET['layer']))
-      try { $layer = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $layer = new layerObj($map); }
-    else
-      $layer = new layerObj($map);
+  if (isset($_GET['layer']))
+    try { $layer = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
+  else
+    $layer = new layerObj($map);
 
-    $layer->type = intval($_POST['type']);
-    $layer->name = trim($_POST['name']);
-    $layer->setProjection($_POST['projection']);
-    $layer->setConnectionType($_POST['connectiontype']);
-    $layer->connection = $_POST['connection'];
-    $layer->data = $_POST['data'];
-    $layer->setFilter($_POST['filter']);
-    $layer->group = $_POST['group'];
+  $layer->tileitem = NULL;
 
-    $map->save($mapfile);
-    $map->free(); unset($map);
-  } else {
-  }
+  $layer->type = intval($_POST['type']);
+  $layer->name = trim($_POST['name']);
+  $layer->setProjection($_POST['projection']);
+  $layer->setConnectionType($_POST['connectiontype']);
+  $layer->connection = $_POST['connection'];
+  $layer->data = $_POST['data'];
+  $layer->setFilter($_POST['filter']);
+  $layer->group = $_POST['group'];
+
+  $layer->free(); unset($layer);
+
+  $map->save($mapfile);
+  $map->free(); unset($map);
 
   header('Location: index.php');
   exit();
@@ -164,13 +165,13 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
     <div class="form-group">
       <label for="inputFilterItem" class="col-sm-2 control-label">Filter Item</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputFilterItem" name="data"<?= (isset($layer) ? ' value="'.htmlentities($layer['filteritem']).'"' : '') ?>>
+        <input type="text" class="form-control" id="inputFilterItem" name="filteritem"<?= (isset($layer) ? ' value="'.htmlentities($layer['filteritem']).'"' : '') ?>>
       </div>
     </div>
     <div class="form-group">
       <label for="inputFilter" class="col-sm-2 control-label">Filter</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputFilter" name="data"<?= (isset($layer) ? ' value="'.htmlentities($layer['filter']).'"' : '') ?>>
+        <input type="text" class="form-control" id="inputFilter" name="filter"<?= (isset($layer) ? ' value="'.htmlentities($layer['filter']).'"' : '') ?>>
       </div>
     </div>
     <div class="form-group text-center">

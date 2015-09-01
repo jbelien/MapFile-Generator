@@ -1,4 +1,9 @@
-.layer {
+body {
+  padding-top: 70px;
+}
+
+/*.
+layer {
   margin-left: 25px;
 }
 .layer > div:first-child {
@@ -12,3 +17,4 @@
 .tab-pane {
   padding-top: 15px;
 }
+*/

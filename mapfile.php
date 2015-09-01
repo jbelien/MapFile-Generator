@@ -16,7 +16,7 @@ $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
 if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
 
-if (is_null($source) || is_null($mapfile)) { header('Location:index.php'); exit(); }
+if (/*is_null($source) || */is_null($mapfile)) { header('Location:index.php'); exit(); }
 
 if (isset($_GET['save'], $_SESSION['mapfile-generator']['mapfile'], $_SESSION['mapfile-generator']['source'])) {
   copy($_SESSION['mapfile-generator']['source'], $_SESSION['mapfile-generator']['source'].'.bak');
