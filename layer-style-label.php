@@ -46,6 +46,7 @@ if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-style') {
   $s->width = (!empty($_POST['width']) ? floatval($_POST['width']) : -1);
   if (!empty($_POST['symbolname'])) $s->symbolname = $_POST['symbolname']; else unset($s->symbolname);
   $s->size = (!empty($_POST['size']) ? floatval($_POST['size']) : -1);
+  if (!empty($_POST['pattern'])) $s->setPattern(explode(' ', $_POST['pattern'])); else unset($s->pattern);
 
   $s->free(); unset($s);
   $c->free(); unset($c);
@@ -302,6 +303,13 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
             <input type="number" class="form-control" id="inputStyleSize" name="size">
           </div>
         </div>
+        <div class="form-group">
+          <label for="inputStylePattern" class="col-sm-3 control-label">Pattern</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputStylePattern" name="pattern">
+            <span class="help-block">List of on, off values separated by a space.</span>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -410,6 +418,7 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
         $(this).find('#inputStyleWidth').val((_style.width >= 0 ? _style.width : ''));
         $(this).find('#inputStyleSymbol').val(_style.symbolname);
         $(this).find('#inputStyleSize').val((_style.size >= 0 ? _style.size : ''));
+        $(this).find('#inputStylePattern').val(_style.pattern.join(' '));
       }
     });
 

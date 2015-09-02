@@ -167,6 +167,7 @@ function mapfile_getlayers($fname) {
             $data['class'][$c]['style'][$s]['width'] = $style->width;
             $data['class'][$c]['style'][$s]['symbolname'] = $style->symbolname;
             $data['class'][$c]['style'][$s]['size'] = $style->size;
+            $data['class'][$c]['style'][$s]['pattern'] = $style->getPatternArray();
           }
         }
         $data['class'][$c]['label'] = array();
