@@ -44,7 +44,7 @@ page_header();
     <a id="mapfile-export" class="btn btn-default" href="?export"><i class="fa fa-download"></i> Export</a>
   </div>
   <?php if (isset($_SESSION['mapfile-generator']['source'])) echo '<p class="text-info">Source : <samp>'.$_SESSION['mapfile-generator']['source'].'</samp></p>'; ?>
-  <p class="text-info">Last update : -</p>
+  <p class="text-info">Last update : <?= (isset($_SESSION['mapfile-generator']['source']) ? strftime('%e %B %Y %H:%M', filemtime($_SESSION['mapfile-generator']['source'])) : strftime('%e %B %Y %H:%M', filemtime($_SESSION['mapfile-generator']['mapfile']))) ?></p>
   <pre><?= file_get_contents($_SESSION['mapfile-generator']['mapfile']) ?></pre>
 </div>
 
