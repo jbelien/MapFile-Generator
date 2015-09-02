@@ -57,7 +57,6 @@ else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-clas
   $c->setExpression($_POST['expression']);
 
   $c->free(); unset($c);
-
   $l->free(); unset($l);
 
   $map->save($mapfile);
@@ -67,21 +66,22 @@ else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-clas
   exit();
 }
 else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove']))) {
-  $map = new mapObj($mapfile);
+  try {
+    $map = new mapObj($mapfile);
 
-  if (isset($_GET['layer']))
-    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
-  else
-    $l = new layerObj($map);
+    $l = $map->getLayer(intval($_GET['layer']));
 
-  if (isset($_GET['down'])) $l->moveclassdown(intval($_GET['down']));
-  else if (isset($_GET['up'])) $l->moveclassup(intval($_GET['up']));
-  else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
+    if (isset($_GET['down'])) $l->moveclassdown(intval($_GET['down']));
+    else if (isset($_GET['up'])) $l->moveclassup(intval($_GET['up']));
+    else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
 
-  $l->free(); unset($l);
+    $l->free(); unset($l);
 
-  $map->save($mapfile);
-  $map->free(); unset($map);
+    $map->save($mapfile);
+    $map->free(); unset($map);
+  } catch (MapScriptException $e) {
+    $error = $e->getMessage();
+  }
 
   header('Location: layer-class.php?layer='.$_GET['layer']);
   exit();
@@ -160,12 +160,12 @@ page_header('Layer: '.$layer['name']);
             echo '<td class="text-right">'.($i+1).'.</td>';
             echo '<td>'.htmlentities($c['name']).'</td>';
             echo '<td>'.htmlentities($c['expression']).'</td>';
-            echo '<td style="width:20px; text-align:center;"><a href="#modal-class"" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
+            echo '<td style="width:20px; text-align:center;"><a href="#modal-class" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
             echo '<td style="width:20px; text-align:center;">'.($i < (count($layer['class'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
             echo '<td style="width:20px; text-align:center;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
             echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '<td style="border-left: 1px solid #DDD;"><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;style" style="text-decoration:none;"><i class="fa fa-paint-brush"></i> '.count($c['style']).' style'.(count($c['style']) > 1 ? 's' : '').'</a></td>';
-            echo '<td><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;label" style="text-decoration:none;"><i class="fa fa-font"></i> '.count($c['label']).' label'.(count($c['label']) > 1 ? 's' : '').'</a></td>';
+            echo '<td><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;label" style="text-decoration:none;"><i class="fa fa-tag"></i> '.count($c['label']).' label'.(count($c['label']) > 1 ? 's' : '').'</a></td>';
           echo '</tr>'.PHP_EOL;
         }
 ?>
@@ -191,7 +191,7 @@ page_header('Layer: '.$layer['name']);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title"></h4>
       </div>
-      <form action="layer-class.php<?= (isset($_GET['layer']) ? '?layer='.$_GET['layer'] : '') ?>" method="post" class="form-horizontal" autocomplete="off">
+      <form action="layer-class.php?layer=<?= $_GET['layer'] ?>" method="post" class="form-horizontal" autocomplete="off">
       <input type="hidden" name="class">
       <div class="modal-body">
         <div class="form-group">

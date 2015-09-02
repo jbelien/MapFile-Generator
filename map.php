@@ -24,20 +24,21 @@ page_header();
   <div class="row">
     <div class="col-sm-7">
       <div class="panel panel-default">
-        <div class="panel-body text-center">
-          <a target="_blank" href="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&mode=browse&layers=all&template=openlayers">
-            <img alt="Unable to draw the map." src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=map&amp;layers=all&amp;<?= time() ?>"></div>
-          </a>
+        <div class="panel-heading">
+          Map:
+          <a target="_blank" class="pull-right" style="text-decoration:none;" href="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&mode=browse&layers=all&template=openlayers">MapServer Viewer <i class="fa fa-external-link"></i></a>
+        </div>
+        <div class="panel-body"><img class="img-responsive center-block"  alt="Unable to draw the map." src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=map&amp;layers=all&amp;<?= time() ?>"></div>
       </div>
     </div>
     <div class="col-sm-5">
       <div class="panel panel-default">
         <div class="panel-heading">Scalebar:</div>
-        <div class="panel-body"><img class="img-responsive" alt="Unable to draw the scalebar." id="map-scalebar" src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=scalebar&amp;layers=all&amp;<?= time() ?>"></div>
+        <div class="panel-body"><img class="img-responsive center-block" alt="Unable to draw the scalebar." id="map-scalebar" src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=scalebar&amp;layers=all&amp;<?= time() ?>"></div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">Legend:</div>
-        <div class="panel-body"><img class="img-responsive" alt="Unable to draw the legend." id="map-legend" src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=legend&amp;layers=all&amp;<?= time() ?>"></div>
+        <div class="panel-body"><img class="img-responsive center-block" alt="Unable to draw the legend." id="map-legend" src="<?= $settings['mapserv'] ?>?map=<?= $mapfile ?>&amp;mode=legend&amp;layers=all&amp;<?= time() ?>"></div>
       </div>
     </div>
   </div>
