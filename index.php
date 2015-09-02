@@ -50,9 +50,9 @@ else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
     try {
       $_map = new mapObj(NULL);
 
-      $map->setProjection('epsg:4326', MS_TRUE);
-      $map->setExtent(-180,-90,180,90);
-      $map->setSize(500, 500);
+      $_map->setProjection('epsg:4326', MS_TRUE);
+      $_map->setExtent(-180,-90,180,90);
+      $_map->setSize(500, 500);
 
       $_map->save($_SESSION['mapfile-generator']['mapfile']);
       $_map->free(); unset($_map);
