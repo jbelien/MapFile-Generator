@@ -214,7 +214,8 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
         <th>Type</th>
         <th>Projection</th>
         <th>Status</th>
-        <th colspan="5"></th>
+        <th colspan="3"></th>
+        <th style="border-left: 1px solid #DDD;" colspan="2"></th>
       </tr>
     </thead>
     <tbody>
@@ -245,11 +246,11 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
             default: echo '<i class="text-warning">Unkown</i>'; break;
           }
         echo '</td>';
-        echo '<td style="width:75px;"><a style="text-decoration:none;" href="layer.php?layer='.$k.'"><i class="fa fa-database"></i> Data</a></td>';
-        echo '<td style="width:150px;"><a style="text-decoration:none;" href="layer-class.php?layer='.$k.'"><i class="fa fa-paint-brush"></i> Styles &amp; Labels</a></td>';
-        echo '<td style="width:20px; text-align:center;">'.($k < (count($layers)-1) ? '<a href="?down='.$k.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
-        echo '<td style="width:20px; text-align:center;">'.($k > 0 ? '<a href="?up='.$k.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
-        echo '<td style="width:20px; text-align:center;"><a href="?remove='.$k.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+        echo '<td class="text-center" style="width:20px;">'.($k < (count($layers)-1) ? '<a href="?down='.$k.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+        echo '<td class="text-center" style="width:20px;">'.($k > 0 ? '<a href="?up='.$k.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+        echo '<td class="text-center" style="width:20px;"><a href="?remove='.$k.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+        echo '<td class="text-center" style="border-left: 1px solid #DDD;"><a style="text-decoration:none;" href="layer.php?layer='.$k.'"><i class="fa fa-database"></i> Data</a></td>';
+        echo '<td class="text-center"><a style="text-decoration:none;" href="layer-class.php?layer='.$k.'"><i class="fa fa-paint-brush"></i> Styles &amp; Labels</a></td>';
       echo '</tr>';
     }
 ?>
@@ -270,8 +271,6 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
   $(document).ready(function() {
     $('a.text-danger').on('click', function(event) { if (!confirm('Are you sure you want to delete this layer ?')) { event.preventDefault(); } });
 
-    $('input[name=wms]').on('click', function() { if ($(this).prop('checked') == true) $('.wms-control').show(); else { $('.wms-control').hide(); $('.wms-control input').val(''); } });
-
     $('#selectProj').on('change', function() {
       var data = $(this).find('option:selected').data();
       if (typeof(data.minx) != 'undefined' && typeof(data.miny) != 'undefined' && typeof(data.maxx) != 'undefined' && typeof(data.maxy) != 'undefined') {
@@ -279,6 +278,8 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
         $('#inputExtentMaxX').val(data.maxx); $('#inputExtentMaxY').val(data.maxy);
       }
     });
+
+    $('input[name=wms]').on('click', function() { if ($(this).prop('checked') == true) { $('.wms-control').show(); } else { $('.wms-control').hide(); $('.wms-control input').val(''); } });
   });
 </script>
 

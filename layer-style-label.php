@@ -193,10 +193,10 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               echo '<td>'.($s['width'] >= 0 ? $s['width'] : '').'</td>';
               echo '<td>'.$s['symbolname'].'</td>';
               echo '<td>'.($s['size'] >= 0 ? $s['size'] : '').'</td>';
-              echo '<td style="width:20px; text-align:center;"><a href="#modal-style" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-              echo '<td style="width:20px; text-align:center;">'.($i < (count($class['style'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
-              echo '<td style="width:20px; text-align:center;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
-              echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+              echo '<td class="text-center" style="width:20px;"><a href="#modal-style" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
+              echo '<td class="text-center" style="width:20px;">'.($i < (count($class['style'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+              echo '<td class="text-center" style="width:20px;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
+              echo '<td class="text-center" style="width:20px;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '</tr>'.PHP_EOL;
           }
         ?>
@@ -245,8 +245,8 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
                   default: echo '<i class="text-warning">Unkown</i>'; break;
                 }
               echo '</td>';
-              echo '<td style="width:20px; text-align:center;"><a href="#modal-label" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-              echo '<td style="width:20px; text-align:center;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;label-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
+              echo '<td class="text-center" style="width:20px;"><a href="#modal-label" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
+              echo '<td class="text-center" style="width:20px;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;label-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '</tr>'.PHP_EOL;
           }
         ?>

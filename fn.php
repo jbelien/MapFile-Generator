@@ -33,7 +33,7 @@ function page_header($title = '', $styles = NULL) {
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li<?= (basename($_SERVER['PHP_SELF']) == 'index.php' || substr(basename($_SERVER['PHP_SELF']), 0, 5) == 'layer' ? ' class="active"' : '') ?>><a href="index.php"><i class="fa fa-pencil"></i> Editor</a></li>
+            <li<?= (basename($_SERVER['PHP_SELF']) == 'index.php' || substr(basename($_SERVER['PHP_SELF']), 0, 5) == 'layer' ? ' class="active"' : '') ?>><a href="index.php"><i class="fa fa-pencil-square-o"></i> Editor</a></li>
             <li<?= (basename($_SERVER['PHP_SELF']) == 'mapfile.php' ? ' class="active"' : '') ?>><a href="mapfile.php"><i class="fa fa-file-text-o"></i> MapFile</a></li>
             <li<?= (basename($_SERVER['PHP_SELF']) == 'map.php' ? ' class="active"' : '') ?>><a href="map.php"><i class="fa fa-globe"></i> Map</a></li>
           </ul>
