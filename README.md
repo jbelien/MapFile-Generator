@@ -48,6 +48,8 @@ Go to [Documentation wiki page](https://github.com/jbelien/MapFile-Generator/wik
 
 ## Libraries
 
-If [PHP MapScript](http://www.mapserver.org/mapscript/index.html) is not enabled, this application use internal library to read and write the MapFile.
+If *[PHP MapScript](http://www.mapserver.org/mapscript/index.html)* is not enabled, this application can use *[MapFile PHP Library](https://github.com/jbelien/MapFile-PHP-Library)* to read and write the MapFile.
 
-Documentation of the internal library : <http://jbelien.github.io/MapFile-Generator/library/>
+**Warning:** The use of *MapFile PHP Library* is currently not available. I'm migrating the library from *MapFile-Generator* to *MapFile-PHP-Library* repository.
+
+Documentation of the *MapFile PHP Library* : <http://jbelien.github.io/MapFile-PHP-Library/docs/namespaces/MapFile.html>
