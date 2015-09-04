@@ -1,16 +1,10 @@
 <?php
-require_once('fn.php');
-
-use MapFile\Map;
-use MapFile\Layer;
-
 session_start();
-
-$tmp = sys_get_temp_dir();
-if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
 
 $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
+
+require('fn.php');
 
 $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];

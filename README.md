@@ -33,6 +33,7 @@ These are the parameters available :
 * *symbolset* : full path to MapServer symbolset file
 * *font* : default fontname (label, legend, scalebar, ...)
 * *directory* : full path to directory containing .map files
+* *library* : full path to directory containing [MapFile PHP Library](https://github.com/jbelien/MapFile-PHP-Library) (optional)
 
 Example :
 
@@ -41,6 +42,7 @@ Example :
     symbolset = "/usr/lib/cgi-bin/symbols.txt"
     font      = "dejavusans"
     directory = "/var/www/mapserver-data"
+    library   = "/var/www/library/mapfile-php-library"
 
 ## Usage
 
@@ -50,6 +52,8 @@ Go to [Documentation wiki page](https://github.com/jbelien/MapFile-Generator/wik
 
 If *[PHP MapScript](http://www.mapserver.org/mapscript/index.html)* is not enabled, this application can use *[MapFile PHP Library](https://github.com/jbelien/MapFile-PHP-Library)* to read and write the MapFile.
 
-**Warning:** The use of *MapFile PHP Library* is currently not available. I'm migrating the library from *MapFile-Generator* to *MapFile-PHP-Library* repository.
+1. Download the *MapFile PHP Library* here : <https://github.com/jbelien/MapFile-PHP-Library/archive/master.zip>
+2. Copy the php files on your webserver
+3. Update `settings.ini` to define the `library` parameter
 
 Documentation of the *MapFile PHP Library* : <http://jbelien.github.io/MapFile-PHP-Library/docs/namespaces/MapFile.html>

@@ -38,8 +38,8 @@ function page_header($title = '', $styles = NULL) {
             <li<?= (basename($_SERVER['PHP_SELF']) == 'map.php' ? ' class="active"' : '') ?>><a href="map.php"><i class="fa fa-globe"></i> Map</a></li>
           </ul>
 <?php
-          if (extension_loaded('mapscript')) echo '<p class="navbar-text navbar-right text-success" style="color:#3C763D;"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
-          else echo '<p class="navbar-text navbar-right text-warning"><i class="fa fa-exclamation-triangle"></i> <a href="http://mapserver.org/mapscript/php/index.html" class="text-warning">MapScript</a> support disabled. Use of internal library.</p>';
+          if (extension_loaded('mapscript')) echo '<p class="navbar-text navbar-right text-success" style="color:#3C763D;"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
+          else echo '<p class="navbar-text navbar-right text-warning" style="color:#8A6D3B;"><i class="fa fa-exclamation-triangle"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapScript</a> support disabled. Use of <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapFile-PHP-Library</a>.</p>';
 ?>
         </div>
       </div>
@@ -83,7 +83,7 @@ function mapfile_getmeta($fname) {
 
     $map->free(); unset($map);
   } else {
-    $map = new Map($_SESSION['mapfile-generator']['mapfile']);
+    $map = new MapFile\Map($_SESSION['mapfile-generator']['mapfile']);
 
     $meta = array();
 
@@ -126,9 +126,6 @@ function mapfile_getlayers($fname) {
 
       $data = array();
 
-      $data['name'] = $layer->name;
-      $data['type'] = $layer->type;
-
       if ($wms_enabled) {
         $data['wms_title'] = (strlen($layer->getMetaData('wms_title')) > 0 ? $layer->getMetaData('wms_title') : NULL);
         $data['wms_abstract'] = (strlen($layer->getMetaData('wms_abstract')) > 0 ? $layer->getMetaData('wms_abstract') : NULL);
@@ -140,6 +137,9 @@ function mapfile_getlayers($fname) {
       }
 
       if (preg_match('/(epsg:[0-9]+)/i', $layer->getProjection(), $_p)) $data['projection'] = $_p[1]; else $data['projection'] = 'epsg:3857';
+
+      $data['name'] = $layer->name;
+      $data['type'] = $layer->type;
       $data['connectiontype'] = $layer->connectiontype;
       $data['connection'] = $layer->connection;
       $data['data'] = $layer->data;
@@ -190,7 +190,7 @@ function mapfile_getlayers($fname) {
 
     $map->free(); unset($map);
   } else {
-    $map = new Map($fname);
+    $map = new MapFile\Map($fname);
 
     $map_name = $map->name;
     $map_extent = $map->extent;
@@ -218,6 +218,7 @@ function mapfile_getlayers($fname) {
 
       $data['name'] = $layer->name;
       $data['type'] = $layer->type;
+      $data['projection'] = $layer->projection;
       $data['connectiontype'] = $layer->connectiontype;
       $data['connection'] = $layer->connection;
       $data['data'] = $layer->data;
@@ -229,20 +230,22 @@ function mapfile_getlayers($fname) {
       $data['opacity'] = $layer->opacity;
       $data['labelitem'] = $layer->labelitem;
       $data['classitem'] = $layer->classitem;
+      $data['status'] = $layer->status;
 
       $data['class'] = array(); $_classes = $layer->getClasses();
       foreach ($_classes as $c => $class) {
         $data['class'][$c]['name'] = $class->name;
         $data['class'][$c]['expression'] = $class->expression;
-        $data['class'][$c]['styles'] = array(); $_styles = $class->getStyles();
+        $data['class'][$c]['style'] = array(); $_styles = $class->getStyles();
         foreach ($_styles as $s => $style) {
           $data['class'][$c]['style'][$s]['color'] = $style->getColor();
           $data['class'][$c]['style'][$s]['outlinecolor'] = $style->getOutlineColor();
           $data['class'][$c]['style'][$s]['width'] = $style->width;
           $data['class'][$c]['style'][$s]['symbolname'] = $style->symbolname;
           $data['class'][$c]['style'][$s]['size'] = $style->size;
+          $data['class'][$c]['style'][$s]['pattern'] = $style->pattern;
         }
-        $data['class'][$c]['label'] = array(); //$_labels = $class->getLabels();
+        $data['class'][$c]['label'] = array(); $_labels = $class->getLabels();
         foreach ($_labels as $l => $label) {
           $label = $class->getLabel(0);
 

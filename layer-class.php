@@ -1,16 +1,25 @@
 <?php
-require_once('fn.php');
-
-use MapFile\Map;
-use MapFile\Layer;
-
 session_start();
+
+$settings = parse_ini_file('settings.ini');
+$mapscript = extension_loaded('mapscript');
 
 $tmp = sys_get_temp_dir();
 if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
 
-$settings = parse_ini_file('settings.ini');
-$mapscript = extension_loaded('mapscript');
+if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
+  require($settings['library'].'/map.php');
+  require($settings['library'].'/legend.php');
+  require($settings['library'].'/scalebar.php');
+  require($settings['library'].'/layer.php');
+  require($settings['library'].'/class.php');
+  require($settings['library'].'/style.php');
+  require($settings['library'].'/label.php');
+}
+
+if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+
+require_once('fn.php');
 
 $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
@@ -19,51 +28,97 @@ if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['m
 if (/*is_null($source) || */is_null($mapfile) || !isset($_GET['layer'])) { header('Location:index.php'); exit(); }
 
 if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
-  $map = new mapObj($mapfile);
+  try {
+    $map = new mapObj($mapfile);
 
-  if (isset($_GET['layer']))
-    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
-  else
-    $l = new layerObj($map);
+    $l = $map->getLayer(intval($_GET['layer']));
 
-  $l->minscaledenom = (!empty($_POST['minscaledenom']) ? floatval($_POST['minscaledenom']) : -1);
-  $l->maxscaledenom = (!empty($_POST['maxscaledenom']) ? floatval($_POST['maxscaledenom']) : -1);
-  $l->opacity = intval($_POST['opacity']);
-  $l->labelitem = $_POST['labelitem'];
-  $l->classitem = $_POST['classitem'];
+    $l->minscaledenom = (!empty($_POST['minscaledenom']) ? floatval($_POST['minscaledenom']) : -1);
+    $l->maxscaledenom = (!empty($_POST['maxscaledenom']) ? floatval($_POST['maxscaledenom']) : -1);
+    $l->opacity = intval($_POST['opacity']);
+    $l->labelitem = $_POST['labelitem'];
+    $l->classitem = $_POST['classitem'];
 
-  $l->free(); unset($l);
+    $l->free(); unset($l);
 
-  $map->save($mapfile);
-  $map->free(); unset($map);
+    $map->save($mapfile);
+    $map->free(); unset($map);
 
-  header('Location: index.php');
-  exit();
+    header('Location: index.php');
+    exit();
+  } catch (MapScriptException $e) {
+    $error = $e->getMessage();
+  }
+}
+else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+  try {
+    $map = new MapFile\Map($mapfile);
+
+    $l = $map->getLayer(intval($_GET['layer']));
+
+    $l->minscaledenom = (!empty($_POST['minscaledenom']) ? floatval($_POST['minscaledenom']) : NULL);
+    $l->maxscaledenom = (!empty($_POST['maxscaledenom']) ? floatval($_POST['maxscaledenom']) : NULL);
+    $l->opacity = intval($_POST['opacity']);
+    $l->labelitem = $_POST['labelitem'];
+    $l->classitem = $_POST['classitem'];
+
+    $map->save($mapfile);
+
+    header('Location: index.php');
+    exit();
+  } catch (MapFile\Exception $e) {
+    $error = $e->getMessage();
+  }
 }
 else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-class') {
-  $map = new mapObj($mapfile);
+  try {
+    $map = new mapObj($mapfile);
 
-  if (isset($_GET['layer']))
-    try { $l = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
-  else
-    $l = new layerObj($map);
+    $l = $map->getLayer(intval($_GET['layer']));
 
-  if (isset($_POST['class']))
-    $c = $l->getClass(intval($_POST['class']));
-  else
-    $c = new classObj($l);
+    if (isset($_POST['class']))
+      $c = $l->getClass(intval($_POST['class']));
+    else
+      $c = new classObj($l);
 
-  $c->name = $_POST['name'];
-  $c->setExpression($_POST['expression']);
+    $c->name = $_POST['name'];
+    $c->setExpression($_POST['expression']);
 
-  $c->free(); unset($c);
-  $l->free(); unset($l);
+    $c->free(); unset($c);
+    $l->free(); unset($l);
 
-  $map->save($mapfile);
-  $map->free(); unset($map);
+    $map->save($mapfile);
+    $map->free(); unset($map);
 
-  header('Location: layer-class.php?layer='.$_GET['layer']);
-  exit();
+    header('Location: layer-class.php?layer='.$_GET['layer']);
+    exit();
+  } catch (MapScriptException $e) {
+    $error = $e->getMessage();
+  }
+}
+else if (isset($_POST['action']) && $_POST['action'] == 'save-class') {
+  try {
+    $map = new MapFile\Map($mapfile);
+
+    $l = $map->getLayer(intval($_GET['layer']));
+
+    if (isset($_POST['class']))
+      $c = $l->getClass(intval($_POST['class']));
+    else {
+      $c = new MapFile\LayerClass();
+      $l->addClass($c);
+    }
+
+    $c->name = $_POST['name'];
+    $c->expression = $_POST['expression'];
+
+    $map->save($mapfile);
+
+    header('Location: layer-class.php?layer='.$_GET['layer']);
+    exit();
+  } catch (MapFile\Exception $e) {
+    $error = $e->getMessage();
+  }
 }
 else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove']))) {
   try {
@@ -79,12 +134,30 @@ else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GE
 
     $map->save($mapfile);
     $map->free(); unset($map);
+
+    header('Location: layer-class.php?layer='.$_GET['layer']);
+    exit();
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
+}
+else if (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove'])) {
+  try {
+    $map = new MapFile\Map($mapfile);
 
-  header('Location: layer-class.php?layer='.$_GET['layer']);
-  exit();
+    $l = $map->getLayer(intval($_GET['layer']));
+
+    if (isset($_GET['down'])) $l->moveClassDown(intval($_GET['down']));
+    else if (isset($_GET['up'])) $l->moveClassUp(intval($_GET['up']));
+    else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
+
+    $map->save($mapfile);
+
+    header('Location: layer-class.php?layer='.$_GET['layer']);
+    exit();
+  } catch (MapFile\Exception $e) {
+    $error = $e->getMessage();
+  }
 }
 
 $meta = mapfile_getmeta($mapfile);
@@ -97,6 +170,8 @@ page_header('Layer: '.$layer['name']);
 <div class="container">
   <h1>Map: <a href="index.php"><?= htmlentities($meta['name']) ?></a></h1>
   <h2>Layer: <?= htmlentities($layer['name']) ?></h2>
+
+  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
 
   <form class="form-horizontal" action="layer-class.php?layer=<?= $_GET['layer'] ?>" method="post">
     <div class="form-group">

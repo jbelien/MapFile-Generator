@@ -1,22 +1,33 @@
 ﻿<?php
-require_once('fn.php');
-
-use MapFile\Map;
-use MapFile\Layer;
-
 session_start();
-
-$tmp = sys_get_temp_dir();
-if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
 
 $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
-if (isset($_GET['map']) && file_exists($_GET['map'])) {
-  $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
-  $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
+$tmp = sys_get_temp_dir();
+if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
 
-  if ($mapscript) {
+if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
+  require($settings['library'].'/map.php');
+  require($settings['library'].'/legend.php');
+  require($settings['library'].'/scalebar.php');
+  require($settings['library'].'/layer.php');
+  require($settings['library'].'/class.php');
+  require($settings['library'].'/style.php');
+  require($settings['library'].'/label.php');
+}
+
+if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+
+require('fn.php');
+
+/*
+ * MapScript
+ */
+if ($mapscript) {
+  if (!isset($error) && isset($_GET['map']) && file_exists($_GET['map'])) {
+    $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
+    $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
     $_SESSION['mapfile-generator']['source'] = $_GET['map'];
 
     try {
@@ -27,24 +38,12 @@ if (isset($_GET['map']) && file_exists($_GET['map'])) {
       $error = $e->getMessage();
     }
   }
-  else if (isset($_GET['map'])) {
-    $_SESSION['mapfile-generator']['source'] = $_GET['map'];
+  else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
+    $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
+    $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
 
-    try {
-      $_map = new Map($_GET['map']);
-      $_map->save($_SESSION['mapfile-generator']['mapfile']);
-    } catch (Exception $e) {
-      $error = $e->getMessage();
-    }
-  }
-}
-else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
-  $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
-  $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
+    unset($_SESSION['mapfile-generator']['source']);
 
-  unset($_SESSION['mapfile-generator']['source']);
-
-  if ($mapscript) {
     try {
       $_map = new mapObj(NULL);
 
@@ -52,32 +51,28 @@ else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
       $_map->setExtent(-180,-90,180,90);
       $_map->setSize(500, 500);
 
+      $_map->setFontSet($settings['fontset']);
+      $_map->setSymbolSet($settings['symbolset']);
+
+      $_map->legend->label->type = MS_TRUETYPE;
+      $_map->legend->label->font = $settings['font'];
+      $_map->legend->label->size = 8.0;
+
+      $_map->scalebar->label->type = MS_TRUETYPE;
+      $_map->scalebar->label->font = $settings['font'];
+      $_map->scalebar->label->size = 8.0;
+      $_map->scalebar->units = MS_KILOMETERS;
+      $_map->scalebar->color->setRGB(0,0,0);
+      $_map->scalebar->outlinecolor->setRGB(0,0,0);
+
       $_map->save($_SESSION['mapfile-generator']['mapfile']);
       $_map->free(); unset($_map);
     } catch (MapScriptException $e) {
       $error = $e->getMessage();
     }
   }
-  else {
-  }
-}
 
-if (!isset($error) && $mapscript) {
   $map = new mapObj($_SESSION['mapfile-generator']['mapfile']);
-
-  $map->setFontSet($settings['fontset']);
-  $map->setSymbolSet($settings['symbolset']);
-
-  $map->legend->label->type = MS_TRUETYPE;
-  $map->legend->label->font = $settings['font'];
-  $map->legend->label->size = 8.0;
-
-  $map->scalebar->label->type = MS_TRUETYPE;
-  $map->scalebar->label->font = $settings['font'];
-  $map->scalebar->label->size = 8.0;
-  $map->scalebar->units = MS_KILOMETERS;
-  $map->scalebar->color->setRGB(0,0,0);
-  $map->scalebar->outlinecolor->setRGB(0,0,0);
 
   if (isset($_GET['up'])) $map->moveLayerUp(intval($_GET['up']));
   else if (isset($_GET['down'])) $map->moveLayerDown(intval($_GET['down']));
@@ -95,7 +90,6 @@ if (!isset($error) && $mapscript) {
       $map->setMetaData('wms_abstract', $_POST['wms_abstract']);
       $map->setMetaData('wms_attribution_title', $_POST['wms_attribution_title']);
       $map->setMetaData('wms_attribution_onlineresource', $_POST['wms_attribution_onlineresource']);
-      //$map->setMetaData('wms_encoding', '');
     } else {
       if (strlen($map->getMetaData('wms_enable_request')) > 0) $map->removeMetaData('wms_enable_request');
       if (strlen($map->getMetaData('wms_feature_info_mime_type')) > 0) $map->removeMetaData('wms_feature_info_mime_type');
@@ -104,29 +98,87 @@ if (!isset($error) && $mapscript) {
       if (strlen($map->getMetaData('wms_abstract')) > 0) $map->removeMetaData('wms_abstract');
       if (strlen($map->getMetaData('wms_attribution_title')) > 0) $map->removeMetaData('wms_attribution_title');
       if (strlen($map->getMetaData('wms_attribution_onlineresource')) > 0) $map->removeMetaData('wms_attribution_onlineresource');
-      //$map->removeMetaData('wms_encoding');
     }
   }
 
   $map->save($_SESSION['mapfile-generator']['mapfile']);
   $map->free(); unset($map);
-} else {
+}
+/*
+ * MapFile PHP Library
+ */
+else {
+  if (!isset($error) && isset($_GET['map']) && file_exists($_GET['map'])) {
+    $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
+    $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
+    $_SESSION['mapfile-generator']['source'] = $_GET['map'];
+
+    try {
+      $_map = new MapFile\Map($_GET['map']);
+      $_map->save($_SESSION['mapfile-generator']['mapfile']);
+    } catch (MapFile\Exception $e) {
+      $error = $e->getMessage();
+    }
+  }
+  else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
+    $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
+    $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
+
+    unset($_SESSION['mapfile-generator']['source']);
+
+    try {
+      $_map = new MapFile\Map();
+
+      $_map->projection = 'epsg:4326';
+      $_map->setExtent(-180,-90,180,90);
+      $_map->setSize(500, 500);
+
+      $_map->setFontSet($settings['fontset']);
+      $_map->setSymbolSet($settings['symbolset']);
+
+      $_map->legend->label->font = $settings['font'];
+
+      $_map->scalebar->label->font = $settings['font'];
+      $_map->scalebar->label->size = 8.0;
+      $_map->scalebar->units = MapFile\Scalebar::UNITS_KILOMETERS;
+      $_map->scalebar->setColor(0,0,0);
+      $_map->scalebar->setOutlineColor(0,0,0);
+
+      $_map->save($_SESSION['mapfile-generator']['mapfile']);
+    } catch (MapFile\Exception $e) {
+      $error = $e->getMessage();
+    }
+  }
+
+  $map = new MapFile\Map($_SESSION['mapfile-generator']['mapfile']);
+
+  if (isset($_GET['up'])) $map->moveLayerUp(intval($_GET['up']));
+  else if (isset($_GET['down'])) $map->moveLayerDown(intval($_GET['down']));
+  else if (isset($_GET['remove'])) $map->removeLayer(intval($_GET['remove']));
+  else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+    $map->name = trim($_POST['name']);
+    $map->projection = $_POST['projection'];
+    $map->setExtent($_POST['extentminx'], $_POST['extentminy'], $_POST['extentmaxx'], $_POST['extentmaxy']);
+  }
+
+  $map->save($_SESSION['mapfile-generator']['mapfile']);
 }
 
-$meta = mapfile_getmeta($_SESSION['mapfile-generator']['mapfile']);
-$layers = mapfile_getlayers($_SESSION['mapfile-generator']['mapfile']);
+if (!isset($error)) {
+  $meta = mapfile_getmeta($_SESSION['mapfile-generator']['mapfile']);
+  $layers = mapfile_getlayers($_SESSION['mapfile-generator']['mapfile']);
+}
 
 page_header();
-
-if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.htmlentities($error).'</div>';
 ?>
 <div class="container">
+  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
 
   <form action="index.php" method="post" autocomplete="off">
     <div class="row">
       <div class="form-group form-group-lg col-sm-6">
         <label for="inputName">Map name</label>
-        <input type="text" class="form-control" id="inputName" name="name" value="<?= $meta['name'] ?>" required="required">
+        <input type="text" class="form-control" id="inputName" name="name" value="<?= (isset($meta) ? $meta['name'] : '') ?>" required="required">
       </div>
       <div class="form-group form-group-lg col-sm-6">
         <label for="selectProj">Map projection</label>
@@ -141,24 +193,24 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
     <div class="row">
       <div class="form-group form-group-sm col-sm-3">
         <label for="inputExtentMinX">Map extent : MIN X</label>
-        <input type="text" class="form-control" id="inputExtentMinX" name="extentminx" value="<?= $meta['extent'][0] ?>" required="required">
+        <input type="text" class="form-control" id="inputExtentMinX" name="extentminx" value="<?= (isset($meta) ? $meta['extent'][0] : '') ?>" required="required">
       </div>
       <div class="form-group form-group-sm col-sm-3">
         <label for="inputExtentMinY">Map extent : MIN Y</label>
-        <input type="text" class="form-control" id="inputExtentMinY" name="extentminy" value="<?= $meta['extent'][1] ?>" required="required">
+        <input type="text" class="form-control" id="inputExtentMinY" name="extentminy" value="<?= (isset($meta) ? $meta['extent'][1] : '') ?>" required="required">
       </div>
       <div class="form-group form-group-sm col-sm-3">
         <label for="inputExtentMaxX">Map extent : MAX X</label>
-        <input type="text" class="form-control" id="inputExtentMaxX" name="extentmaxx" value="<?= $meta['extent'][2] ?>" required="required">
+        <input type="text" class="form-control" id="inputExtentMaxX" name="extentmaxx" value="<?= (isset($meta) ? $meta['extent'][2] : '') ?>" required="required">
       </div>
       <div class="form-group form-group-sm col-sm-3">
         <label for="inputExtentMaxY">Map extent : MAX Y</label>
-        <input type="text" class="form-control" id="inputExtentMaxY" name="extentmaxy" value="<?= $meta['extent'][3] ?>" required="required">
+        <input type="text" class="form-control" id="inputExtentMaxY" name="extentmaxy" value="<?= (isset($meta) ? $meta['extent'][3] : '') ?>" required="required">
       </div>
     </div>
     <div>
-      <div class="checkbox"><label><input type="checkbox" name="wms" value="1"<?= ($meta['wms'] ? ' checked="checked"' : '') ?>> Enable WMS</label></div>
-      <div class="form-horizontal wms-control"<?= (!$meta['wms'] ? ' style="display:none;"' : '') ?>>
+      <div class="checkbox"><label><input type="checkbox" name="wms" value="1"<?= (isset($meta) && $meta['wms'] ? ' checked="checked"' : '') ?>> Enable WMS</label></div>
+      <div class="form-horizontal wms-control"<?= (!isset($meta) || !$meta['wms'] ? ' style="display:none;"' : '') ?>>
         <div class="form-group">
           <label for="inputWMSTitle" class="col-sm-3 control-label">WMS Title</label>
           <div class="col-sm-9">
@@ -218,29 +270,30 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
     </thead>
     <tbody>
 <?php
+    if (isset($layers)) {
     foreach ($layers as $k => $data) {
       echo '<tr>';
         echo '<td>'.htmlentities($data['group']).'</td>';
         echo '<th>'.htmlentities($data['name']).'</th>';
         echo '<td>';
           switch($data['type']) {
-            case ($mapscript ? MS_LAYER_CHART     : Layer::TYPE_CHART    ): echo 'Chart'; break;
-            case ($mapscript ? MS_LAYER_CIRCLE    : Layer::TYPE_CIRCLE   ): echo 'Circle'; break;
-            case ($mapscript ? MS_LAYER_LINE      : Layer::TYPE_LINE     ): echo 'Line'; break;
-            case ($mapscript ? MS_LAYER_POINT     : Layer::TYPE_POINT    ): echo 'Point'; break;
-            case ($mapscript ? MS_LAYER_POLYGON   : Layer::TYPE_POLYGON  ): echo 'Polygon'; break;
-            case ($mapscript ? MS_LAYER_QUERY     : Layer::TYPE_QUERY    ): echo 'Query'; break;
-            case ($mapscript ? MS_LAYER_RASTER    : Layer::TYPE_RASTER   ): echo 'Raster'; break;
-            case ($mapscript ? MS_LAYER_TILEINDEX : Layer::TYPE_TILEINDEX): echo 'TileIndex'; break;
+            case ($mapscript ? MS_LAYER_CHART     : MapFile\Layer::TYPE_CHART    ): echo 'Chart'; break;
+            case ($mapscript ? MS_LAYER_CIRCLE    : MapFile\Layer::TYPE_CIRCLE   ): echo 'Circle'; break;
+            case ($mapscript ? MS_LAYER_LINE      : MapFile\Layer::TYPE_LINE     ): echo 'Line'; break;
+            case ($mapscript ? MS_LAYER_POINT     : MapFile\Layer::TYPE_POINT    ): echo 'Point'; break;
+            case ($mapscript ? MS_LAYER_POLYGON   : MapFile\Layer::TYPE_POLYGON  ): echo 'Polygon'; break;
+            case ($mapscript ? MS_LAYER_QUERY     : MapFile\Layer::TYPE_QUERY    ): echo 'Query'; break;
+            case ($mapscript ? MS_LAYER_RASTER    : MapFile\Layer::TYPE_RASTER   ): echo 'Raster'; break;
+            case ($mapscript ? MS_LAYER_TILEINDEX : MapFile\Layer::TYPE_TILEINDEX): echo 'TileIndex'; break;
             default: echo '<i class="text-warning">Unkown</i>'; break;
           }
         echo '</td>';
         echo '<td>'.htmlentities(strtoupper($data['projection'])).'</td>';
         echo '<td>';
           switch($data['status']) {
-            case ($mapscript ? MS_ON      : Layer::STATUS_ON     ): echo '<i class="fa fa-check"></i> ON'; break;
-            case ($mapscript ? MS_OFF     : Layer::STATUS_OFF    ): echo '<i class="fa fa-remove"></i> OFF'; break;
-            case ($mapscript ? MS_DEFAULT : Layer::STATUS_DEFAULT): echo '<i class="fa fa-check"></i> DEFAULT'; break;
+            case ($mapscript ? MS_ON      : MapFile\Layer::STATUS_ON     ): echo '<i class="fa fa-check"></i> ON'; break;
+            case ($mapscript ? MS_OFF     : MapFile\Layer::STATUS_OFF    ): echo '<i class="fa fa-remove"></i> OFF'; break;
+            case ($mapscript ? MS_DEFAULT : MapFile\Layer::STATUS_DEFAULT): echo '<i class="fa fa-check"></i> DEFAULT'; break;
             default: echo '<i class="text-warning">Unkown</i>'; break;
           }
         echo '</td>';
@@ -250,6 +303,7 @@ if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Er
         echo '<td class="text-center" style="border-left: 1px solid #DDD;"><a style="text-decoration:none;" href="layer.php?layer='.$k.'"><i class="fa fa-database"></i> Data</a></td>';
         echo '<td class="text-center"><a style="text-decoration:none;" href="layer-class.php?layer='.$k.'"><i class="fa fa-paint-brush"></i> Styles &amp; Labels</a></td>';
       echo '</tr>';
+    }
     }
 ?>
     </tbody>

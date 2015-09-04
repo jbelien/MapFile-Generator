@@ -1,16 +1,25 @@
 <?php
-require_once('fn.php');
-
-use MapFile\Map;
-use MapFile\Layer;
-
 session_start();
+
+$settings = parse_ini_file('settings.ini');
+$mapscript = extension_loaded('mapscript');
 
 $tmp = sys_get_temp_dir();
 if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
 
-$settings = parse_ini_file('settings.ini');
-$mapscript = extension_loaded('mapscript');
+if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
+  require($settings['library'].'/map.php');
+  require($settings['library'].'/legend.php');
+  require($settings['library'].'/scalebar.php');
+  require($settings['library'].'/layer.php');
+  require($settings['library'].'/class.php');
+  require($settings['library'].'/style.php');
+  require($settings['library'].'/label.php');
+}
+
+if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+
+require_once('fn.php');
 
 $source = NULL; $mapfile = NULL;
 if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
@@ -24,31 +33,65 @@ $layers = mapfile_getlayers($mapfile);
 if (isset($_GET['layer'])) $layer = $layers[intval($_GET['layer'])];
 
 if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
-  $map = new mapObj($mapfile);
+  try {
+    $map = new mapObj($mapfile);
 
-  if (isset($_GET['layer']))
-    try { $layer = $map->getLayer(intval($_GET['layer'])); } catch (MapScriptException $e) { $error = $e->getMessage(); }
-  else
-    $layer = new layerObj($map);
+    if (isset($_GET['layer']))
+      $layer = $map->getLayer(intval($_GET['layer']));
+    else
+      $layer = new layerObj($map);
 
-  $layer->tileitem = NULL;
+    $layer->tileitem = NULL;
 
-  $layer->type = intval($_POST['type']);
-  $layer->name = trim($_POST['name']);
-  $layer->setProjection($_POST['projection']);
-  $layer->setConnectionType($_POST['connectiontype']);
-  $layer->connection = $_POST['connection'];
-  $layer->data = $_POST['data'];
-  $layer->setFilter($_POST['filter']);
-  $layer->group = $_POST['group'];
+    $layer->type = intval($_POST['type']);
+    $layer->name = trim($_POST['name']);
+    $layer->setProjection($_POST['projection']);
+    $layer->setConnectionType($_POST['connectiontype']);
+    $layer->connection = $_POST['connection'];
+    $layer->data = $_POST['data'];
+    $layer->filteritem = $_POST['filteritem'];
+    $layer->setFilter($_POST['filter']);
+    $layer->group = $_POST['group'];
 
-  $layer->free(); unset($layer);
+    $layer->free(); unset($layer);
 
-  $map->save($mapfile);
-  $map->free(); unset($map);
+    $map->save($mapfile);
+    $map->free(); unset($map);
 
-  header('Location: index.php');
-  exit();
+    header('Location: index.php');
+    exit();
+  } catch (MapScriptException $e) {
+    $error = $e->getMessage();
+  }
+}
+else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+  try {
+    $map = new MapFile\Map($mapfile);
+
+    if (isset($_GET['layer']))
+      $layer = $map->getLayer(intval($_GET['layer']));
+    else {
+      $layer = new MapFile\Layer();
+      $map->addLayer($layer);
+    }
+
+    $layer->type = intval($_POST['type']);
+    $layer->name = trim($_POST['name']);
+    $layer->projection = $_POST['projection'];
+    $layer->connectiontype = $_POST['connectiontype'];
+    $layer->connection = $_POST['connection'];
+    $layer->data = $_POST['data'];
+    $layer->filteritem = $_POST['filteritem'];
+    $layer->filter = $_POST['filter'];
+    $layer->group = $_POST['group'];
+
+    $map->save($mapfile);
+
+    header('Location: index.php');
+    exit();
+  } catch (MapFile\Exception $e) {
+    $error = $e->getMessage();
+  }
 }
 
 page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
@@ -56,6 +99,8 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
 <div class="container">
   <h1>Map: <a href="index.php"><?= htmlentities($meta['name']) ?></a></h1>
   <h2><?= (isset($layer) ? 'Layer: '.htmlentities($layer['name']) : 'New layer') ?></h2>
+
+  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
 
   <form class="form-horizontal" action="layer.php<?= (isset($layer) ? '?layer='.intval($_GET['layer']) : '') ?>" method="post">
     <div class="form-group">
@@ -72,9 +117,9 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
       <label for="selectStatus" class="col-sm-2 control-label">Status</label>
       <div class="col-sm-10">
         <select class="form-control" id="selectStatus" name="status">
-          <option value="<?= ($mapscript ? MS_DEFAULT : Layer::STATUS_DEFAULT) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_DEFAULT : Layer::STATUS_DEFAULT) ? ' selected="selected"' : '') ?>>DEFAULT</option>
-          <option value="<?= ($mapscript ? MS_ON      : Layer::STATUS_ON     ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_ON      : Layer::STATUS_ON     ) ? ' selected="selected"' : '') ?>>ON</option>
-          <option value="<?= ($mapscript ? MS_OFF     : Layer::STATUS_OFF    ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_OFF     : Layer::STATUS_OFF    ) ? ' selected="selected"' : '') ?>>OFF</option>
+          <option value="<?= ($mapscript ? MS_DEFAULT : MapFile\Layer::STATUS_DEFAULT) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_DEFAULT : MapFile\Layer::STATUS_DEFAULT) ? ' selected="selected"' : '') ?>>DEFAULT</option>
+          <option value="<?= ($mapscript ? MS_ON      : MapFile\Layer::STATUS_ON     ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_ON      : MapFile\Layer::STATUS_ON     ) ? ' selected="selected"' : '') ?>>ON</option>
+          <option value="<?= ($mapscript ? MS_OFF     : MapFile\Layer::STATUS_OFF    ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_OFF     : MapFile\Layer::STATUS_OFF    ) ? ' selected="selected"' : '') ?>>OFF</option>
         </select>
       </div>
     </div>
@@ -92,14 +137,14 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
           <option value="<?= MS_LAYER_RASTER ?>"<?= (isset($layer) && $layer['type'] == MS_LAYER_RASTER ? ' selected="selected"' : '') ?>>Raster</option>
           <option value="<?= MS_LAYER_TILEINDEX ?>"<?= (isset($layer) && $layer['type'] == MS_LAYER_TILEINDEX ? ' selected="selected"' : '') ?> disabled="disabled">Tile index (not yet supported)</option>
 <?php } else { ?>
-          <option value="<?= Layer::TYPE_CHART ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_CHART ? ' selected="selected"' : '') ?> disabled="disabled">Chart (not yet supported)</option>
-          <option value="<?= Layer::TYPE_CIRCLE ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_CIRCLE ? ' selected="selected"' : '') ?> disabled="disabled">Circle (not yet supported)</option>
-          <option value="<?= Layer::TYPE_LINE ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_LINE ? ' selected="selected"' : '') ?>>Line</option>
-          <option value="<?= Layer::TYPE_POINT ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_POINT ? ' selected="selected"' : '') ?>>Point</option>
-          <option value="<?= Layer::TYPE_POLYGON ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_POLYGON ? ' selected="selected"' : '') ?>>Polygon</option>
-          <option value="<?= Layer::TYPE_QUERY ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_QUERY ? ' selected="selected"' : '') ?> disabled="disabled">Query (not yet supported)</option>
-          <option value="<?= Layer::TYPE_RASTER ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_RASTER ? ' selected="selected"' : '') ?>>Raster</option>
-          <option value="<?= Layer::TYPE_TILEINDEX ?>"<?= (isset($layer) && $layer['type'] == Layer::TYPE_TILEINDEX ? ' selected="selected"' : '') ?> disabled="disabled">Tile index (not yet supported)</option>
+          <option value="<?= MapFile\Layer::TYPE_CHART ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_CHART ? ' selected="selected"' : '') ?> disabled="disabled">Chart (not yet supported)</option>
+          <option value="<?= MapFile\Layer::TYPE_CIRCLE ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_CIRCLE ? ' selected="selected"' : '') ?> disabled="disabled">Circle (not yet supported)</option>
+          <option value="<?= MapFile\Layer::TYPE_LINE ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_LINE ? ' selected="selected"' : '') ?>>Line</option>
+          <option value="<?= MapFile\Layer::TYPE_POINT ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_POINT ? ' selected="selected"' : '') ?>>Point</option>
+          <option value="<?= MapFile\Layer::TYPE_POLYGON ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_POLYGON ? ' selected="selected"' : '') ?>>Polygon</option>
+          <option value="<?= MapFile\Layer::TYPE_QUERY ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_QUERY ? ' selected="selected"' : '') ?> disabled="disabled">Query (not yet supported)</option>
+          <option value="<?= MapFile\Layer::TYPE_RASTER ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_RASTER ? ' selected="selected"' : '') ?>>Raster</option>
+          <option value="<?= MapFile\Layer::TYPE_TILEINDEX ?>"<?= (isset($layer) && $layer['type'] == MapFile\Layer::TYPE_TILEINDEX ? ' selected="selected"' : '') ?> disabled="disabled">Tile index (not yet supported)</option>
 <?php } ?>
         </select>
       </div>
@@ -135,17 +180,17 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
           <option value="<?= MS_WFS ?>"<?= (isset($layer) && $layer['connectiontype'] == MS_WFS ? ' selected="selected"' : '') ?>>WFS</option>
           <option value="<?= MS_WMS ?>"<?= (isset($layer) && $layer['connectiontype'] == MS_WMS ? ' selected="selected"' : '') ?>>WMS</option>
 <?php } else { ?>
-          <option value="<?= Layer::CONNECTIONTYPE_CONTOUR ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_CONTOUR ? ' selected="selected"' : '') ?> disabled="disabled">Contour (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_LOCAL ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_LOCAL ? ' selected="selected"' : '') ?>>Local</option>
-          <option value="<?= Layer::CONNECTIONTYPE_OGR ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_OGR ? ' selected="selected"' : '') ?>>OGR</option>
-          <option value="<?= Layer::CONNECTIONTYPE_ORACLESPATIAL ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_ORACLESPATIAL ? ' selected="selected"' : '') ?> disabled="disabled">OracleSpatial (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_PLUGIN ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_PLUGIN ? ' selected="selected"' : '') ?> disabled="disabled">Plugin (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_POSTGIS ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_POSTGIS ? ' selected="selected"' : '') ?> disabled="disabled">PostGIS (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_SDE ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_CONTOUR ? ' selected="selected"' : '') ?> disabled="disabled">SDE (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_UNION ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_SDE ? ' selected="selected"' : '') ?> disabled="disabled">Union (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_UVRASTER ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_UVRASTER ? ' selected="selected"' : '') ?> disabled="disabled">UV Raster (not yet supported)</option>
-          <option value="<?= Layer::CONNECTIONTYPE_WFS ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_WFS ? ' selected="selected"' : '') ?>>WFS</option>
-          <option value="<?= Layer::CONNECTIONTYPE_WMS ?>"<?= (isset($layer) && $layer['connectiontype'] == Layer::CONNECTIONTYPE_WMS ? ' selected="selected"' : '') ?>>WMS</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_CONTOUR ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_CONTOUR ? ' selected="selected"' : '') ?> disabled="disabled">Contour (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_LOCAL ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_LOCAL ? ' selected="selected"' : '') ?>>Local</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_OGR ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_OGR ? ' selected="selected"' : '') ?>>OGR</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_ORACLESPATIAL ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_ORACLESPATIAL ? ' selected="selected"' : '') ?> disabled="disabled">OracleSpatial (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_PLUGIN ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_PLUGIN ? ' selected="selected"' : '') ?> disabled="disabled">Plugin (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_POSTGIS ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_POSTGIS ? ' selected="selected"' : '') ?> disabled="disabled">PostGIS (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_SDE ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_CONTOUR ? ' selected="selected"' : '') ?> disabled="disabled">SDE (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_UNION ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_SDE ? ' selected="selected"' : '') ?> disabled="disabled">Union (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_UVRASTER ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_UVRASTER ? ' selected="selected"' : '') ?> disabled="disabled">UV Raster (not yet supported)</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_WFS ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_WFS ? ' selected="selected"' : '') ?>>WFS</option>
+          <option value="<?= MapFile\Layer::CONNECTIONTYPE_WMS ?>"<?= (isset($layer) && $layer['connectiontype'] == MapFile\Layer::CONNECTIONTYPE_WMS ? ' selected="selected"' : '') ?>>WMS</option>
 <?php } ?>
         </select>
       </div>
