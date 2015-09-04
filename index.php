@@ -1,8 +1,6 @@
 ﻿<?php
 require_once('fn.php');
 
-require_once('library/map.php');
-
 use MapFile\Map;
 use MapFile\Layer;
 
