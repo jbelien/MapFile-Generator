@@ -38,7 +38,7 @@ if ($mapscript) {
       $error = $e->getMessage();
     }
   }
-  else if (!isset($_SESSION['mapfile-generator']['mapfile'])) {
+  else if (!isset($_SESSION['mapfile-generator']['mapfile']) || !file_exists($_SESSION['mapfile-generator']['mapfile'])) {
     $mapfile = $tmp.'/mapserver/mapfile-'.uniqid().'.map';
     $_SESSION['mapfile-generator']['mapfile'] = $mapfile;
 
@@ -54,11 +54,11 @@ if ($mapscript) {
       $_map->setFontSet($settings['fontset']);
       $_map->setSymbolSet($settings['symbolset']);
 
-      $_map->legend->label->type = MS_TRUETYPE;
+      //$_map->legend->label->type = MS_TRUETYPE;
       $_map->legend->label->font = $settings['font'];
       $_map->legend->label->size = 8.0;
 
-      $_map->scalebar->label->type = MS_TRUETYPE;
+      //$_map->scalebar->label->type = MS_TRUETYPE;
       $_map->scalebar->label->font = $settings['font'];
       $_map->scalebar->label->size = 8.0;
       $_map->scalebar->units = MS_KILOMETERS;
