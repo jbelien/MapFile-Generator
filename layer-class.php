@@ -247,7 +247,10 @@ page_header('Layer: '.$layer['name']);
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="9" class="text-right"><a href="#modal-class" data-toggle="modal" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new class</a></td>
+            <td colspan="9" class="text-right">
+              <?= ($mapscript ? '<a href="sld.php?layer='.intval($_GET['layer']).'" target="_blank" style="text-decoration:none;"><i class="fa fa-cog"></i> Generate SLD</a>' : '') ?>
+              <a href="#modal-class" data-toggle="modal" style="text-decoration:none;"><i class="fa fa-plus-square"></i> Add new class</a>
+            </td>
           </tr>
         </tfoot>
       </table>
@@ -266,7 +269,7 @@ page_header('Layer: '.$layer['name']);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title"></h4>
       </div>
-      <form action="layer-class.php?layer=<?= $_GET['layer'] ?>" method="post" class="form-horizontal" autocomplete="off">
+      <form action="layer-class.php?layer=<?= intval($_GET['layer']) ?>" method="post" class="form-horizontal" autocomplete="off">
       <input type="hidden" name="class">
       <div class="modal-body">
         <div class="form-group">
