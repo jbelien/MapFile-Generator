@@ -24,7 +24,7 @@ Just copy these files in a directory accessible via HTTP.
 
 ## Configuration
 
-Create a `setting.ini` file in "MapFile Generator" root directory.
+Create a `settings.ini` file in "MapFile Generator" root directory.
 
 These are the parameters available :
 
