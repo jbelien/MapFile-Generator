@@ -5,7 +5,9 @@ $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
 $tmp = sys_get_temp_dir();
-if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
+if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) {
+  mkdir($tmp.'/mapserver');
+}
 
 if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
   require($settings['library'].'/map.php');
@@ -17,29 +19,38 @@ if (isset($settings['library']) && file_exists($settings['library']) && is_dir($
   require($settings['library'].'/label.php');
 }
 
-if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+if (!$mapscript && !class_exists('MapFile\Map')) {
+  $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+}
 
 require_once('fn.php');
 
 $source = NULL; $mapfile = NULL;
-if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
-if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) {
+  $source = $_SESSION['mapfile-generator']['source'];
+}
+if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) {
+  $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+}
 
 if (/*is_null($source) || */is_null($mapfile)) { header('Location:index.php'); exit(); }
 
 $meta = mapfile_getmeta($mapfile);
 $layers = mapfile_getlayers($mapfile);
 
-if (isset($_GET['layer'])) $layer = $layers[intval($_GET['layer'])];
+if (isset($_GET['layer'])) {
+  $layer = $layers[intval($_GET['layer'])];
+}
 
 if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
   try {
     $map = new mapObj($mapfile);
 
-    if (isset($_GET['layer']))
-      $layer = $map->getLayer(intval($_GET['layer']));
-    else
-      $layer = new layerObj($map);
+    if (isset($_GET['layer'])) {
+          $layer = $map->getLayer(intval($_GET['layer']));
+    } else {
+          $layer = new layerObj($map);
+    }
 
     $layer->tileitem = NULL;
 
@@ -63,14 +74,13 @@ if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+} else if (isset($_POST['action']) && $_POST['action'] == 'save') {
   try {
     $map = new MapFile\Map($mapfile);
 
-    if (isset($_GET['layer']))
-      $layer = $map->getLayer(intval($_GET['layer']));
-    else {
+    if (isset($_GET['layer'])) {
+          $layer = $map->getLayer(intval($_GET['layer']));
+    } else {
       $layer = new MapFile\Layer();
       $map->addLayer($layer);
     }
@@ -100,7 +110,10 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
   <h1>Map: <a href="index.php"><?= htmlentities($meta['name']) ?></a></h1>
   <h2><?= (isset($layer) ? 'Layer: '.htmlentities($layer['name']) : 'New layer') ?></h2>
 
-  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
+  <?php if (isset($error)) {
+  echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>';
+}
+?>
 
   <form class="form-horizontal" action="layer.php<?= (isset($layer) ? '?layer='.intval($_GET['layer']) : '') ?>" method="post">
     <div class="form-group">
@@ -118,8 +131,8 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
       <div class="col-sm-10">
         <select class="form-control" id="selectStatus" name="status">
           <option value="<?= ($mapscript ? MS_DEFAULT : MapFile\Layer::STATUS_DEFAULT) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_DEFAULT : MapFile\Layer::STATUS_DEFAULT) ? ' selected="selected"' : '') ?>>DEFAULT</option>
-          <option value="<?= ($mapscript ? MS_ON      : MapFile\Layer::STATUS_ON     ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_ON      : MapFile\Layer::STATUS_ON     ) ? ' selected="selected"' : '') ?>>ON</option>
-          <option value="<?= ($mapscript ? MS_OFF     : MapFile\Layer::STATUS_OFF    ) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_OFF     : MapFile\Layer::STATUS_OFF    ) ? ' selected="selected"' : '') ?>>OFF</option>
+          <option value="<?= ($mapscript ? MS_ON : MapFile\Layer::STATUS_ON) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_ON : MapFile\Layer::STATUS_ON) ? ' selected="selected"' : '') ?>>ON</option>
+          <option value="<?= ($mapscript ? MS_OFF : MapFile\Layer::STATUS_OFF) ?>"<?= (isset($layer) && $layer['status'] == ($mapscript ? MS_OFF : MapFile\Layer::STATUS_OFF) ? ' selected="selected"' : '') ?>>OFF</option>
         </select>
       </div>
     </div>
@@ -153,9 +166,9 @@ page_header((isset($layer) ? 'Layer: '.$layer['name'] : 'New layer'));
       <label for="selectProjection" class="col-sm-2 control-label">Projection</label>
       <div class="col-sm-10">
         <select class="form-control" id="selectProjection" name="projection">
-          <option value="epsg:3857"  <?= (isset($layer) && $layer['projection'] == 'epsg:3857'   ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
-          <option value="epsg:4326"  <?= (isset($layer) && $layer['projection'] == 'epsg:4326'   ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
-          <option value="epsg:31370" <?= (isset($layer) && $layer['projection'] == 'epsg:31370'  ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
+          <option value="epsg:3857"  <?= (isset($layer) && $layer['projection'] == 'epsg:3857' ? ' selected="selected"' : '') ?>>EPSG:3857 - Spherical Mercator</option>
+          <option value="epsg:4326"  <?= (isset($layer) && $layer['projection'] == 'epsg:4326' ? ' selected="selected"' : '') ?>>EPSG:4326 - WGS 84</option>
+          <option value="epsg:31370" <?= (isset($layer) && $layer['projection'] == 'epsg:31370' ? ' selected="selected"' : '') ?>>EPSG:31370 - Belge 1972 / Belgian Lambert 72</option>
           <option value="epsg:900913"<?= (isset($layer) && $layer['projection'] == 'epsg:900913' ? ' selected="selected"' : '') ?>>EPSG:900913 - Spherical Mercator</option>
         </select>
       </div>

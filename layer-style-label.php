@@ -5,7 +5,9 @@ $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
 $tmp = sys_get_temp_dir();
-if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
+if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) {
+  mkdir($tmp.'/mapserver');
+}
 
 if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
   require($settings['library'].'/map.php');
@@ -17,13 +19,19 @@ if (isset($settings['library']) && file_exists($settings['library']) && is_dir($
   require($settings['library'].'/label.php');
 }
 
-if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+if (!$mapscript && !class_exists('MapFile\Map')) {
+  $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+}
 
 require_once('fn.php');
 
 $source = NULL; $mapfile = NULL;
-if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
-if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) {
+  $source = $_SESSION['mapfile-generator']['source'];
+}
+if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) {
+  $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+}
 
 if (/*is_null($source) || */is_null($mapfile) || !isset($_GET['layer']) || !isset($_GET['class'])) { header('Location:index.php'); exit(); }
 
@@ -39,15 +47,15 @@ if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-style') {
     else
       $s = new styleObj($c);
 
-    if (strlen($_POST['color']['r'])+strlen($_POST['color']['g'])+strlen($_POST['color']['b']) == 0)
-      $s->color->setRGB(-1,-1,-1);
+    if (strlen($_POST['color']['r']) + strlen($_POST['color']['g']) + strlen($_POST['color']['b']) == 0)
+      $s->color->setRGB(-1, -1, -1);
     else
-      $s->color->setRGB(intval($_POST['color']['r']),intval($_POST['color']['g']),intval($_POST['color']['b']));
+      $s->color->setRGB(intval($_POST['color']['r']), intval($_POST['color']['g']), intval($_POST['color']['b']));
 
-    if (strlen($_POST['outlinecolor']['r'])+strlen($_POST['outlinecolor']['g'])+strlen($_POST['outlinecolor']['b']) == 0)
-      $s->outlinecolor->setRGB(-1,-1,-1);
+    if (strlen($_POST['outlinecolor']['r']) + strlen($_POST['outlinecolor']['g']) + strlen($_POST['outlinecolor']['b']) == 0)
+      $s->outlinecolor->setRGB(-1, -1, -1);
     else
-      $s->outlinecolor->setRGB(intval($_POST['outlinecolor']['r']),intval($_POST['outlinecolor']['g']),intval($_POST['outlinecolor']['b']));
+      $s->outlinecolor->setRGB(intval($_POST['outlinecolor']['r']), intval($_POST['outlinecolor']['g']), intval($_POST['outlinecolor']['b']));
 
     $s->width = (!empty($_POST['width']) ? floatval($_POST['width']) : -1);
     if (!empty($_POST['symbolname'])) $s->symbolname = $_POST['symbolname']; else unset($s->symbolname);
@@ -81,15 +89,15 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save-style') {
       $c->addStyle($s);
     }
 
-    if (strlen($_POST['color']['r'])+strlen($_POST['color']['g'])+strlen($_POST['color']['b']) == 0)
+    if (strlen($_POST['color']['r']) + strlen($_POST['color']['g']) + strlen($_POST['color']['b']) == 0)
       $s->unsetColor();
     else
-      $s->setColor(intval($_POST['color']['r']),intval($_POST['color']['g']),intval($_POST['color']['b']));
+      $s->setColor(intval($_POST['color']['r']), intval($_POST['color']['g']), intval($_POST['color']['b']));
 
-    if (strlen($_POST['outlinecolor']['r'])+strlen($_POST['outlinecolor']['g'])+strlen($_POST['outlinecolor']['b']) == 0)
+    if (strlen($_POST['outlinecolor']['r']) + strlen($_POST['outlinecolor']['g']) + strlen($_POST['outlinecolor']['b']) == 0)
       $s->unsetOutlineColor();
     else
-      $s->setOutlineColor(intval($_POST['outlinecolor']['r']),intval($_POST['outlinecolor']['g']),intval($_POST['outlinecolor']['b']));
+      $s->setOutlineColor(intval($_POST['outlinecolor']['r']), intval($_POST['outlinecolor']['g']), intval($_POST['outlinecolor']['b']));
 
     $s->width = (!empty($_POST['width']) ? floatval($_POST['width']) : -1);
     if (!empty($_POST['symbolname'])) $s->symbolname = $_POST['symbolname']; else unset($s->symbolname);
@@ -103,17 +111,20 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save-style') {
   } catch (MapFile\Exception $e) {
     $error = $e->getMessage();
   }
-}
-else if ($mapscript && (isset($_GET['style-down']) || isset($_GET['style-up']) || isset($_GET['style-remove']))) {
+} else if ($mapscript && (isset($_GET['style-down']) || isset($_GET['style-up']) || isset($_GET['style-remove']))) {
   try {
     $map = new mapObj($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
     $c = $l->getClass(intval($_GET['class']));
 
-    if (isset($_GET['style-down'])) $c->movestyledown(intval($_GET['style-down']));
-    else if (isset($_GET['style-up'])) $c->movestyleup(intval($_GET['style-up']));
-    else if (isset($_GET['style-remove'])) $c->deletestyle(intval($_GET['style-remove']));
+    if (isset($_GET['style-down'])) {
+      $c->movestyledown(intval($_GET['style-down']));
+    } else if (isset($_GET['style-up'])) {
+      $c->movestyleup(intval($_GET['style-up']));
+    } else if (isset($_GET['style-remove'])) {
+      $c->deletestyle(intval($_GET['style-remove']));
+    }
 
     $c->free(); unset($c);
     $l->free(); unset($l);
@@ -126,17 +137,20 @@ else if ($mapscript && (isset($_GET['style-down']) || isset($_GET['style-up']) |
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_GET['style-down']) || isset($_GET['style-up']) || isset($_GET['style-remove'])) {
+} else if (isset($_GET['style-down']) || isset($_GET['style-up']) || isset($_GET['style-remove'])) {
   try {
     $map = new MapFile\Map($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
     $c = $l->getClass(intval($_GET['class']));
 
-    if (isset($_GET['style-down'])) $c->moveStyleDown(intval($_GET['style-down']));
-    else if (isset($_GET['style-up'])) $c->moveStyleUp(intval($_GET['style-up']));
-    else if (isset($_GET['style-remove'])) $c->removeStyle(intval($_GET['style-remove']));
+    if (isset($_GET['style-down'])) {
+      $c->moveStyleDown(intval($_GET['style-down']));
+    } else if (isset($_GET['style-up'])) {
+      $c->moveStyleUp(intval($_GET['style-up']));
+    } else if (isset($_GET['style-remove'])) {
+      $c->removeStyle(intval($_GET['style-remove']));
+    }
 
     $map->save($mapfile);
 
@@ -158,15 +172,15 @@ else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-labe
     else
       $la = new labelObj();
 
-    if (strlen($_POST['color']['r'])+strlen($_POST['color']['g'])+strlen($_POST['color']['b']) == 0)
-      $la->color->setRGB(-1,-1,-1);
+    if (strlen($_POST['color']['r']) + strlen($_POST['color']['g']) + strlen($_POST['color']['b']) == 0)
+      $la->color->setRGB(-1, -1, -1);
     else
-      $la->color->setRGB(intval($_POST['color']['r']),intval($_POST['color']['g']),intval($_POST['color']['b']));
+      $la->color->setRGB(intval($_POST['color']['r']), intval($_POST['color']['g']), intval($_POST['color']['b']));
 
-    if (strlen($_POST['outlinecolor']['r'])+strlen($_POST['outlinecolor']['g'])+strlen($_POST['outlinecolor']['b']) == 0)
-      $la->outlinecolor->setRGB(-1,-1,-1);
+    if (strlen($_POST['outlinecolor']['r']) + strlen($_POST['outlinecolor']['g']) + strlen($_POST['outlinecolor']['b']) == 0)
+      $la->outlinecolor->setRGB(-1, -1, -1);
     else
-      $la->outlinecolor->setRGB(intval($_POST['outlinecolor']['r']),intval($_POST['outlinecolor']['g']),intval($_POST['outlinecolor']['b']));
+      $la->outlinecolor->setRGB(intval($_POST['outlinecolor']['r']), intval($_POST['outlinecolor']['g']), intval($_POST['outlinecolor']['b']));
 
     $la->align = $_POST['align'];
     $la->position = (!empty($_POST['position']) ? $_POST['position'] : -1);
@@ -202,15 +216,15 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save-label') {
       $c->addLabel($la);
     }
 
-    if (strlen($_POST['color']['r'])+strlen($_POST['color']['g'])+strlen($_POST['color']['b']) == 0)
+    if (strlen($_POST['color']['r']) + strlen($_POST['color']['g']) + strlen($_POST['color']['b']) == 0)
       $la->unsetColor();
     else
-      $la->setColor(intval($_POST['color']['r']),intval($_POST['color']['g']),intval($_POST['color']['b']));
+      $la->setColor(intval($_POST['color']['r']), intval($_POST['color']['g']), intval($_POST['color']['b']));
 
-    if (strlen($_POST['outlinecolor']['r'])+strlen($_POST['outlinecolor']['g'])+strlen($_POST['outlinecolor']['b']) == 0)
+    if (strlen($_POST['outlinecolor']['r']) + strlen($_POST['outlinecolor']['g']) + strlen($_POST['outlinecolor']['b']) == 0)
       $la->unsetOutlineColor();
     else
-      $la->setOutlineColor(intval($_POST['outlinecolor']['r']),intval($_POST['outlinecolor']['g']),intval($_POST['outlinecolor']['b']));
+      $la->setOutlineColor(intval($_POST['outlinecolor']['r']), intval($_POST['outlinecolor']['g']), intval($_POST['outlinecolor']['b']));
 
     $la->align = intval($_POST['align']);
     $la->position = intval($_POST['position']);
@@ -224,8 +238,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save-label') {
   } catch (MapFile\Exception $e) {
     $error = $e->getMessage();
   }
-}
-else if ($mapscript && isset($_GET['label-remove'])) {
+} else if ($mapscript && isset($_GET['label-remove'])) {
   try {
     $map = new mapObj($mapfile);
 
@@ -245,8 +258,7 @@ else if ($mapscript && isset($_GET['label-remove'])) {
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_GET['label-remove'])) {
+} else if (isset($_GET['label-remove'])) {
   try {
     $map = new MapFile\Map($mapfile);
 
@@ -278,7 +290,10 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
   <h2>Layer: <a href="layer-class.php?layer=<?= intval($_GET['layer']) ?>"><?= htmlentities($layer['name']) ?></a></h2>
   <h3>Class: <?= htmlentities($class['name']) ?></h3>
 
-  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
+  <?php if (isset($error)) {
+  echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>';
+}
+?>
 
   <div>
     <ul class="nav nav-tabs" role="tablist">
@@ -302,9 +317,9 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
           </thead>
           <tbody>
         <?php
-          foreach($class['style'] as $i => $s) {
+          foreach ($class['style'] as $i => $s) {
             echo '<tr>';
-              echo '<td class="text-right">'.($i+1).'.</td>';
+              echo '<td class="text-right">'.($i + 1).'.</td>';
               echo '<td style="min-width:20px;'.(array_sum($s['color']) >= 0 ? ' background-color:rgb('.implode(',', $s['color']).');' : '').'"></td>';
               echo '<td>'.(array_sum($s['color']) >= 0 ? implode(', ', $s['color']) : '').'</td>';
               echo '<td style="min-width:20px;'.(array_sum($s['outlinecolor']) >= 0 ? ' background-color:rgb('.implode(',', $s['outlinecolor']).');' : '').'"></td>';
@@ -313,7 +328,7 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
               echo '<td>'.$s['symbolname'].'</td>';
               echo '<td>'.($s['size'] >= 0 ? $s['size'] : '').'</td>';
               echo '<td class="text-center" style="width:20px;"><a href="#modal-style" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-              echo '<td class="text-center" style="width:20px;">'.($i < (count($class['style'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+              echo '<td class="text-center" style="width:20px;">'.($i < (count($class['style']) - 1) ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
               echo '<td class="text-center" style="width:20px;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
               echo '<td class="text-center" style="width:20px;"><a href="?layer='.$_GET['layer'].'&amp;class='.$_GET['class'].'&amp;style-remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '</tr>'.PHP_EOL;
@@ -341,26 +356,26 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
           </thead>
           <tbody>
         <?php
-          foreach($class['label'] as $i => $l) {
+          foreach ($class['label'] as $i => $l) {
             echo '<tr>';
-              echo '<td class="text-right">'.($i+1).'.</td>';
+              echo '<td class="text-right">'.($i + 1).'.</td>';
               echo '<td style="min-width:20px;'.(array_sum($l['color']) >= 0 ? ' background-color:rgb('.implode(',', $l['color']).');' : '').'"></td>';
               echo '<td>'.(array_sum($l['color']) >= 0 ? implode(', ', $l['color']) : '').'</td>';
               echo '<td style="min-width:20px;'.(array_sum($l['outlinecolor']) >= 0 ? ' background-color:rgb('.implode(',', $l['outlinecolor']).');' : '').'"></td>';
               echo '<td>'.(array_sum($l['outlinecolor']) >= 0 ? implode(', ', $l['outlinecolor']) : '').'</td>';
               echo '<td>'.$l['size'].'</td>';
               echo '<td>';
-                switch($l['position']) {
-                  case ($mapscript ? MS_AUTO : MapFile\Label::POSITION_AUTO): echo 'AUTO'; break;
-                  case ($mapscript ? MS_UL   : MapFile\Label::POSITION_UL  ): echo 'Upper Left'; break;
-                  case ($mapscript ? MS_UC   : MapFile\Label::POSITION_UC  ): echo 'Upper Center'; break;
-                  case ($mapscript ? MS_UR   : MapFile\Label::POSITION_UR  ): echo 'Upper Right'; break;
-                  case ($mapscript ? MS_CL   : MapFile\Label::POSITION_CL  ): echo 'Center Left'; break;
-                  case ($mapscript ? MS_CC   : MapFile\Label::POSITION_CC  ): echo 'Center Center'; break;
-                  case ($mapscript ? MS_CR   : MapFile\Label::POSITION_CR  ): echo 'Center Right'; break;
-                  case ($mapscript ? MS_LL   : MapFile\Label::POSITION_LL  ): echo 'Lower Left'; break;
-                  case ($mapscript ? MS_LC   : MapFile\Label::POSITION_LC  ): echo 'Lower Center'; break;
-                  case ($mapscript ? MS_LR   : MapFile\Label::POSITION_LR  ): echo 'Lower Right'; break;
+                switch ($l['position']) {
+                  case ($mapscript ? MS_AUTO : MapFile\Label::POSITION_AUTO) : echo 'AUTO'; break;
+                  case ($mapscript ? MS_UL : MapFile\Label::POSITION_UL) : echo 'Upper Left'; break;
+                  case ($mapscript ? MS_UC : MapFile\Label::POSITION_UC) : echo 'Upper Center'; break;
+                  case ($mapscript ? MS_UR : MapFile\Label::POSITION_UR) : echo 'Upper Right'; break;
+                  case ($mapscript ? MS_CL : MapFile\Label::POSITION_CL) : echo 'Center Left'; break;
+                  case ($mapscript ? MS_CC : MapFile\Label::POSITION_CC) : echo 'Center Center'; break;
+                  case ($mapscript ? MS_CR : MapFile\Label::POSITION_CR) : echo 'Center Right'; break;
+                  case ($mapscript ? MS_LL : MapFile\Label::POSITION_LL) : echo 'Lower Left'; break;
+                  case ($mapscript ? MS_LC : MapFile\Label::POSITION_LC) : echo 'Lower Center'; break;
+                  case ($mapscript ? MS_LR : MapFile\Label::POSITION_LR) : echo 'Lower Right'; break;
                   default: echo '<i class="text-warning">Unkown</i>'; break;
                 }
               echo '</td>';
@@ -453,9 +468,9 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
           <label for="selectLabelAlign" class="col-sm-3 control-label">Align</label>
           <div class="col-sm-9">
             <select class="form-control" id="selectLabelAlign" name="align">
-              <option value="<?= ($mapscript ? MS_ALIGN_LEFT   : MapFile\Label::ALIGN_LEFT  ) ?>">Left</option>
+              <option value="<?= ($mapscript ? MS_ALIGN_LEFT : MapFile\Label::ALIGN_LEFT) ?>">Left</option>
               <option value="<?= ($mapscript ? MS_ALIGN_CENTER : MapFile\Label::ALIGN_CENTER) ?>">Center</option>
-              <option value="<?= ($mapscript ? MS_ALIGN_RIGHT  : MapFile\Label::ALIGN_RIGHT  ) ?>">Right</option>
+              <option value="<?= ($mapscript ? MS_ALIGN_RIGHT : MapFile\Label::ALIGN_RIGHT) ?>">Right</option>
             </select>
           </div>
         </div>
@@ -464,15 +479,15 @@ page_header('Layer: '.$layer['name'].' - Class: '.$class['name']);
           <div class="col-sm-9">
             <select class="form-control" id="selectLabelPosition" name="position">
               <option value="<?= ($mapscript ? MS_AUTO : MapFile\Label::POSITION_AUTO) ?>" selected="selected">AUTO</option>
-              <option value="<?= ($mapscript ? MS_UL   : MapFile\Label::POSITION_UL  ) ?>">Upper Left</option>
-              <option value="<?= ($mapscript ? MS_UC   : MapFile\Label::POSITION_UC  ) ?>">Upper Center</option>
-              <option value="<?= ($mapscript ? MS_UR   : MapFile\Label::POSITION_UR  ) ?>">Upper Right</option>
-              <option value="<?= ($mapscript ? MS_CL   : MapFile\Label::POSITION_CL  ) ?>">Center Left</option>
-              <option value="<?= ($mapscript ? MS_CC   : MapFile\Label::POSITION_CC  ) ?>">Center Center</option>
-              <option value="<?= ($mapscript ? MS_CR   : MapFile\Label::POSITION_CR  ) ?>">Center Right</option>
-              <option value="<?= ($mapscript ? MS_LL   : MapFile\Label::POSITION_LL  ) ?>">Lower Left</option>
-              <option value="<?= ($mapscript ? MS_LC   : MapFile\Label::POSITION_LC  ) ?>">Lower Center</option>
-              <option value="<?= ($mapscript ? MS_LR   : MapFile\Label::POSITION_LR  ) ?>">Lower Right</option>
+              <option value="<?= ($mapscript ? MS_UL : MapFile\Label::POSITION_UL) ?>">Upper Left</option>
+              <option value="<?= ($mapscript ? MS_UC : MapFile\Label::POSITION_UC) ?>">Upper Center</option>
+              <option value="<?= ($mapscript ? MS_UR : MapFile\Label::POSITION_UR) ?>">Upper Right</option>
+              <option value="<?= ($mapscript ? MS_CL : MapFile\Label::POSITION_CL) ?>">Center Left</option>
+              <option value="<?= ($mapscript ? MS_CC : MapFile\Label::POSITION_CC) ?>">Center Center</option>
+              <option value="<?= ($mapscript ? MS_CR : MapFile\Label::POSITION_CR) ?>">Center Right</option>
+              <option value="<?= ($mapscript ? MS_LL : MapFile\Label::POSITION_LL) ?>">Lower Left</option>
+              <option value="<?= ($mapscript ? MS_LC : MapFile\Label::POSITION_LC) ?>">Lower Center</option>
+              <option value="<?= ($mapscript ? MS_LR : MapFile\Label::POSITION_LR) ?>">Lower Right</option>
             </select>
           </div>
         </div>
