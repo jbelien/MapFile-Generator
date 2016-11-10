@@ -5,7 +5,9 @@ $settings = parse_ini_file('settings.ini');
 $mapscript = extension_loaded('mapscript');
 
 $tmp = sys_get_temp_dir();
-if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) mkdir($tmp.'/mapserver');
+if (!file_exists($tmp.'/mapserver') || !is_dir($tmp.'/mapserver')) {
+  mkdir($tmp.'/mapserver');
+}
 
 if (isset($settings['library']) && file_exists($settings['library']) && is_dir($settings['library'])) {
   require($settings['library'].'/map.php');
@@ -17,13 +19,19 @@ if (isset($settings['library']) && file_exists($settings['library']) && is_dir($
   require($settings['library'].'/label.php');
 }
 
-if (!$mapscript && !class_exists('MapFile\Map')) $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+if (!$mapscript && !class_exists('MapFile\Map')) {
+  $error = 'This application needs <a href="http://www.mapserver.org/mapscript/php/" target="_blank">MapScript</a> or <a href="https://github.com/jbelien/MapFile-PHP-Library" target="_blank">MapFile-PHP-Library</a> ! Enable MapScript or download and link MapFile-PHP-Library (see <a href="https://github.com/jbelien/MapFile-Generator#libraries" target="_blank">documentation</a>).';
+}
 
 require_once('fn.php');
 
 $source = NULL; $mapfile = NULL;
-if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) $source = $_SESSION['mapfile-generator']['source'];
-if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+if (isset($_SESSION['mapfile-generator']['source']) && file_exists($_SESSION['mapfile-generator']['source'])) {
+  $source = $_SESSION['mapfile-generator']['source'];
+}
+if (isset($_SESSION['mapfile-generator']['mapfile']) && file_exists($_SESSION['mapfile-generator']['mapfile'])) {
+  $mapfile = $_SESSION['mapfile-generator']['mapfile'];
+}
 
 if (/*is_null($source) || */is_null($mapfile) || !isset($_GET['layer'])) { header('Location:index.php'); exit(); }
 
@@ -49,8 +57,7 @@ if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save') {
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_POST['action']) && $_POST['action'] == 'save') {
+} else if (isset($_POST['action']) && $_POST['action'] == 'save') {
   try {
     $map = new MapFile\Map($mapfile);
 
@@ -69,17 +76,17 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save') {
   } catch (MapFile\Exception $e) {
     $error = $e->getMessage();
   }
-}
-else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-class') {
+} else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-class') {
   try {
     $map = new mapObj($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
 
-    if (isset($_POST['class']))
-      $c = $l->getClass(intval($_POST['class']));
-    else
-      $c = new classObj($l);
+    if (isset($_POST['class'])) {
+          $c = $l->getClass(intval($_POST['class']));
+    } else {
+          $c = new classObj($l);
+    }
 
     $c->name = $_POST['name'];
     $c->setExpression($_POST['expression']);
@@ -95,16 +102,15 @@ else if ($mapscript && isset($_POST['action']) && $_POST['action'] == 'save-clas
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_POST['action']) && $_POST['action'] == 'save-class') {
+} else if (isset($_POST['action']) && $_POST['action'] == 'save-class') {
   try {
     $map = new MapFile\Map($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
 
-    if (isset($_POST['class']))
-      $c = $l->getClass(intval($_POST['class']));
-    else {
+    if (isset($_POST['class'])) {
+          $c = $l->getClass(intval($_POST['class']));
+    } else {
       $c = new MapFile\LayerClass();
       $l->addClass($c);
     }
@@ -119,16 +125,19 @@ else if (isset($_POST['action']) && $_POST['action'] == 'save-class') {
   } catch (MapFile\Exception $e) {
     $error = $e->getMessage();
   }
-}
-else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove']))) {
+} else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove']))) {
   try {
     $map = new mapObj($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
 
-    if (isset($_GET['down'])) $l->moveclassdown(intval($_GET['down']));
-    else if (isset($_GET['up'])) $l->moveclassup(intval($_GET['up']));
-    else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
+    if (isset($_GET['down'])) {
+      $l->moveclassdown(intval($_GET['down']));
+    } else if (isset($_GET['up'])) {
+      $l->moveclassup(intval($_GET['up']));
+    } else if (isset($_GET['remove'])) {
+      $l->removeClass(intval($_GET['remove']));
+    }
 
     $l->free(); unset($l);
 
@@ -140,16 +149,19 @@ else if ($mapscript && (isset($_GET['down']) || isset($_GET['up']) || isset($_GE
   } catch (MapScriptException $e) {
     $error = $e->getMessage();
   }
-}
-else if (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove'])) {
+} else if (isset($_GET['down']) || isset($_GET['up']) || isset($_GET['remove'])) {
   try {
     $map = new MapFile\Map($mapfile);
 
     $l = $map->getLayer(intval($_GET['layer']));
 
-    if (isset($_GET['down'])) $l->moveClassDown(intval($_GET['down']));
-    else if (isset($_GET['up'])) $l->moveClassUp(intval($_GET['up']));
-    else if (isset($_GET['remove'])) $l->removeClass(intval($_GET['remove']));
+    if (isset($_GET['down'])) {
+      $l->moveClassDown(intval($_GET['down']));
+    } else if (isset($_GET['up'])) {
+      $l->moveClassUp(intval($_GET['up']));
+    } else if (isset($_GET['remove'])) {
+      $l->removeClass(intval($_GET['remove']));
+    }
 
     $map->save($mapfile);
 
@@ -171,7 +183,10 @@ page_header('Layer: '.$layer['name']);
   <h1>Map: <a href="index.php"><?= htmlentities($meta['name']) ?></a></h1>
   <h2>Layer: <?= htmlentities($layer['name']) ?></h2>
 
-  <?php if (isset($error)) echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>'; ?>
+  <?php if (isset($error)) {
+  echo '<div class="alert alert-danger" role="alert"><strong>Error :</strong> '.$error.'</div>';
+}
+?>
 
   <form class="form-horizontal" action="layer-class.php?layer=<?= $_GET['layer'] ?>" method="post">
     <div class="form-group">
@@ -232,11 +247,11 @@ page_header('Layer: '.$layer['name']);
 <?php
         foreach ($layer['class'] as $i => $c) {
           echo '<tr>';
-            echo '<td class="text-right">'.($i+1).'.</td>';
+            echo '<td class="text-right">'.($i + 1).'.</td>';
             echo '<td>'.htmlentities($c['name']).'</td>';
             echo '<td>'.htmlentities($c['expression']).'</td>';
             echo '<td class="text-center" style="width:20px;"><a href="#modal-class" data-toggle="modal" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td>';
-            echo '<td class="text-center" style="width:20px;">'.($i < (count($layer['class'])-1) ? '<a href="?layer='.$_GET['layer'].'&amp;down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
+            echo '<td class="text-center" style="width:20px;">'.($i < (count($layer['class']) - 1) ? '<a href="?layer='.$_GET['layer'].'&amp;down='.$i.'" title="Move down"><i class="fa fa-arrow-down"></i></a>' : '').'</td>';
             echo '<td class="text-center" style="width:20px;">'.($i > 0 ? '<a href="?layer='.$_GET['layer'].'&amp;up='.$i.'" title="Move up"><i class="fa fa-arrow-up"></i></a>' : '').'</td>';
             echo '<td class="text-center" style="width:20px;"><a href="?layer='.$_GET['layer'].'&amp;remove='.$i.'" class="text-danger" title="Remove"><i class="fa fa-trash-o"></i></a></td>';
             echo '<td style="border-left: 1px solid #DDD;"><a href="layer-style-label.php?layer='.intval($_GET['layer']).'&amp;class='.$i.'&amp;style" style="text-decoration:none;"><i class="fa fa-paint-brush"></i> '.count($c['style']).' style'.(count($c['style']) > 1 ? 's' : '').'</a></td>';

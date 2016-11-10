@@ -14,7 +14,7 @@ function page_header($title = '', $styles = NULL) {
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet">
-<?php if (!is_null($styles) && is_array($styles)) foreach($styles as $s) echo '    <link rel="stylesheet" href="'.$s.'">'.PHP_EOL; ?>
+<?php if (!is_null($styles) && is_array($styles)) foreach ($styles as $s) echo '    <link rel="stylesheet" href="'.$s.'">'.PHP_EOL; ?>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
   </head>
@@ -38,9 +38,12 @@ function page_header($title = '', $styles = NULL) {
             <li<?= (basename($_SERVER['PHP_SELF']) == 'map.php' ? ' class="active"' : '') ?>><a href="map.php"><i class="fa fa-globe"></i> Map</a></li>
           </ul>
 <?php
-          if (extension_loaded('mapscript')) echo '<p class="navbar-text navbar-right text-success" style="color:#3C763D;"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
-          else echo '<p class="navbar-text navbar-right text-warning" style="color:#8A6D3B;"><i class="fa fa-exclamation-triangle"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapScript</a> support disabled. Use of <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapFile-PHP-Library</a>.</p>';
-?>
+          if (extension_loaded('mapscript')) {
+            echo '<p class="navbar-text navbar-right text-success" style="color:#3C763D;"><i class="fa fa-check"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-success">MapScript</a> support enabled (v'.ms_GetVersionInt().').</p>';
+          } else {
+            echo '<p class="navbar-text navbar-right text-warning" style="color:#8A6D3B;"><i class="fa fa-exclamation-triangle"></i> <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapScript</a> support disabled. Use of <a href="http://mapserver.org/mapscript/php/index.html" target="_blank" class="text-warning">MapFile-PHP-Library</a>.</p>';
+          }
+          ?>
         </div>
       </div>
     </nav>
@@ -53,7 +56,7 @@ function page_header($title = '', $styles = NULL) {
 function page_footer($scripts = NULL) {
 ?>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<?php if (!is_null($scripts) && is_array($scripts)) foreach($scripts as $s) echo '    <script src="'.$s.'"></script>'.PHP_EOL; ?>
+<?php if (!is_null($scripts) && is_array($scripts)) foreach ($scripts as $s) echo '    <script src="'.$s.'"></script>'.PHP_EOL; ?>
   </body>
 </html>
 <?php
@@ -71,7 +74,11 @@ function mapfile_getmeta($fname) {
 
     $meta['name'] = $map->name;
     $meta['extent'] = array($map->extent->minx, $map->extent->miny, $map->extent->maxx, $map->extent->maxy);
-    if (preg_match('/(epsg:[0-9]+)/i', $map->getProjection(), $_p)) $meta['projection'] = $_p[1]; else $map_projection = 'epsg:3857';
+    if (preg_match('/(epsg:[0-9]+)/i', $map->getProjection(), $_p)) {
+      $meta['projection'] = $_p[1];
+    } else {
+      $map_projection = 'epsg:3857';
+    }
 
     $meta['wms'] = (strlen($map->getMetaData('wms_enable_request')) > 0);
     if ($meta['wms']) {
@@ -100,8 +107,12 @@ function mapfile_getmeta($fname) {
     }
   }
 
-  if (isset($meta)) return $meta; else return FALSE;
-}
+  if (isset($meta)) {
+    return $meta;
+  } else {
+    return FALSE;
+  }
+  }
 
 /*
  *
@@ -112,7 +123,11 @@ function mapfile_getlayers($fname) {
 
     $map_name = $map->name;
     $map_extent = array($map->extent->minx, $map->extent->miny, $map->extent->maxx, $map->extent->maxy);
-    if (preg_match('/(epsg:[0-9]+)/i', $map->getProjection(), $_p)) $map_projection = $_p[1]; else $map_projection = 'epsg:3857';
+    if (preg_match('/(epsg:[0-9]+)/i', $map->getProjection(), $_p)) {
+      $map_projection = $_p[1];
+    } else {
+      $map_projection = 'epsg:3857';
+    }
 
     $wms_enabled = (strlen($map->getMetaData('wms_enable_request')) > 0);
     if ($wms_enabled) {
@@ -136,7 +151,11 @@ function mapfile_getlayers($fname) {
         $data['wms_enable_request'] = (strlen($layer->getMetaData('wms_enable_request')) > 0 ? $layer->getMetaData('wms_enable_request') : NULL);
       }
 
-      if (preg_match('/(epsg:[0-9]+)/i', $layer->getProjection(), $_p)) $data['projection'] = $_p[1]; else $data['projection'] = 'epsg:3857';
+      if (preg_match('/(epsg:[0-9]+)/i', $layer->getProjection(), $_p)) {
+        $data['projection'] = $_p[1];
+      } else {
+        $data['projection'] = 'epsg:3857';
+      }
 
       $data['name'] = $layer->name;
       $data['type'] = $layer->type;
@@ -265,5 +284,9 @@ function mapfile_getlayers($fname) {
     }
   }
 
-  if (isset($_layers)) return $_layers; else return FALSE;
-}
+  if (isset($_layers)) {
+    return $_layers;
+  } else {
+    return FALSE;
+  }
+  }
