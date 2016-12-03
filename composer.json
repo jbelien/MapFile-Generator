@@ -1,0 +1,14 @@
+{
+    "name": "jbelien/mapfile-generator",
+    "description": "MapServer .MAP Generator (Read, Write & Preview)",
+    "type": "project",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Jonathan Beliën"
+        }
+    ],
+    "suggest": {
+        "jbelien/mapfile-php-library": "Use MapFile PHP Library in place of MapScript"
+    }
+}
