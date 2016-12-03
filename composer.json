@@ -10,5 +10,6 @@
     ],
     "suggest": {
         "jbelien/mapfile-php-library": "Use MapFile PHP Library in place of MapScript"
-    }
+    },
+    "minimum-stability": "beta"
 }
