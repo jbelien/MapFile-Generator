@@ -20,7 +20,9 @@ Still in development ! Use with caution.
 
 ## Installation
 
-Just copy these files in a directory accessible via HTTP.
+```
+composer require jbelien/mapfile-generator
+```
 
 ## Configuration
 
