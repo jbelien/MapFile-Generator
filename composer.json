@@ -23,6 +23,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
+        "ext-mbstring": "*",
         "zendframework/zend-component-installer": "2.1.1",
         "zendframework/zend-config-aggregator": "1.1.1",
         "zendframework/zend-diactoros": "1.8.6",
