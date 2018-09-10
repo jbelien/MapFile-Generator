@@ -1,0 +1,12 @@
+extends: standard
+env:
+  browser: true
+  es6: true
+  jquery: true
+rules:
+  indent:
+    - error
+    - 4
+  semi:
+    - error
+    - always

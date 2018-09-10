@@ -1,0 +1,193 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Layer{% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+      api: '/api/layer/{{ map.layer.indexOf(layer) }}'
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Layer #{{ map.layer.indexOf(layer) + 1 }}</h1>
+<h2>
+    Map: <a href="{{ path('map') }}">{{ map.name }}</a>
+</h2>
+<hr>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    All the information you need are right here :
+    <a class="alert-link" href="https://mapserver.org/mapfile/layer.html" target="_blank">https://mapserver.org/mapfile/layer.html</a>
+</div>
+
+<form autocomplete="off">
+    <div class="row">
+        <div class="col-5">
+            <div class="form-group">
+                <label for="layer-name">NAME</label>
+                <input type="text" class="form-control" name="name" id="layer-name" value="{{ layer.name }}">
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="form-group">
+                <label for="layer-group">GROUP</label>
+                <input type="text" class="form-control" name="group" id="layer-group" value="{{ layer.group }}">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="layer-status">STATUS</label>
+                <select class="form-control" name="status" id="layer-status">
+                    <option value="ON"{{ layer.status == 'ON' ? ' selected="selected"' : '' }}>ON</option>
+                    <option value="OFF"{{ layer.status == 'OFF' ? ' selected="selected"' : '' }}>OFF</option>
+                    <option value="DEFAULT"{{ layer.status == 'DEFAULT' ? ' selected="selected"' : '' }}>DEFAULT</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="layer-type">TYPE</label>
+                <select class="form-control" name="type" id="layer-type">
+                    <option disabled value="CHART"{{ layer.type == 'CHART' ? ' selected="selected"' : '' }}>CHART (not yet supported)</option>
+                    <option disabled value="CIRCLE"{{ layer.type == 'CIRCLE' ? ' selected="selected"' : '' }}>CIRCLE (not yet supported)</option>
+                    <option value="LINE"{{ layer.type == 'LINE' ? ' selected="selected"' : '' }}>LINE</option>
+                    <option value="POINT"{{ layer.type == 'POINT' ? ' selected="selected"' : '' }}>POINT</option>
+                    <option value="POLYGON"{{ layer.type == 'POLYGON' ? ' selected="selected"' : '' }}>POLYGON</option>
+                    <option disabled value="QUERY"{{ layer.type == 'QUERY' ? ' selected="selected"' : '' }}>QUERY (not yet supported)</option>
+                    <option value="RASTER"{{ layer.type == 'RASTER' ? ' selected="selected"' : '' }}>RASTER</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="layer-projection">PROJECTION</label>
+                <input type="text" class="form-control" name="projection" id="layer-projection" value="{{ layer.projection }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="layer-connectiontype">CONNECTIONTYPE</label>
+                <select class="form-control" name="connectiontype" id="layer-connectiontype">
+                    <option disabled value="CONTOUR"{{ layer.connectiontype == 'CONTOUR' ? ' selected="selected"' : '' }}>CONTOUR (not yet supported)</option>
+                    <option disabled value="KERNELDENSITY"{{ layer.connectiontype == 'KERNELDENSITY' ? ' selected="selected"' : '' }}>KERNELDENSITY (not yet supported)</option>
+                    <option value="LOCAL"{{ layer.connectiontype == 'LOCAL' or layer.connectiontype is not defined ? ' selected="selected"' : '' }}>LOCAL</option>
+                    <option value="OGR"{{ layer.connectiontype == 'OGR' ? ' selected="selected"' : '' }}>OGR</option>
+                    <option disabled value="ORACLESPATIAL"{{ layer.connectiontype == 'ORACLESPATIAL' ? ' selected="selected"' : '' }}>ORACLESPATIAL (not yet supported)</option>
+                    <option disabled value="PLUGIN"{{ layer.connectiontype == 'PLUGIN' ? ' selected="selected"' : '' }}>PLUGIN (not yet supported)</option>
+                    <option value="POSTGIS"{{ layer.connectiontype == 'POSTGIS' ? ' selected="selected"' : '' }}>POSTGIS</option>
+                    <option disabled value="SDE"{{ layer.connectiontype == 'SDE' ? ' selected="selected"' : '' }}>SDE (not yet supported)</option>
+                    <option disabled value="UNION"{{ layer.connectiontype == 'UNION' ? ' selected="selected"' : '' }}>UNION (not yet supported)</option>
+                    <option disabled value="UVRASTER"{{ layer.connectiontype == 'UVRASTER' ? ' selected="selected"' : '' }}>UVRASTER (not yet supported)</option>
+                    <option value="WFS"{{ layer.connectiontype == 'WFS' ? ' selected="selected"' : '' }}>WFS</option>
+                    <option value="WMS"{{ layer.connectiontype == 'WMS' ? ' selected="selected"' : '' }}>WMS</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="layer-connection">CONNECTION</label>
+                <input type="text" class="form-control" name="connection" id="layer-connection" value="{{ layer.connection }}">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="layer-data">DATA</label>
+                <input type="text" class="form-control" name="data" id="layer-data" value="{{ layer.data }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="layer-minscaledenom">MINSCALEDENOM</label>
+                <input type="text" class="form-control" name="minscaledenom" id="layer-minscaledenom" value="{{ layer.minscaledenom }}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="layer-maxscaledenom">MAXSCALEDENOM</label>
+                <input type="text" class="form-control" name="maxscaledenom" id="layer-maxscaledenom" value="{{ layer.maxscaledenom }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group">
+                <label for="layer-filteritem">FILTERITEM</label>
+                <input type="text" class="form-control" name="filteritem" id="layer-filteritem" value="{{ layer.filteritem }}">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="layer-filter">FILTER</label>
+                <input type="text" class="form-control" name="filter" id="layer-filter" value="{{ layer.filter }}">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="layer-classitem">CLASSITEM</label>
+                <input type="text" class="form-control" name="classitem" id="layer-classitem" value="{{ layer.classitem }}">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="layer-labelitem">LABELITEM</label>
+                <input type="text" class="form-control" name="labelitem" id="layer-labelitem" value="{{ layer.labelitem }}">
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<h2>
+    Classes
+    <span class="badge badge-pill badge-secondary">{{ layer.class | length }}</span>
+</h2>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>EXPRESSION</th>
+            <th class="text-center">Styles</th>
+            <th class="text-center">Labels</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for class in layer.class %}
+        <tr>
+            <th>{{ class.name }}</th>
+            <td>{{ class.expression }}</td>
+            <td class="text-center">
+                <span class="badge badge-pill badge-secondary">{{ class.style | length }}</span>
+            </td>
+            <td class="text-center">
+                <span class="badge badge-pill badge-secondary">{{ class.label | length }}</span>
+            </td>
+            <td class="text-center">
+                <a title="Edit" href="{{ path('class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}" style="text-decoration: none;">
+                    <i class="far fa-edit"></i>
+                    <span class="sr-only sr-only-focusable">Edit</span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a title="Remove" href="{{ path('api.class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}" class="btn-remove text-danger" style="text-decoration: none;">
+                    <i class="far fa-trash-alt"></i>
+                    <span class="sr-only sr-only-focusable">Remove</span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

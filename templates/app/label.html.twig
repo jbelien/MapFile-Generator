@@ -1,0 +1,125 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Label{% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+      api: '/api/layer/{{ map.layer.indexOf(layer) }}/class/{{ layer.class.indexOf(class) }}/label/{{ class.label.indexOf(label) }}'
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Label #{{ class.label.indexOf(label) + 1 }}</h1>
+<h2>
+    Map: <a href="{{ path('map') }}">{{ map.name }}</a> <i class="fas fa-caret-right"></i>
+    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name }}</a> <i class="fas fa-caret-right"></i>
+    Class: <a href="{{ path('class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}">{{ class.name }}</a>
+</h2>
+<hr>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    All the information you need are right here :
+    <a class="alert-link" href="https://mapserver.org/mapfile/label.html" target="_blank">https://mapserver.org/mapfile/label.html</a>
+</div>
+
+<form autocomplete="off">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-align">ALIGN</label>
+                <select class="form-control" name="align" id="label-align">
+                    <option value=""{{ label.align is not defined ? ' selected="selected"' : '' }}></option>
+                    <option value="LEFT"{{ label.align == 'LEFT' ? ' selected="selected"' : '' }}>LEFT</option>
+                    <option value="CENTER"{{ label.align == 'CENTER' ? ' selected="selected"' : '' }}>CENTER</option>
+                    <option value="RIGHT"{{ label.align == 'RIGHT' ? ' selected="selected"' : '' }}>RIGHT</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-position">POSITION</label>
+                <select class="form-control" name="position" id="label-position">
+                    <option value=""{{ label.position is not defined ? ' selected="selected"' : '' }}></option>
+                    <option value="AUTO"{{ label.position == 'AUTO' ? ' selected="selected"' : '' }}>AUTO</option>
+                    <option value="UL"{{ label.position == 'UL' ? ' selected="selected"' : '' }}>Upper Left</option>
+                    <option value="UC"{{ label.position == 'UC' ? ' selected="selected"' : '' }}>Upper Center</option>
+                    <option value="UR"{{ label.position == 'UR' ? ' selected="selected"' : '' }}>Upper Right</option>
+                    <option value="CL"{{ label.position == 'CL' ? ' selected="selected"' : '' }}>Center Left</option>
+                    <option value="CC"{{ label.position == 'CC' ? ' selected="selected"' : '' }}>Center Center</option>
+                    <option value="CR"{{ label.position == 'CR' ? ' selected="selected"' : '' }}>Center Right</option>
+                    <option value="LL"{{ label.position == 'LL' ? ' selected="selected"' : '' }}>Lower Left</option>
+                    <option value="LC"{{ label.position == 'LC' ? ' selected="selected"' : '' }}>Lower Center</option>
+                    <option value="LR"{{ label.position == 'LR' ? ' selected="selected"' : '' }}>Lower Right</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-color-r">COLOR</label>
+                {% if label.color is empty or label.color is iterable %}
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-r" id="label-color-r" value="{{ label.color is not empty ? label.color[0] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Red</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-g" id="label-color-g" value="{{ label.color is not empty ? label.color[1] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Green</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-b" id="label-color-b" value="{{ label.color is not empty ? label.color[2] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Blue</small>
+                    </div>
+                </div>
+                {% else %}
+                <input type="text" class="form-control" name="color" id="label-color" value="{{ label.color }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-outlinecolor-r">OUTLINECOLOR</label>
+                {% if label.outlinecolor is empty or label.outlinecolor is iterable %}
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-r" id="label-outlinecolor-r" value="{{ label.outlinecolor is not empty ? label.outlinecolor[0] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Red</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-g" id="label-outlinecolor-g" value="{{ label.outlinecolor is not empty ? label.outlinecolor[1] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Green</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-b" id="label-outlinecolor-b" value="{{ label.outlinecolor is not empty ? label.outlinecolor[2] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Blue</small>
+                    </div>
+                </div>
+                {% else %}
+                <input type="text" class="form-control" name="outlinecolor" id="label-outlinecolor" value="{{ label.outlinecolor }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-minscaledenom">MINSCALEDENOM</label>
+                <input type="text" class="form-control text-right" name="minscaledenom" id="label-minscaledenom" value="{{ label.minscaledenom }}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="label-maxscaledenom">MAXSCALEDENOM</label>
+                <input type="text" class="form-control text-right" name="maxscaledenom" id="label-maxscaledenom" value="{{ label.maxscaledenom }}">
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

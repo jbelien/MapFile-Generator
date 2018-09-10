@@ -1,0 +1,16 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}MapFile{% endblock %}
+
+{% block content %}
+
+<h1>MapFile</h1>
+<hr>
+
+{% spaceless %}
+<pre class="bg-light" style="padding: 15px;">
+    <code>{{ mapfile }}</code>
+</pre>
+{% endspaceless %}
+
+{% endblock %}

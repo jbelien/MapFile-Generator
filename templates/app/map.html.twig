@@ -1,0 +1,148 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Map{% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+      api: '/api/map'
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Map</h1>
+<hr>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    All the information you need are right here :
+    <a class="alert-link" href="https://mapserver.org/mapfile/map.html" target="_blank">https://mapserver.org/mapfile/map.html</a>
+</div>
+
+<form autocomplete="off">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="map-name">NAME</label>
+                <input type="text" class="form-control" name="name" id="map-name" value="{{ map.name }}">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="map-status">STATUS</label>
+                <select class="form-control" name="status" id="map-status">
+                    <option value="ON"{{ map.status == 'ON' ? ' selected="selected"' : '' }}>ON</option>
+                    <option value="OFF"{{ map.status == 'OFF' ? ' selected="selected"' : '' }}>OFF</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="map-size-x">SIZE</label>
+                <div class="row no-gutters">
+                    <div class="col-6">
+                        <input type="number" min="0" class="form-control text-right" name="size-x" id="map-size-x" value="{{ map.size[0] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Width</small>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" min="0" class="form-control text-right" name="size-y" id="map-size-y" value="{{ map.size[1] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Height</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="map-projection">PROJECTION</label>
+                <input type="text" class="form-control" name="projection" id="map-projection" value="{{ map.projection }}">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="map-units">UNITS</label>
+                <select class="form-control" name="units" id="map-units">
+                    <option value="DD"{{ map.units == 'DD' ? ' selected="selected"' : '' }}>DD</option>
+                    <option value="FEET"{{ map.units == 'FEET' ? ' selected="selected"' : '' }}>FEET</option>
+                    <option value="INCHES"{{ map.units == 'INCHES' ? ' selected="selected"' : '' }}>INCHES</option>
+                    <option value="KILOMETERS"{{ map.units == 'KILOMETERS' ? ' selected="selected"' : '' }}>KILOMETERS</option>
+                    <option value="METERS"{{ map.units == 'METERS' ? ' selected="selected"' : '' }}>METERS</option>
+                    <option value="MILES"{{ map.units == 'MILES' ? ' selected="selected"' : '' }}>MILES</option>
+                    <option value="NAUTICALMILES"{{ map.units == 'NAUTICALMILES' ? ' selected="selected"' : '' }}>NAUTICALMILES</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="map-extent-minx">EXTENT</label>
+                <div class="row no-gutters">
+                    <div class="col-3">
+                        <input type="text" class="form-control text-right" name="extent-minx" id="map-extent-minx" value="{{ map.extent[0] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Min. X</small>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" class="form-control text-right" name="extent-miny" id="map-extent-miny" value="{{ map.extent[1] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Min. Y</small>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" class="form-control text-right" name="extent-maxx" id="map-extent-maxx" value="{{ map.extent[2] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Max. X</small>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" class="form-control text-right" name="extent-maxy" id="map-extent-maxy" value="{{ map.extent[3] | default('') }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Max. Y</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<h2>
+    Layers
+    <span class="badge badge-pill badge-secondary">{{ map.layer | length }}</span>
+</h2>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>GROUP</th>
+            <th>TYPE</th>
+            <th>CONNECTIONTYPE</th>
+            <th>PROJECTION</th>
+            <th>STATUS</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for layer in map.layer %}
+        <tr>
+            <th>{{ layer.name }}</th>
+            <td>{{ layer.group }}</td>
+            <td>{{ layer.type }}</td>
+            <td>{{ layer.connectiontype is empty ? 'LOCAL' : layer.connectiontype }}</td>
+            <td>{{ layer.projection }}</td>
+            <td>{{ layer.status }}</td>
+            <td class="text-center">
+                <a title="Edit" href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}" style="text-decoration: none;">
+                    <i class="far fa-edit"></i>
+                    <span class="sr-only sr-only-focusable">Edit</span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a title="Remove" href="{{ path('api.layer', {'id': map.layer.indexOf(layer)}) }}" class="btn-remove text-danger" style="text-decoration: none;">
+                    <i class="far fa-trash-alt"></i>
+                    <span class="sr-only sr-only-focusable">Remove</span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

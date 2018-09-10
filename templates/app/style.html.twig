@@ -1,0 +1,114 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Style{% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+      api: '/api/layer/{{ map.layer.indexOf(layer) }}/class/{{ layer.class.indexOf(class) }}/style/{{ class.style.indexOf(style) }}'
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Style #{{ class.style.indexOf(style) + 1 }}</h1>
+<h2>
+    Map: <a href="{{ path('map') }}">{{ map.name }}</a> <i class="fas fa-caret-right"></i>
+    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name }}</a> <i class="fas fa-caret-right"></i>
+    Class: <a href="{{ path('class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}">{{ class.name }}</a>
+</h2>
+<hr>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    All the information you need are right here :
+    <a class="alert-link" href="https://mapserver.org/mapfile/style.html" target="_blank">https://mapserver.org/mapfile/style.html</a>
+</div>
+
+<form autocomplete="off">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="style-color-r">COLOR</label>
+                {% if style.color is empty or style.color is iterable %}
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-r" id="style-color-r" value="{{ style.color is not empty ? style.color[0] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Red</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-g" id="style-color-g" value="{{ style.color is not empty ? style.color[1] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Green</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="color-b" id="style-color-b" value="{{ style.color is not empty ? style.color[2] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Blue</small>
+                    </div>
+                </div>
+                {% else %}
+                <input type="text" class="form-control" name="color" id="style-color" value="{{ style.color }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="style-outlinecolor-r">OUTLINECOLOR</label>
+                {% if style.outlinecolor is empty or style.outlinecolor is iterable %}
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-r" id="style-outlinecolor-r" value="{{ style.outlinecolor is not empty ? style.outlinecolor[0] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Red</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-g" id="style-outlinecolor-g" value="{{ style.outlinecolor is not empty ? style.outlinecolor[1] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Green</small>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" min="0" max="255" class="form-control text-right" name="outlinecolor-b" id="style-outlinecolor-b" value="{{ style.outlinecolor is not empty ? style.outlinecolor[2] : '' }}">
+                        <small class="form-text text-muted"><i class="far fa-question-circle"></i> Blue</small>
+                    </div>
+                </div>
+                {% else %}
+                <input type="text" class="form-control" name="outlinecolor" id="style-outlinecolor" value="{{ style.outlinecolor }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="style-width">WIDTH</label>
+                <input type="text" class="form-control" name="width" id="style-width" value="{{ style.width }}">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="style-symbol">SYMBOL</label>
+                <input type="text" class="form-control" name="symbol" id="style-symbol" value="{{ style.symbol }}">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="style-size">SIZE</label>
+                <input type="text" class="form-control" name="size" id="style-size" value="{{ style.size }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="style-minscaledenom">MINSCALEDENOM</label>
+                <input type="text" class="form-control text-right" name="minscaledenom" id="style-minscaledenom" value="{{ style.minscaledenom }}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="style-maxscaledenom">MAXSCALEDENOM</label>
+                <input type="text" class="form-control text-right" name="maxscaledenom" id="style-maxscaledenom" value="{{ style.maxscaledenom }}">
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

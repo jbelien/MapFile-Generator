@@ -1,0 +1,151 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Class{% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+      api: '/api/layer/{{ map.layer.indexOf(layer) }}/class/{{ layer.class.indexOf(class) }}'
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Class #{{ layer.class.indexOf(class) + 1 }}</h1>
+<h2>
+    Map: <a href="{{ path('map') }}">{{ map.name }}</a> <i class="fas fa-caret-right"></i>
+    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name }}</a>
+</h2>
+<hr>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    All the information you need are right here :
+    <a class="alert-link" href="https://mapserver.org/mapfile/class.html" target="_blank">https://mapserver.org/mapfile/class.html</a>
+</div>
+
+<form autocomplete="off">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="class-name">NAME</label>
+                <input type="text" class="form-control" name="name" id="class-name" value="{{ class.name }}">
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="form-group">
+                <label for="class-expression">EXPRESSION</label>
+                <input type="text" class="form-control" name="expression" id="class-expression" value="{{ class.expression }}">
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<h2>
+    Styles
+    <span class="badge badge-pill badge-secondary">{{ class.style | length }}</span>
+</h2>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>COLOR</th>
+            <th>OUTLINECOLOR</th>
+            <th>MINSCALEDENOM</th>
+            <th>MAXSCALEDENOM</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for style in class.style %}
+        <tr>
+        {% if style.color is empty %}
+            <td></td>
+        {% elseif style.color is iterable %}
+            <td><i class="fas fa-square" style="color: rgb({{ style.color | join(',') }});"></i> {{ style.color | join(', ') }}</td>
+        {% else %}
+            <td><i class="fas fa-square" style="color: {{ style.color }};"></i> {{ style.color }}</td>
+        {% endif %}
+        {% if style.outlinecolor is empty %}
+            <td></td>
+        {% elseif style.outlinecolor is iterable %}
+            <td><i class="far fa-square" style="color: rgb({{ style.outlinecolor | join(',') }});"></i> {{ style.outlinecolor | join(', ') }}</td>
+        {% else %}
+            <td><i class="far fa-square" style="color: {{ style.outlinecolor }};"></i> {{ style.outlinecolor }}</td>
+        {% endif %}
+            <td>{{ style.minscaledenom }}</td>
+            <td>{{ style.maxscaledenom }}</td>
+            <td class="text-center">
+                <a title="Edit" href="{{ path('style', {'layer': map.layer.indexOf(layer), 'class': layer.class.indexOf(class), 'id': class.style.indexOf(style)}) }}" style="text-decoration: none;">
+                    <i class="far fa-edit"></i>
+                    <span class="sr-only sr-only-focusable">Edit</span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a title="Remove" href="{{ path('api.style', {'layer': map.layer.indexOf(layer), 'class': layer.class.indexOf(class), 'id': class.style.indexOf(style)}) }}" class="btn-remove text-danger" style="text-decoration: none;">
+                    <i class="far fa-trash-alt"></i>
+                    <span class="sr-only sr-only-focusable">Remove</span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<h2>
+    Labels
+    <span class="badge badge-pill badge-secondary">{{ class.label | length }}</span>
+</h2>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>COLOR</th>
+            <th>OUTLINECOLOR</th>
+            <th>MINSCALEDENOM</th>
+            <th>MAXSCALEDENOM</th>
+            <th>SIZE</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for label in class.label %}
+        <tr>
+        {% if label.color is empty %}
+            <td></td>
+        {% elseif label.color is iterable %}
+            <td><i class="fas fa-square" style="color: rgb({{ label.color | join(',') }});"></i> {{ label.color | join(', ') }}</td>
+        {% else %}
+            <td><i class="fas fa-square" style="color: {{ label.color }};"></i> {{ label.color }}</td>
+        {% endif %}
+        {% if label.outlinecolor is empty %}
+            <td></td>
+        {% elseif label.outlinecolor is iterable %}
+            <td><i class="far fa-square" style="color: rgb({{ label.outlinecolor | join(',') }});"></i> {{ label.outlinecolor | join(', ') }}</td>
+        {% else %}
+            <td><i class="far fa-square" style="color: {{ label.outlinecolor }};"></i> {{ label.outlinecolor }}</td>
+        {% endif %}
+            <td>{{ label.minscaledenom }}</td>
+            <td>{{ label.maxscaledenom }}</td>
+            <td>{{ label.size }}</td>
+            <td class="text-center">
+                <a title="Edit" href="{{ path('label', {'layer': map.layer.indexOf(layer), 'class': layer.class.indexOf(class), 'id': class.label.indexOf(label)}) }}" style="text-decoration: none;">
+                    <i class="far fa-edit"></i>
+                    <span class="sr-only sr-only-focusable">Edit</span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a title="Remove" href="{{ path('api.label', {'layer': map.layer.indexOf(layer), 'class': layer.class.indexOf(class), 'id': class.label.indexOf(label)}) }}" class="btn-remove text-danger" style="text-decoration: none;">
+                    <i class="far fa-trash-alt"></i>
+                    <span class="sr-only sr-only-focusable">Remove</span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
