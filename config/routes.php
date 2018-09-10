@@ -6,7 +6,7 @@ use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
 use Zend\Expressive\MiddlewareFactory;
 
-/**
+/*
  * Setup routes with a single request method:
  *
  * $app->get('/', App\Handler\HomePageHandler::class, 'home');

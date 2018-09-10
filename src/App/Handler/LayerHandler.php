@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -26,8 +26,8 @@ class LayerHandler implements RequestHandlerInterface
         Template\TemplateRendererInterface $template = null,
         string $containerName
     ) {
-        $this->router        = $router;
-        $this->template      = $template;
+        $this->router = $router;
+        $this->template = $template;
         $this->containerName = $containerName;
     }
 

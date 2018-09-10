@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -27,8 +27,8 @@ class ClassHandler implements RequestHandlerInterface
         Template\TemplateRendererInterface $template = null,
         string $containerName
     ) {
-        $this->router        = $router;
-        $this->template      = $template;
+        $this->router = $router;
+        $this->template = $template;
         $this->containerName = $containerName;
     }
 
@@ -40,7 +40,7 @@ class ClassHandler implements RequestHandlerInterface
             $map = unserialize($session->get('map'));
 
             $layer = intval($request->getAttribute('layer'));
-            $id    = intval($request->getAttribute('id'));
+            $id = intval($request->getAttribute('id'));
 
             if ($map->layer->containsKey($layer) &&
                 $map->layer->get($layer)->class->containsKey($id)

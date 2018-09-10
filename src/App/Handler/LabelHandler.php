@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -27,8 +27,8 @@ class LabelHandler implements RequestHandlerInterface
         Template\TemplateRendererInterface $template = null,
         string $containerName
     ) {
-        $this->router        = $router;
-        $this->template      = $template;
+        $this->router = $router;
+        $this->template = $template;
         $this->containerName = $containerName;
     }
 
@@ -41,13 +41,13 @@ class LabelHandler implements RequestHandlerInterface
 
             $layer = intval($request->getAttribute('layer'));
             $class = intval($request->getAttribute('class'));
-            $id    = intval($request->getAttribute('id'));
+            $id = intval($request->getAttribute('id'));
 
             if ($map->layer->containsKey($layer) &&
                 $map->layer->get($layer)->class->containsKey($id) &&
                 $map->layer->get($layer)->class->get($class)->label->containsKey($id)
             ) {
-                    $data = [
+                $data = [
                     'map'   => $map,
                     'layer' => $map->layer->get($layer),
                     'class' => $map->layer->get($layer)->class->get($class),
