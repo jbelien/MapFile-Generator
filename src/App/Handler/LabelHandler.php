@@ -52,7 +52,7 @@ class LabelHandler implements RequestHandlerInterface
 
                     $session->set('map', serialize($map));
                 } elseif ($map->layer->get($layer)->class->get($class)->label->containsKey(intval($id))) {
-                    $label = $map->layer->get($layer)->class->get($class)->label->containsKey(intval($id));
+                    $label = $map->layer->get($layer)->class->get($class)->label->get(intval($id));
                 }
             }
 

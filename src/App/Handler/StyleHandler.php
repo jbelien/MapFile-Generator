@@ -52,7 +52,7 @@ class StyleHandler implements RequestHandlerInterface
 
                     $session->set('map', serialize($map));
                 } elseif ($map->layer->get($layer)->class->get($class)->style->containsKey(intval($id))) {
-                    $style = $map->layer->get($layer)->class->get($class)->style->containsKey(intval($id));
+                    $style = $map->layer->get($layer)->class->get($class)->style->get(intval($id));
                 }
             }
 
