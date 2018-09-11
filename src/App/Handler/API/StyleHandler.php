@@ -103,7 +103,7 @@ class StyleHandler implements RequestHandlerInterface
             unset($params['outlinecolor-g']);
         }
         if (isset($params['outlinecolor-b'])) {
-            $style->outlinecolor[2] = intval($params['coloutlinecoloror-b']);
+            $style->outlinecolor[2] = intval($params['outlinecolor-b']);
             unset($params['outlinecolor-b']);
         }
         if (isset($params['size'])) {
