@@ -34,9 +34,7 @@ class MapFileHandler implements RequestHandlerInterface
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
-        $data = [
-            'source' => file_get_contents('data/test.map'),
-        ];
+        $data = [];
 
         if ($session->has('map')) {
             $map = unserialize($session->get('map'));
