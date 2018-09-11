@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use MapFile\Parser\Map;
+use MapFile\Model\LayerClass;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -40,18 +40,29 @@ class ClassHandler implements RequestHandlerInterface
             $map = unserialize($session->get('map'));
 
             $layer = intval($request->getAttribute('layer'));
-            $id = intval($request->getAttribute('id'));
 
-            if ($map->layer->containsKey($layer) &&
-                $map->layer->get($layer)->class->containsKey($id)
-            ) {
-                $data = [
-                    'map'   => $map,
-                    'layer' => $map->layer->get($layer),
-                    'class' => $map->layer->get($layer)->class->get($id),
-                ];
+            $id = $request->getAttribute('id');
 
-                return new HtmlResponse($this->template->render('app::class', $data));
+            if ($map->layer->containsKey($layer)) {
+                if (is_null($id)) {
+                    $class = new LayerClass();
+
+                    $map->layer->get($layer)->class->add($class);
+
+                    $session->set('map', serialize($map));
+                } elseif ($map->layer->get($layer)->class->containsKey(intval($id))) {
+                    $class = $map->layer->get($layer)->class->get(intval($id));
+                }
+
+                if (isset($class)) {
+                    $data = [
+                        'map'   => $map,
+                        'layer' => $map->layer->get($layer),
+                        'class' => $class,
+                    ];
+
+                    return new HtmlResponse($this->template->render('app::class', $data));
+                }
             }
         }
 

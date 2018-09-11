@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use MapFile\Model\Layer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -38,12 +39,22 @@ class LayerHandler implements RequestHandlerInterface
         if ($session->has('map')) {
             $map = unserialize($session->get('map'));
 
-            $id = intval($request->getAttribute('id'));
+            $id = $request->getAttribute('id');
 
-            if ($map->layer->containsKey($id)) {
+            if (is_null($id)) {
+                $layer = new Layer();
+
+                $map->layer->add($layer);
+
+                $session->set('map', serialize($map));
+            } elseif ($map->layer->containsKey(intval($id))) {
+                $layer = $map->layer->get(intval($id));
+            }
+
+            if (isset($layer)) {
                 $data = [
                     'map'   => $map,
-                    'layer' => $map->layer->get($id),
+                    'layer' => $layer,
                 ];
 
                 return new HtmlResponse($this->template->render('app::layer', $data));

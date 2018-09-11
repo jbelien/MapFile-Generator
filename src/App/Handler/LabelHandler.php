@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use MapFile\Parser\Map;
+use MapFile\Model\Label;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -41,17 +41,27 @@ class LabelHandler implements RequestHandlerInterface
 
             $layer = intval($request->getAttribute('layer'));
             $class = intval($request->getAttribute('class'));
-            $id = intval($request->getAttribute('id'));
 
-            if ($map->layer->containsKey($layer) &&
-                $map->layer->get($layer)->class->containsKey($id) &&
-                $map->layer->get($layer)->class->get($class)->label->containsKey($id)
-            ) {
+            $id = $request->getAttribute('id');
+
+            if ($map->layer->containsKey($layer) && $map->layer->get($layer)->class->containsKey($class)) {
+                if (is_null($id)) {
+                    $label = new Label();
+
+                    $map->layer->get($layer)->class->get($class)->label->add($label);
+
+                    $session->set('map', serialize($map));
+                } elseif ($map->layer->get($layer)->class->get($class)->label->containsKey(intval($id))) {
+                    $label = $map->layer->get($layer)->class->get($class)->label->containsKey(intval($id));
+                }
+            }
+
+            if (isset($label)) {
                 $data = [
                     'map'   => $map,
                     'layer' => $map->layer->get($layer),
                     'class' => $map->layer->get($layer)->class->get($class),
-                    'label' => $map->layer->get($layer)->class->get($class)->label->get($id),
+                    'label' => $label,
                 ];
 
                 return new HtmlResponse($this->template->render('app::label', $data));

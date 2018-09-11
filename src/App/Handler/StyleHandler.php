@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use MapFile\Model\Style;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -40,17 +41,27 @@ class StyleHandler implements RequestHandlerInterface
 
             $layer = intval($request->getAttribute('layer'));
             $class = intval($request->getAttribute('class'));
-            $id = intval($request->getAttribute('id'));
 
-            if ($map->layer->containsKey($layer) &&
-                $map->layer->get($layer)->class->containsKey($id) &&
-                $map->layer->get($layer)->class->get($class)->style->containsKey($id)
-            ) {
+            $id = $request->getAttribute('id');
+
+            if ($map->layer->containsKey($layer) && $map->layer->get($layer)->class->containsKey($class)) {
+                if (is_null($id)) {
+                    $style = new Style();
+
+                    $map->layer->get($layer)->class->get($class)->style->add($style);
+
+                    $session->set('map', serialize($map));
+                } elseif ($map->layer->get($layer)->class->get($class)->style->containsKey(intval($id))) {
+                    $style = $map->layer->get($layer)->class->get($class)->style->containsKey(intval($id));
+                }
+            }
+
+            if (isset($style)) {
                 $data = [
                     'map'   => $map,
                     'layer' => $map->layer->get($layer),
                     'class' => $map->layer->get($layer)->class->get($class),
-                    'style' => $map->layer->get($layer)->class->get($class)->style->get($id),
+                    'style' => $style,
                 ];
 
                 return new HtmlResponse($this->template->render('app::style', $data));

@@ -103,10 +103,20 @@
 
 <hr>
 
-<h2>
-    Layers
-    <span class="badge badge-pill badge-secondary">{{ map.layer | length }}</span>
-</h2>
+<div class="row">
+    <div class="col">
+        <h2>
+            Layers
+            <span class="badge badge-pill badge-secondary">{{ map.layer | length }}</span>
+        </h2>
+    </div>
+    <div class="col text-right">
+        <a href="{{ path('layer.new') }}" class="btn btn-outline-primary">
+            <i class="fas fa-plus-circle"></i>
+            Add new layer
+        </a>
+    </div>
+</div>
 <table class="table table-bordered table-sm table-striped">
     <thead>
         <tr>
