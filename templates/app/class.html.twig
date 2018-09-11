@@ -14,8 +14,8 @@
 
 <h1>Class #{{ layer.class.indexOf(class) + 1 }}</h1>
 <h2>
-    Map: <a href="{{ path('map') }}">{{ map.name }}</a> <i class="fas fa-caret-right"></i>
-    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name }}</a>
+    Map: <a href="{{ path('map') }}">{{ map.name | default('...') }}</a> <i class="fas fa-caret-right"></i>
+    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name | default('...') }}</a>
 </h2>
 <hr>
 

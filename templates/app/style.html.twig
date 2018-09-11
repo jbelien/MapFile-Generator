@@ -14,9 +14,9 @@
 
 <h1>Style #{{ class.style.indexOf(style) + 1 }}</h1>
 <h2>
-    Map: <a href="{{ path('map') }}">{{ map.name }}</a> <i class="fas fa-caret-right"></i>
-    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name }}</a> <i class="fas fa-caret-right"></i>
-    Class: <a href="{{ path('class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}">{{ class.name }}</a>
+    Map: <a href="{{ path('map') }}">{{ map.name | default('...') }}</a> <i class="fas fa-caret-right"></i>
+    Layer: <a href="{{ path('layer', {'id': map.layer.indexOf(layer)}) }}">{{ layer.name | default('...') }}</a> <i class="fas fa-caret-right"></i>
+    Class: <a href="{{ path('class', {'layer': map.layer.indexOf(layer), 'id': layer.class.indexOf(class)}) }}">{{ class.name | default('...') }}</a>
 </h2>
 <hr>
 

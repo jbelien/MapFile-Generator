@@ -14,7 +14,7 @@
 
 <h1>Layer #{{ map.layer.indexOf(layer) + 1 }}</h1>
 <h2>
-    Map: <a href="{{ path('map') }}">{{ map.name }}</a>
+    Map: <a href="{{ path('map') }}">{{ map.name | default('...') }}</a>
 </h2>
 <hr>
 
