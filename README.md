@@ -9,10 +9,11 @@
 
 ## Installation
 
-    composer create-project jbelien/mapfile-generator
+    composer create-project jbelien/mapfile-generator -s beta
 
 ## Run locally
 
+    cd ./mapfile-generator
     composer run serve --timeout 0
 
 Then open http://localhost:8080/ in your favorite browser !
