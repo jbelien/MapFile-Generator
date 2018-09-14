@@ -44,6 +44,7 @@ class ConfigProvider
                 Handler\LayerHandler::class   => Handler\LayerHandlerFactory::class,
                 Handler\MapHandler::class     => Handler\MapHandlerFactory::class,
                 Handler\MapFileHandler::class => Handler\MapFileHandlerFactory::class,
+                Handler\OpenHandler::class    => Handler\OpenHandlerFactory::class,
                 Handler\StyleHandler::class   => Handler\StyleHandlerFactory::class,
             ],
         ];

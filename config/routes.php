@@ -46,6 +46,8 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/mapfile', App\Handler\MapFileHandler::class, 'mapfile');
     $app->get('/mapfile/edit', App\Handler\MapFileHandler::class, 'mapfile.edit');
 
+    $app->route('/open', App\Handler\OpenHandler::class, ['get', 'post'], 'open');
+
     $app->put('/api/map', App\Handler\API\MapHandler::class, 'api.map');
     $app->route('/api/layer/{id:\d+}', App\Handler\API\LayerHandler::class, ['put', 'delete'], 'api.layer');
     $app->route('/api/layer/{layer:\d+}/class/{id:\d+}', App\Handler\API\ClassHandler::class, ['put', 'delete'], 'api.class');
