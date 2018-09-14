@@ -17,3 +17,5 @@
     composer run serve --timeout 0
 
 Then open http://localhost:8080/ in your favorite browser !
+
+You can also use online version : <https://mapfile.herokuapp.com/> !
