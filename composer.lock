@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe0f018b9b7be43d67e42109af5ff9fd",
+    "content-hash": "bad805db14223a6b0ebeeaa6d6310523",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -208,16 +208,16 @@
         },
         {
             "name": "jbelien/mapfile-php-library",
-            "version": "v2.0.0-beta",
+            "version": "v2.0.1-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbelien/MapFile-PHP-Library.git",
-                "reference": "1ae46065315dc8a39351e491f3fd3f8394526892"
+                "reference": "115b7311efa88e957053b8f49a6bbdca54814a73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/1ae46065315dc8a39351e491f3fd3f8394526892",
-                "reference": "1ae46065315dc8a39351e491f3fd3f8394526892",
+                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/115b7311efa88e957053b8f49a6bbdca54814a73",
+                "reference": "115b7311efa88e957053b8f49a6bbdca54814a73",
                 "shasum": ""
             },
             "require": {
@@ -247,7 +247,7 @@
                 }
             ],
             "description": "PHP Library to read/write MapServer mapfiles",
-            "time": "2018-09-10T20:01:21+00:00"
+            "time": "2018-09-14T09:06:08+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -1184,16 +1184,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session.git",
-                "reference": "632fba38f01e884bb788ac3baf529d41458d75a4"
+                "reference": "1bcb8e7869b47e30f1ba692f15e52481d1d550db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/632fba38f01e884bb788ac3baf529d41458d75a4",
-                "reference": "632fba38f01e884bb788ac3baf529d41458d75a4",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/1bcb8e7869b47e30f1ba692f15e52481d1d550db",
+                "reference": "1bcb8e7869b47e30f1ba692f15e52481d1d550db",
                 "shasum": ""
             },
             "require": {
@@ -1216,8 +1216,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\ConfigProvider"
@@ -1242,7 +1242,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-03-15T14:36:37+00:00"
+            "time": "2018-09-12T15:16:19+00:00"
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
@@ -2249,20 +2249,23 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/cecbc684605bb0cc288828eb5d65d93d5c676d3c",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
@@ -2292,7 +2295,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-06-11T11:44:00+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
