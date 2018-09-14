@@ -42,9 +42,9 @@
             <div class="form-group">
                 <label for="layer-status">STATUS</label>
                 <select class="form-control" name="status" id="layer-status">
-                    <option value="ON"{{ layer.status == 'ON' ? ' selected="selected"' : '' }}>ON</option>
-                    <option value="OFF"{{ layer.status == 'OFF' ? ' selected="selected"' : '' }}>OFF</option>
-                    <option value="DEFAULT"{{ layer.status == 'DEFAULT' ? ' selected="selected"' : '' }}>DEFAULT</option>
+                    <option value="ON"{{ layer.status == 'ON' ? ' selected' : '' }}>ON</option>
+                    <option value="OFF"{{ layer.status == 'OFF' ? ' selected' : '' }}>OFF</option>
+                    <option value="DEFAULT"{{ layer.status == 'DEFAULT' ? ' selected' : '' }}>DEFAULT</option>
                 </select>
             </div>
         </div>
@@ -54,13 +54,13 @@
             <div class="form-group">
                 <label for="layer-type">TYPE</label>
                 <select class="form-control" name="type" id="layer-type">
-                    <option disabled value="CHART"{{ layer.type == 'CHART' ? ' selected="selected"' : '' }}>CHART (not yet supported)</option>
-                    <option disabled value="CIRCLE"{{ layer.type == 'CIRCLE' ? ' selected="selected"' : '' }}>CIRCLE (not yet supported)</option>
-                    <option value="LINE"{{ layer.type == 'LINE' ? ' selected="selected"' : '' }}>LINE</option>
-                    <option value="POINT"{{ layer.type == 'POINT' ? ' selected="selected"' : '' }}>POINT</option>
-                    <option value="POLYGON"{{ layer.type == 'POLYGON' ? ' selected="selected"' : '' }}>POLYGON</option>
-                    <option disabled value="QUERY"{{ layer.type == 'QUERY' ? ' selected="selected"' : '' }}>QUERY (not yet supported)</option>
-                    <option value="RASTER"{{ layer.type == 'RASTER' ? ' selected="selected"' : '' }}>RASTER</option>
+                    <option disabled value="CHART"{{ layer.type == 'CHART' ? ' selected' : '' }}>CHART (not yet supported)</option>
+                    <option disabled value="CIRCLE"{{ layer.type == 'CIRCLE' ? ' selected' : '' }}>CIRCLE (not yet supported)</option>
+                    <option value="LINE"{{ layer.type == 'LINE' ? ' selected' : '' }}>LINE</option>
+                    <option value="POINT"{{ layer.type == 'POINT' ? ' selected' : '' }}>POINT</option>
+                    <option value="POLYGON"{{ layer.type == 'POLYGON' ? ' selected' : '' }}>POLYGON</option>
+                    <option disabled value="QUERY"{{ layer.type == 'QUERY' ? ' selected' : '' }}>QUERY (not yet supported)</option>
+                    <option value="RASTER"{{ layer.type == 'RASTER' ? ' selected' : '' }}>RASTER</option>
                 </select>
             </div>
         </div>
@@ -76,18 +76,18 @@
             <div class="form-group">
                 <label for="layer-connectiontype">CONNECTIONTYPE</label>
                 <select class="form-control" name="connectiontype" id="layer-connectiontype">
-                    <option disabled value="CONTOUR"{{ layer.connectiontype == 'CONTOUR' ? ' selected="selected"' : '' }}>CONTOUR (not yet supported)</option>
-                    <option disabled value="KERNELDENSITY"{{ layer.connectiontype == 'KERNELDENSITY' ? ' selected="selected"' : '' }}>KERNELDENSITY (not yet supported)</option>
-                    <option value="LOCAL"{{ layer.connectiontype == 'LOCAL' or layer.connectiontype is not defined ? ' selected="selected"' : '' }}>LOCAL</option>
-                    <option value="OGR"{{ layer.connectiontype == 'OGR' ? ' selected="selected"' : '' }}>OGR</option>
-                    <option disabled value="ORACLESPATIAL"{{ layer.connectiontype == 'ORACLESPATIAL' ? ' selected="selected"' : '' }}>ORACLESPATIAL (not yet supported)</option>
-                    <option disabled value="PLUGIN"{{ layer.connectiontype == 'PLUGIN' ? ' selected="selected"' : '' }}>PLUGIN (not yet supported)</option>
-                    <option value="POSTGIS"{{ layer.connectiontype == 'POSTGIS' ? ' selected="selected"' : '' }}>POSTGIS</option>
-                    <option disabled value="SDE"{{ layer.connectiontype == 'SDE' ? ' selected="selected"' : '' }}>SDE (not yet supported)</option>
-                    <option disabled value="UNION"{{ layer.connectiontype == 'UNION' ? ' selected="selected"' : '' }}>UNION (not yet supported)</option>
-                    <option disabled value="UVRASTER"{{ layer.connectiontype == 'UVRASTER' ? ' selected="selected"' : '' }}>UVRASTER (not yet supported)</option>
-                    <option value="WFS"{{ layer.connectiontype == 'WFS' ? ' selected="selected"' : '' }}>WFS</option>
-                    <option value="WMS"{{ layer.connectiontype == 'WMS' ? ' selected="selected"' : '' }}>WMS</option>
+                    <option disabled value="CONTOUR"{{ layer.connectiontype == 'CONTOUR' ? ' selected' : '' }}>CONTOUR (not yet supported)</option>
+                    <option disabled value="KERNELDENSITY"{{ layer.connectiontype == 'KERNELDENSITY' ? ' selected' : '' }}>KERNELDENSITY (not yet supported)</option>
+                    <option value="LOCAL"{{ layer.connectiontype == 'LOCAL' or layer.connectiontype is not defined ? ' selected' : '' }}>LOCAL</option>
+                    <option value="OGR"{{ layer.connectiontype == 'OGR' ? ' selected' : '' }}>OGR</option>
+                    <option disabled value="ORACLESPATIAL"{{ layer.connectiontype == 'ORACLESPATIAL' ? ' selected' : '' }}>ORACLESPATIAL (not yet supported)</option>
+                    <option disabled value="PLUGIN"{{ layer.connectiontype == 'PLUGIN' ? ' selected' : '' }}>PLUGIN (not yet supported)</option>
+                    <option value="POSTGIS"{{ layer.connectiontype == 'POSTGIS' ? ' selected' : '' }}>POSTGIS</option>
+                    <option disabled value="SDE"{{ layer.connectiontype == 'SDE' ? ' selected' : '' }}>SDE (not yet supported)</option>
+                    <option disabled value="UNION"{{ layer.connectiontype == 'UNION' ? ' selected' : '' }}>UNION (not yet supported)</option>
+                    <option disabled value="UVRASTER"{{ layer.connectiontype == 'UVRASTER' ? ' selected' : '' }}>UVRASTER (not yet supported)</option>
+                    <option value="WFS"{{ layer.connectiontype == 'WFS' ? ' selected' : '' }}>WFS</option>
+                    <option value="WMS"{{ layer.connectiontype == 'WMS' ? ' selected' : '' }}>WMS</option>
                 </select>
             </div>
         </div>

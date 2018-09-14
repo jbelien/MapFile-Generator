@@ -33,8 +33,8 @@
             <div class="form-group">
                 <label for="map-status">STATUS</label>
                 <select class="form-control" name="status" id="map-status">
-                    <option value="ON"{{ map.status == 'ON' ? ' selected="selected"' : '' }}>ON</option>
-                    <option value="OFF"{{ map.status == 'OFF' ? ' selected="selected"' : '' }}>OFF</option>
+                    <option value="ON"{{ map.status == 'ON' ? ' selected' : '' }}>ON</option>
+                    <option value="OFF"{{ map.status == 'OFF' ? ' selected' : '' }}>OFF</option>
                 </select>
             </div>
         </div>
@@ -65,13 +65,13 @@
             <div class="form-group">
                 <label for="map-units">UNITS</label>
                 <select class="form-control" name="units" id="map-units">
-                    <option value="DD"{{ map.units == 'DD' ? ' selected="selected"' : '' }}>DD</option>
-                    <option value="FEET"{{ map.units == 'FEET' ? ' selected="selected"' : '' }}>FEET</option>
-                    <option value="INCHES"{{ map.units == 'INCHES' ? ' selected="selected"' : '' }}>INCHES</option>
-                    <option value="KILOMETERS"{{ map.units == 'KILOMETERS' ? ' selected="selected"' : '' }}>KILOMETERS</option>
-                    <option value="METERS"{{ map.units == 'METERS' ? ' selected="selected"' : '' }}>METERS</option>
-                    <option value="MILES"{{ map.units == 'MILES' ? ' selected="selected"' : '' }}>MILES</option>
-                    <option value="NAUTICALMILES"{{ map.units == 'NAUTICALMILES' ? ' selected="selected"' : '' }}>NAUTICALMILES</option>
+                    <option value="DD"{{ map.units == 'DD' ? ' selected' : '' }}>DD</option>
+                    <option value="FEET"{{ map.units == 'FEET' ? ' selected' : '' }}>FEET</option>
+                    <option value="INCHES"{{ map.units == 'INCHES' ? ' selected' : '' }}>INCHES</option>
+                    <option value="KILOMETERS"{{ map.units == 'KILOMETERS' ? ' selected' : '' }}>KILOMETERS</option>
+                    <option value="METERS"{{ map.units == 'METERS' ? ' selected' : '' }}>METERS</option>
+                    <option value="MILES"{{ map.units == 'MILES' ? ' selected' : '' }}>MILES</option>
+                    <option value="NAUTICALMILES"{{ map.units == 'NAUTICALMILES' ? ' selected' : '' }}>NAUTICALMILES</option>
                 </select>
             </div>
         </div>
