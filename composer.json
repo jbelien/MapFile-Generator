@@ -34,7 +34,7 @@
         "zendframework/zend-expressive-twigrenderer": "2.1.0",
         "zendframework/zend-servicemanager": "3.3.2",
         "zendframework/zend-stdlib": "3.2.1",
-        "jbelien/mapfile-php-library": "v2.0.2-beta"
+        "jbelien/mapfile-php-library": "v2.0.3-beta"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0.1",
