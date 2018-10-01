@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92e64c30fd4d0fdf55f8bbac91953907",
+    "content-hash": "cc0276e212a87fd7f3c05ec2eff9ca37",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -956,16 +956,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346"
+                "reference": "a57c75703e781e3a8e812b83413443f3ce550a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346",
-                "reference": "1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a57c75703e781e3a8e812b83413443f3ce550a0f",
+                "reference": "a57c75703e781e3a8e812b83413443f3ce550a0f",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "phpstan/phpstan-strict-rules": "^0.9",
                 "phpunit/phpunit": "^7.0.1",
                 "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-diactoros": "^1.7.1",
+                "zendframework/zend-diactoros": "^1.7.1 || ^2.0",
                 "zendframework/zend-expressive-aurarouter": "^3.0",
                 "zendframework/zend-expressive-fastroute": "^3.0",
                 "zendframework/zend-expressive-zendrouter": "^3.0",
@@ -1012,8 +1012,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev",
-                    "dev-develop": "3.1.x-dev"
+                    "dev-master": "3.2.x-dev",
+                    "dev-develop": "3.3.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\ConfigProvider"
@@ -1044,7 +1044,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-07-30T21:23:01+00:00"
+            "time": "2018-09-27T21:32:28+00:00"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
