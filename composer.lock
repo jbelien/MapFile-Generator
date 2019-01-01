@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c30f321eec72c300070387781fd220e",
+    "content-hash": "02b07dc2394db20dfb68b09cd0c60ca2",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -210,16 +210,16 @@
         },
         {
             "name": "jbelien/mapfile-php-library",
-            "version": "v2.0.5-beta",
+            "version": "v2.0.6-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbelien/MapFile-PHP-Library.git",
-                "reference": "64b704ff010d547e00f1f10e5e87e2a6a3491caf"
+                "reference": "c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/64b704ff010d547e00f1f10e5e87e2a6a3491caf",
-                "reference": "64b704ff010d547e00f1f10e5e87e2a6a3491caf",
+                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51",
+                "reference": "c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51",
                 "shasum": ""
             },
             "require": {
@@ -249,7 +249,7 @@
                 }
             ],
             "description": "PHP Library to read/write MapServer mapfiles",
-            "time": "2018-10-01T14:39:08+00:00"
+            "time": "2018-12-13T14:16:36+00:00"
         },
         {
             "name": "nikic/fast-route",
