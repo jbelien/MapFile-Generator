@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75a555e61aaf6397a0676b12b0687032",
+    "content-hash": "ee3105a42adff7d0747cb4b7a25852eb",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1302,16 +1302,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-ext.git",
-                "reference": "40425178d89e7fdc2785870ed5cc4381e2346e55"
+                "reference": "e6ccd35f0164cc92e3645aab4462c250f692cd94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/40425178d89e7fdc2785870ed5cc4381e2346e55",
-                "reference": "40425178d89e7fdc2785870ed5cc4381e2346e55",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/e6ccd35f0164cc92e3645aab4462c250f692cd94",
+                "reference": "e6ccd35f0164cc92e3645aab4462c250f692cd94",
                 "shasum": ""
             },
             "require": {
@@ -1331,8 +1331,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev",
-                    "dev-develop": "1.4.x-dev"
+                    "dev-master": "1.4.x-dev",
+                    "dev-develop": "1.5.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\Ext\\ConfigProvider"
@@ -1357,7 +1357,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-10-31T19:49:54+00:00"
+            "time": "2019-01-09T14:07:45+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
