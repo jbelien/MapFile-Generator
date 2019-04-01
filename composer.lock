@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "335e455cb2dcaf655c54fb8af752a8a1",
+    "content-hash": "bef41d49a9f06a3948874b6b7333a37b",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1117,16 +1117,16 @@
         },
         {
             "name": "zendframework/zend-expressive-helpers",
-            "version": "5.1.3",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-helpers.git",
-                "reference": "8c078dd74d75b97a680b036114712dedb35b85b6"
+                "reference": "7027a9a1818e67656e474a0c7894ef96997316d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/8c078dd74d75b97a680b036114712dedb35b85b6",
-                "reference": "8c078dd74d75b97a680b036114712dedb35b85b6",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/7027a9a1818e67656e474a0c7894ef96997316d1",
+                "reference": "7027a9a1818e67656e474a0c7894ef96997316d1",
                 "shasum": ""
             },
             "require": {
@@ -1146,8 +1146,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1.x-dev",
-                    "dev-develop": "5.2.x-dev"
+                    "dev-master": "5.3.x-dev",
+                    "dev-develop": "5.4.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Helper\\ConfigProvider"
@@ -1173,7 +1173,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-02-27T16:42:27+00:00"
+            "time": "2019-03-12T20:43:27+00:00"
         },
         {
             "name": "zendframework/zend-expressive-router",
@@ -2627,12 +2627,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "3521da8036ce31b11490433aaae47f9601774191"
+                "reference": "0698207bf8a9bed212fdde2d8c7cdc77085660c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/3521da8036ce31b11490433aaae47f9601774191",
-                "reference": "3521da8036ce31b11490433aaae47f9601774191",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0698207bf8a9bed212fdde2d8c7cdc77085660c4",
+                "reference": "0698207bf8a9bed212fdde2d8c7cdc77085660c4",
                 "shasum": ""
             },
             "conflict": {
@@ -2667,8 +2667,8 @@
                 "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
-                "drupal/core": ">=7,<7.62|>=8,<8.5.11|>=8.6,<8.6.10",
-                "drupal/drupal": ">=7,<7.62|>=8,<8.5.11|>=8.6,<8.6.10",
+                "drupal/core": ">=7,<7.64|>=8,<8.5.13|>=8.6,<8.6.12",
+                "drupal/drupal": ">=7,<7.64|>=8,<8.5.13|>=8.6,<8.6.12",
                 "erusev/parsedown": "<1.7",
                 "ezsystems/ezpublish-kernel": ">=5.3,<5.3.12.1|>=5.4,<5.4.13.1|>=6,<6.7.9.1|>=6.8,<6.13.5.1|>=7,<7.2.4.1|>=7.3,<7.3.2.1",
                 "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.6|>=5.4,<5.4.12.3|>=2011,<2017.12.4.3|>=2018.6,<2018.6.1.4|>=2018.9,<2018.9.1.3",
@@ -2696,7 +2696,7 @@
                 "la-haute-societe/tcpdf": "<6.2.22",
                 "laravel/framework": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.42|>=5.6,<5.6.30",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
-                "league/commonmark": ">=0.15.6,<0.18.1",
+                "league/commonmark": "<0.18.3",
                 "magento/magento1ce": "<1.9.4",
                 "magento/magento1ee": ">=1.9,<1.14.4",
                 "magento/product-community-edition": ">=2,<2.2.7",
@@ -2765,7 +2765,7 @@
                 "symfony/yaml": ">=2,<2.0.22|>=2.1,<2.1.7",
                 "tecnickcom/tcpdf": "<6.2.22",
                 "thelia/backoffice-default-template": ">=2.1,<2.1.2",
-                "thelia/thelia": ">=2.1.0-beta1,<2.1.3|>=2.1,<2.1.2",
+                "thelia/thelia": ">=2.1,<2.1.2|>=2.1.0-beta1,<2.1.3",
                 "theonedemon/phpwhois": "<=4.2.5",
                 "titon/framework": ">=0,<9.9.99",
                 "truckersmp/phpwhois": "<=4.3.1",
@@ -2789,6 +2789,7 @@
                 "zendframework/zend-captcha": ">=2,<2.4.9|>=2.5,<2.5.2",
                 "zendframework/zend-crypt": ">=2,<2.4.9|>=2.5,<2.5.2",
                 "zendframework/zend-db": ">=2,<2.0.99|>=2.1,<2.1.99|>=2.2,<2.2.10|>=2.3,<2.3.5",
+                "zendframework/zend-developer-tools": ">=1.2.2,<1.2.3",
                 "zendframework/zend-diactoros": ">=1,<1.8.4",
                 "zendframework/zend-feed": ">=1,<2.10.3",
                 "zendframework/zend-form": ">=2,<2.2.7|>=2.3,<2.3.1",
@@ -2823,7 +2824,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2019-03-12T13:04:55+00:00"
+            "time": "2019-03-28T22:30:08+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
