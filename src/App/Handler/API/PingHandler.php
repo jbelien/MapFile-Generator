@@ -11,7 +11,7 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class PingHandler implements RequestHandlerInterface
 {
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new JsonResponse(['ack' => time()]);
     }
