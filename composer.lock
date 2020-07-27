@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e808be93328d5fa4db5ebe3e5d0cd88a",
+    "content-hash": "595e65a2b912ef50edb1ca8460b9c3b7",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -94,16 +94,16 @@
         },
         {
             "name": "doctrine/collections",
-            "version": "1.6.5",
+            "version": "1.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "fc0206348e17e530d09463fef07ba8968406cd6d"
+                "reference": "5f0470363ff042d0057006ae7acabc5d7b5252d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/fc0206348e17e530d09463fef07ba8968406cd6d",
-                "reference": "fc0206348e17e530d09463fef07ba8968406cd6d",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/5f0470363ff042d0057006ae7acabc5d7b5252d5",
+                "reference": "5f0470363ff042d0057006ae7acabc5d7b5252d5",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-25T19:24:35+00:00"
+            "time": "2020-06-22T19:14:02+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -225,16 +225,16 @@
         },
         {
             "name": "jbelien/mapfile-php-library",
-            "version": "v2.0.6-beta",
+            "version": "v2.0.7-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbelien/MapFile-PHP-Library.git",
-                "reference": "c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51"
+                "reference": "2a72671a9a1521d040a947ecb00e9abb0fa33de6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51",
-                "reference": "c0bfa8601ff8210cbaee37ac1a5fd56ab6775b51",
+                "url": "https://api.github.com/repos/jbelien/MapFile-PHP-Library/zipball/2a72671a9a1521d040a947ecb00e9abb0fa33de6",
+                "reference": "2a72671a9a1521d040a947ecb00e9abb0fa33de6",
                 "shasum": ""
             },
             "require": {
@@ -242,10 +242,15 @@
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.3",
+                "phpunit/phpunit": "^7.3 || ^8.0",
                 "squizlabs/php_codesniffer": "^3.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "MapFile\\": "src/"
@@ -264,7 +269,17 @@
                 }
             ],
             "description": "PHP Library to read/write MapServer mapfiles",
-            "time": "2018-12-13T14:16:36+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/jbelien",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/jbelien",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2020-07-21T09:31:10+00:00"
         },
         {
             "name": "nikic/fast-route",
