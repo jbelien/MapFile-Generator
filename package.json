@@ -10,7 +10,7 @@
     "eslint-plugin-standard": "4.0.2",
     "node-sass": "4.14.1",
     "webpack": "4.44.2",
-    "webpack-cli": "3.3.12"
+    "webpack-cli": "4.1.0"
   },
   "scripts": {
     "prepublish": "npm run build",
