@@ -1,4 +1,4 @@
-name: PHP/JavaScrip CI
+name: PHP/JavaScript CI
 
 on:
   push:
