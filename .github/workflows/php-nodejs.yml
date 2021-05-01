@@ -1,4 +1,4 @@
-name: PHP Composer
+name: PHP/JavaScrip CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  php:
     name: PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
     strategy:
@@ -53,3 +53,29 @@ jobs:
       - uses: actions/checkout@v2
       - run: composer install --prefer-dist --no-progress
       - run: composer run-script analyze
+
+  js-build:
+    name: Node.js ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build
+
+  js-eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run test
+        env:
+          CI: true
