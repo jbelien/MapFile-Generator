@@ -14,8 +14,8 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "test": "eslint resources/javascript/",
-    "fix": "eslint resources/javascript/ --fix",
+    "lint": "eslint resources/javascript/",
+    "lint:fix": "eslint resources/javascript/ --fix",
     "build": "npm run build:css & npm run build:js",
     "build:css": "node-sass --output public/css resources/sass/style.scss --output-style compressed",
     "build:js": "webpack --config webpack.config.js --mode production",
