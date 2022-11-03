@@ -13,8 +13,6 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \Mezzio\Tooling\ConfigProvider::class,
-    \Laminas\Diactoros\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
@@ -24,7 +22,9 @@ $aggregator = new ConfigAggregator([
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Mezzio\Session\ConfigProvider::class,
     \Mezzio\Session\Ext\ConfigProvider::class,
+    // \Mezzio\Tooling\ConfigProvider::class,
     \Mezzio\Twig\ConfigProvider::class,
+    \Laminas\Diactoros\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
 
     // Swoole config to overwrite some services (if installed)
