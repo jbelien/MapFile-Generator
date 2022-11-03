@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  test:
+  build:
     name: PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
     strategy:
@@ -34,8 +34,8 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-    - name: Run test suite
-      run: composer run-script test
+    # - name: Run test suite
+    #   run: composer run-script test
 
   phpcs:
     name: PHP_CodeSniffer
@@ -46,11 +46,3 @@ jobs:
       - name: Configure PHPCS
         run: ./vendor/squizlabs/php_codesniffer/bin/phpcs --config-set ignore_warnings_on_exit 1
       - run: composer run-script cs-check
-
-  phpstan:
-    name: PHPStan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: composer install --prefer-dist --no-progress
-      - run: composer run-script analyze

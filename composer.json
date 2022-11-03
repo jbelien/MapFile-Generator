@@ -64,12 +64,6 @@
             "@development-enable",
             "npm install"
         ],
-        "analyze": "phpstan analyze -l max -c ./phpstan.installer.neon ./src ./config",
-        "check": [
-            "@cs-check",
-            "@test",
-            "@analyze"
-        ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
