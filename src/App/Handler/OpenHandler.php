@@ -9,12 +9,12 @@ use MapFile\Parser\Map as MapParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Diactoros\UploadedFile;
-use Zend\Expressive\Router;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\UploadedFile;
+use Mezzio\Router;
+use Mezzio\Session\SessionMiddleware;
+use Mezzio\Template;
 
 class OpenHandler implements RequestHandlerInterface
 {

@@ -9,9 +9,9 @@ use MapFile\Model\Layer as LayerObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\EmptyResponse;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Expressive\Session\SessionMiddleware;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Session\SessionMiddleware;
 
 class LayerHandler implements RequestHandlerInterface
 {
