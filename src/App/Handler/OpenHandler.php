@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use Exception;
-use MapFile\Parser\Map as MapParser;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\UploadedFile;
+use MapFile\Parser\Map as MapParser;
 use Mezzio\Router;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class OpenHandler implements RequestHandlerInterface
 {
