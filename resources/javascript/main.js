@@ -43,7 +43,7 @@ $(document).ready(() => {
         const name = $(event.target).attr('name');
         const labelElement = $(event.target).closest('.form-group').find('label');
 
-        let data = {};
+        const data = {};
         data[name] = $(event.target).val();
 
         console.log(data);
