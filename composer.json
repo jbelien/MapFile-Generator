@@ -1,13 +1,13 @@
 {
     "name": "jbelien/mapfile-generator",
     "description": "MapServer .MAP Generator (Read & Write)",
-    "license": "GPL-2.0",
+    "license": "GPL-2.0-or-later",
     "type": "project",
     "keywords": [],
     "require": {
         "php": "^7.3 || ^8.0",
         "ext-mbstring": "*",
-        "jbelien/mapfile-php-library": "v2.0.8-beta",
+        "jbelien/mapfile-php-library": "^v2.0.8-beta",
         "laminas/laminas-component-installer": "^3.0",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-dependency-plugin": "^2.1",
