@@ -8,7 +8,6 @@ use Exception;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\UploadedFile;
-use MapFile\Parser\Map as MapParser;
 use Mezzio\Router;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template;
@@ -51,7 +50,7 @@ class OpenHandler implements RequestHandlerInterface
 
                             $files['mapfile']->moveTo($temp);
 
-                            $map = (new MapParser($temp))->parse();
+                            $map = (new \MapFile\Parser\Map())->parse($temp);
 
                             $session->set('map', serialize($map));
 

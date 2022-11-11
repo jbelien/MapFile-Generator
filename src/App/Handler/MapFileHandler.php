@@ -39,7 +39,11 @@ class MapFileHandler implements RequestHandlerInterface
         if ($session->has('map')) {
             $map = unserialize($session->get('map'));
 
-            $data['mapfile'] = (new \MapFile\Writer\Map())->write($map);
+            $temp = tempnam(sys_get_temp_dir(), 'mapfile-');
+
+            (new \MapFile\Writer\Map($map))->save($temp);
+
+            $data['mapfile'] = file_get_contents($temp);
         }
 
         return new HtmlResponse($this->template->render('app::mapfile', $data));
