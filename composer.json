@@ -21,6 +21,7 @@
         "mezzio/mezzio-twigrenderer": "^2.5"
     },
     "require-dev": {
+        "deployer/deployer": "^7.0",
         "filp/whoops": "^2.1.12",
         "laminas/laminas-development-mode": "^3.1",
         "mezzio/mezzio-tooling": "^2.0",
