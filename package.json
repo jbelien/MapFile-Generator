@@ -9,7 +9,7 @@
     "eslint-plugin-promise": "^6.1",
     "eslint-plugin-standard": "^5.0",
     "node-sass": "^7.0",
-    "webpack": "^5.74",
+    "webpack": "^5.75",
     "webpack-cli": "^4.10"
   },
   "scripts": {
