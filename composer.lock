@@ -1543,25 +1543,25 @@
         },
         {
             "name": "mezzio/mezzio-twigrenderer",
-            "version": "2.11.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-twigrenderer.git",
-                "reference": "f01a5e802d137e366de959e20d0b4565fe350fed"
+                "reference": "0521ce7677c661b73b0a056cc230a501a2cd43ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-twigrenderer/zipball/f01a5e802d137e366de959e20d0b4565fe350fed",
-                "reference": "f01a5e802d137e366de959e20d0b4565fe350fed",
+                "url": "https://api.github.com/repos/mezzio/mezzio-twigrenderer/zipball/0521ce7677c661b73b0a056cc230a501a2cd43ec",
+                "reference": "0521ce7677c661b73b0a056cc230a501a2cd43ec",
                 "shasum": ""
             },
             "require": {
                 "mezzio/mezzio-helpers": "^5.0",
                 "mezzio/mezzio-router": "^3.7",
                 "mezzio/mezzio-template": "^2.0",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
                 "psr/container": "^1.0 || ^2.0",
-                "twig/twig": "^3.3.8"
+                "twig/twig": "^3.4.3"
             },
             "conflict": {
                 "container-interop/container-interop": "<1.2.0",
@@ -1569,7 +1569,7 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.4.0",
-                "phpunit/phpunit": "^9.5.24"
+                "phpunit/phpunit": "^9.5.26"
             },
             "type": "library",
             "extra": {
@@ -1611,7 +1611,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-09-20T22:25:16+00:00"
+            "time": "2022-11-16T09:25:36+00:00"
         },
         {
             "name": "nikic/fast-route",
