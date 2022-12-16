@@ -9,7 +9,7 @@
 
 ## Installation
 
-    composer create-project jbelien/mapfile-generator -s beta
+    composer create-project jbelien/mapfile-generator
 
 ## Run locally
 
@@ -18,4 +18,4 @@
 
 Then open <http://localhost:8080/> in your favorite browser !
 
-You can also use online version : <https://mapfile.herokuapp.com/> !
+You can also use online version : <https://mapfile.akoo.be/> !
