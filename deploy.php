@@ -3,6 +3,7 @@
 namespace Deployer;
 
 require 'recipe/zend_framework.php';
+require 'contrib/php-fpm.php';
 
 // Config
 
@@ -15,9 +16,10 @@ add('writable_dirs', []);
 // Hosts
 
 host('mapfile.akoo.be')
-    ->set('remote_user', 'debian')
+    ->set('remote_user', 'root')
     ->set('deploy_path', '/var/www/mapfile');
 
 // Hooks
 
 after('deploy:failed', 'deploy:unlock');
+after('deploy', 'php-fpm:reload');
