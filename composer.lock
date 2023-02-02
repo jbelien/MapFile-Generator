@@ -692,16 +692,16 @@
         },
         {
             "name": "laminas/laminas-httphandlerrunner",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-httphandlerrunner.git",
-                "reference": "d15af53895fd581b5a448a09fd9a4baebc4ae6e5"
+                "reference": "7a47834aaad7852816d2ec4fdbb0492163b039ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-httphandlerrunner/zipball/d15af53895fd581b5a448a09fd9a4baebc4ae6e5",
-                "reference": "d15af53895fd581b5a448a09fd9a4baebc4ae6e5",
+                "url": "https://api.github.com/repos/laminas/laminas-httphandlerrunner/zipball/7a47834aaad7852816d2ec4fdbb0492163b039ae",
+                "reference": "7a47834aaad7852816d2ec4fdbb0492163b039ae",
                 "shasum": ""
             },
             "require": {
@@ -713,9 +713,9 @@
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.4.0",
                 "laminas/laminas-diactoros": "^2.18",
-                "phpunit/phpunit": "^9.5.25",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.28"
+                "phpunit/phpunit": "^9.5.26",
+                "psalm/plugin-phpunit": "^0.18.0",
+                "vimeo/psalm": "^5.0.0"
             },
             "type": "library",
             "extra": {
@@ -755,7 +755,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-25T13:41:39+00:00"
+            "time": "2023-01-05T21:54:03+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -988,16 +988,16 @@
         },
         {
             "name": "mezzio/mezzio",
-            "version": "3.14.0",
+            "version": "3.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio.git",
-                "reference": "cbb044afda55f8d4a9b395d5aa37c98d1e1e5369"
+                "reference": "f1c473acd715d804075cd128b91846db74ca3d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/cbb044afda55f8d4a9b395d5aa37c98d1e1e5369",
-                "reference": "cbb044afda55f8d4a9b395d5aa37c98d1e1e5369",
+                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/f1c473acd715d804075cd128b91846db74ca3d14",
+                "reference": "f1c473acd715d804075cd128b91846db74ca3d14",
                 "shasum": ""
             },
             "require": {
@@ -1023,17 +1023,16 @@
                 "zendframework/zend-expressive": "*"
             },
             "require-dev": {
-                "filp/whoops": "^2.14.5",
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-diactoros": "^2.19",
-                "laminas/laminas-servicemanager": "^3.15",
-                "mezzio/mezzio-aurarouter": "^3.5",
-                "mezzio/mezzio-fastroute": "^3.7",
+                "filp/whoops": "^2.14.6",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-diactoros": "^2.24",
+                "laminas/laminas-servicemanager": "^3.20",
+                "mezzio/mezzio-aurarouter": "^3.6",
+                "mezzio/mezzio-fastroute": "^3.8",
                 "mezzio/mezzio-laminasrouter": "^3.7",
-                "mockery/mockery": "^1.5.1",
-                "phpunit/phpunit": "^9.5.26",
-                "psalm/plugin-phpunit": "^0.18",
-                "vimeo/psalm": "^5.0.0"
+                "phpunit/phpunit": "^9.5.27",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.4"
             },
             "suggest": {
                 "filp/whoops": "^2.1 to use the Whoops error handler",
@@ -1092,7 +1091,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-05T09:40:08+00:00"
+            "time": "2023-01-15T08:32:54+00:00"
         },
         {
             "name": "mezzio/mezzio-fastroute",
