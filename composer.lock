@@ -1095,16 +1095,16 @@
         },
         {
             "name": "mezzio/mezzio-fastroute",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-fastroute.git",
-                "reference": "7f952dfb8c9acf8c59b4f2ff854839b74b092d09"
+                "reference": "fb419052c0ac18fd1286d286de6757eceb9f6897"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-fastroute/zipball/7f952dfb8c9acf8c59b4f2ff854839b74b092d09",
-                "reference": "7f952dfb8c9acf8c59b4f2ff854839b74b092d09",
+                "url": "https://api.github.com/repos/mezzio/mezzio-fastroute/zipball/fb419052c0ac18fd1286d286de6757eceb9f6897",
+                "reference": "fb419052c0ac18fd1286d286de6757eceb9f6897",
                 "shasum": ""
             },
             "require": {
@@ -1121,13 +1121,13 @@
                 "zendframework/zend-expressive-fastroute": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-diactoros": "^2.18",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-diactoros": "^2.24",
                 "laminas/laminas-stratigility": "^3.9",
                 "mikey179/vfsstream": "^1.6.11",
-                "phpunit/phpunit": "^9.5.25",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.28"
+                "phpunit/phpunit": "^9.5.27",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.4"
             },
             "type": "library",
             "extra": {
@@ -1169,7 +1169,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-10T21:52:43+00:00"
+            "time": "2023-01-09T23:30:41+00:00"
         },
         {
             "name": "mezzio/mezzio-helpers",
