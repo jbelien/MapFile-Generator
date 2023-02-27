@@ -7,6 +7,8 @@
 [![Monthly Downloads](https://poser.pugx.org/jbelien/mapfile-generator/d/monthly.png)](https://packagist.org/packages/jbelien/mapfile-generator)
 [![Software License](https://img.shields.io/badge/license-GPL--2.0-brightgreen.svg)](LICENSE)
 
+This tool is powered by [MapFile PHP Library](https://github.com/jbelien/MapFile-PHP-Library) to read/write Mapfile configuration files.
+
 ## Installation
 
     composer create-project jbelien/mapfile-generator
