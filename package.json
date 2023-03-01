@@ -2,7 +2,7 @@
   "name": "mapfile-generator",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.33",
+    "eslint": "^8.35",
     "eslint-config-standard": "^17.0",
     "eslint-plugin-import": "^2.27",
     "eslint-plugin-node": "^11.1",
