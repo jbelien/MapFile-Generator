@@ -1330,22 +1330,22 @@
         },
         {
             "name": "mezzio/mezzio-session",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session.git",
-                "reference": "c52f68efa0b45d52284f354af1805b738ded7250"
+                "reference": "6fda1a10abf5c1e83e21a08beac199c670c8be34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session/zipball/c52f68efa0b45d52284f354af1805b738ded7250",
-                "reference": "c52f68efa0b45d52284f354af1805b738ded7250",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session/zipball/6fda1a10abf5c1e83e21a08beac199c670c8be34",
+                "reference": "6fda1a10abf5c1e83e21a08beac199c670c8be34",
                 "shasum": ""
             },
             "require": {
-                "dflydev/fig-cookies": "^2.0.1 || ^3.0",
+                "dflydev/fig-cookies": "^3.0",
                 "ext-json": "*",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "~8.1.0 || ~8.2.0",
                 "psr/container": "^1.0 || ^2.0",
                 "psr/http-server-middleware": "^1.0"
             },
@@ -1353,11 +1353,11 @@
                 "zendframework/zend-expressive-session": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-diactoros": "^2.21",
-                "phpunit/phpunit": "^9.5.26",
-                "psalm/plugin-phpunit": "^0.18.3",
-                "vimeo/psalm": "^4.30"
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-diactoros": "^2.24",
+                "phpunit/phpunit": "^10.0.16",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.8"
             },
             "suggest": {
                 "mezzio/mezzio-csrf": "^1.0 || ^1.0-dev for CSRF protection capabilities",
@@ -1402,37 +1402,37 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-11-16T10:23:30+00:00"
+            "time": "2023-03-20T16:09:29+00:00"
         },
         {
             "name": "mezzio/mezzio-session-ext",
-            "version": "1.16.0",
+            "version": "1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session-ext.git",
-                "reference": "b41dc33a2346cfe43aee81bfad8b72f006a595b8"
+                "reference": "04533f552c9064172b42b94e5e7764a36d7ca52d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/b41dc33a2346cfe43aee81bfad8b72f006a595b8",
-                "reference": "b41dc33a2346cfe43aee81bfad8b72f006a595b8",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/04533f552c9064172b42b94e5e7764a36d7ca52d",
+                "reference": "04533f552c9064172b42b94e5e7764a36d7ca52d",
                 "shasum": ""
             },
             "require": {
                 "ext-session": "*",
                 "mezzio/mezzio-session": "^1.4",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+                "php": "~8.1.0 || ~8.2.0"
             },
             "conflict": {
                 "zendframework/zend-expressive-session-ext": "*"
             },
             "require-dev": {
-                "dflydev/fig-cookies": "^2.0.1 || ^3.0",
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-diactoros": "^2.22",
-                "phpunit/phpunit": "^9.5.27",
+                "dflydev/fig-cookies": "^3.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-diactoros": "^2.24",
+                "phpunit/phpunit": "^10.0.16",
                 "psalm/plugin-phpunit": "^0.18.4",
-                "vimeo/psalm": "^5.2"
+                "vimeo/psalm": "^5.8"
             },
             "type": "library",
             "extra": {
@@ -1473,7 +1473,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-12T21:44:13+00:00"
+            "time": "2023-03-20T16:50:41+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
