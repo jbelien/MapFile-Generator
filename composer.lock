@@ -1173,21 +1173,21 @@
         },
         {
             "name": "mezzio/mezzio-helpers",
-            "version": "5.12.0",
+            "version": "5.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-helpers.git",
-                "reference": "e165b3dac9c314ab7f879740ca12455b20716b1d"
+                "reference": "e73c7b7d5ad5cb574cca40c371104e4d0db760c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/e165b3dac9c314ab7f879740ca12455b20716b1d",
-                "reference": "e165b3dac9c314ab7f879740ca12455b20716b1d",
+                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/e73c7b7d5ad5cb574cca40c371104e4d0db760c7",
+                "reference": "e73c7b7d5ad5cb574cca40c371104e4d0db760c7",
                 "shasum": ""
             },
             "require": {
                 "mezzio/mezzio-router": "^3.0",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "~8.1.0 || ~8.2.0",
                 "psr/container": "^1.0 || ^2.0",
                 "psr/http-message": "^1.0.1",
                 "psr/http-server-middleware": "^1.0"
@@ -1198,10 +1198,10 @@
             "require-dev": {
                 "ext-json": "*",
                 "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-diactoros": "^2.19",
-                "phpunit/phpunit": "^9.5.25",
-                "psalm/plugin-phpunit": "^0.18.0",
-                "vimeo/psalm": "^5.0"
+                "laminas/laminas-diactoros": "^2.24",
+                "phpunit/phpunit": "^10.0.16",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.8"
             },
             "suggest": {
                 "ext-json": "If you wish to use the JsonStrategy with BodyParamsMiddleware"
@@ -1245,25 +1245,25 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-01-11T08:34:19+00:00"
+            "time": "2023-03-20T15:12:19+00:00"
         },
         {
             "name": "mezzio/mezzio-router",
-            "version": "3.13.0",
+            "version": "3.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-router.git",
-                "reference": "cb9e2476844074587e1ed849f53ef466a7e8d893"
+                "reference": "4d95b07441b8a319bf2376713e8dad5480fb6e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/cb9e2476844074587e1ed849f53ef466a7e8d893",
-                "reference": "cb9e2476844074587e1ed849f53ef466a7e8d893",
+                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/4d95b07441b8a319bf2376713e8dad5480fb6e15",
+                "reference": "4d95b07441b8a319bf2376713e8dad5480fb6e15",
                 "shasum": ""
             },
             "require": {
                 "fig/http-message-util": "^1.1.2",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "~8.1.0 || ~8.2.0",
                 "psr/container": "^1.0 || ^2.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0.1",
@@ -1277,10 +1277,11 @@
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-diactoros": "^2.24",
+                "laminas/laminas-servicemanager": "^3.20.0",
                 "laminas/laminas-stratigility": "^3.9.0",
-                "phpunit/phpunit": "^9.5.27",
+                "phpunit/phpunit": "^10.0.19",
                 "psalm/plugin-phpunit": "^0.18.4",
-                "vimeo/psalm": "^5.4"
+                "vimeo/psalm": "^5.8"
             },
             "suggest": {
                 "mezzio/mezzio-aurarouter": "^3.0 to use the Aura.Router routing adapter",
@@ -1326,7 +1327,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-01-15T08:25:11+00:00"
+            "time": "2023-03-29T08:09:00+00:00"
         },
         {
             "name": "mezzio/mezzio-session",
