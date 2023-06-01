@@ -11,7 +11,7 @@
         "laminas/laminas-component-installer": "^3.0",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-dependency-plugin": "^2.1",
-        "laminas/laminas-diactoros": "^2.2",
+        "laminas/laminas-diactoros": "^3.0",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-stdlib": "^3.2",
         "mezzio/mezzio": "^3.2",
