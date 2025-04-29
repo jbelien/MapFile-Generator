@@ -3,7 +3,6 @@
 namespace Deployer;
 
 require 'recipe/zend_framework.php';
-require 'contrib/php-fpm.php';
 
 // Config
 
@@ -15,9 +14,9 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('mapfile.akoo.be')
-    ->set('remote_user', 'root')
-    ->set('deploy_path', '/var/www/mapfile');
+host('ob5cds.ftp.infomaniak.com')
+    ->set('remote_user', 'ob5cds_system')
+    ->set('deploy_path', '~/sites/mapfile.akoo.be');
 
 // Tasks
 
@@ -33,6 +32,5 @@ task('npm', ['npm:build', 'npm:rsync']);
 
 // Hooks
 
-after('deploy:update_code', 'npm');
+after('deploy:update_code', 'npm:rsync');
 after('deploy:failed', 'deploy:unlock');
-after('deploy:success', 'php-fpm:reload');
