@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Script for clearing the configuration cache.
  *
