@@ -23,7 +23,7 @@ class MapHandler implements RequestHandlerInterface
 
     public function __construct(
         Router\RouterInterface $router,
-        Template\TemplateRendererInterface $template = null,
+        ?Template\TemplateRendererInterface $template = null,
         string $containerName
     ) {
         $this->router = $router;
