@@ -24,7 +24,7 @@ class ClassHandler implements RequestHandlerInterface
 
     public function __construct(
         Router\RouterInterface $router,
-        ?Template\TemplateRendererInterface $template = null,
+        ?Template\TemplateRendererInterface $template,
         string $containerName
     ) {
         $this->router = $router;
