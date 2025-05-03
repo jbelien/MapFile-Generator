@@ -15,6 +15,9 @@ add('writable_dirs', []);
 // Hosts
 
 host('ob5cds.ftp.infomaniak.com')
+    ->set('bin/php', '/usr/bin/php-8.3')
+    ->set('php_version', '8.3')
+    ->set('bin/composer', '/opt/php8.1/bin/composer')
     ->set('remote_user', 'ob5cds_system')
     ->set('deploy_path', '~/sites/mapfile.akoo.be');
 
