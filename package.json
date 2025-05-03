@@ -1,25 +1,18 @@
 {
   "name": "mapfile-generator",
-  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.37",
-    "eslint-config-standard": "^17.0",
-    "eslint-plugin-import": "^2.31",
-    "eslint-plugin-node": "^11.1",
-    "eslint-plugin-promise": "^6.1",
-    "eslint-plugin-standard": "^5.0",
-    "node-sass": "^8.0",
-    "webpack": "^5.99",
-    "webpack-cli": "^5.0"
+    "neostandard": "^0.12",
+    "sass": "^1.87",
+    "webpack-cli": "^6.0"
   },
   "scripts": {
     "prepublish": "npm run build",
-    "lint": "eslint resources/javascript/",
-    "lint:fix": "eslint resources/javascript/ --fix",
+    "lint": "eslint resources/javascript/**/*.js *.mjs",
+    "lint:fix": "eslint --fix resources/javascript/**/*.js *.mjs",
     "build": "npm run build:css & npm run build:js",
-    "build:css": "node-sass --output public/css resources/sass/style.scss --output-style compressed",
+    "build:css": "sass --style=compressed resources/sass/style.scss public/css/style.css",
     "build:js": "webpack --config webpack.config.js --mode production",
     "watch:js": "webpack --config webpack.config.js --watch --mode development",
-    "watch:css": "node-sass --output public/css resources/sass/style.scss --watch"
+    "watch:css": "sass --watch resources/sass/style.scss public/css/style.css"
   }
 }
