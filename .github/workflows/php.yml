@@ -16,7 +16,7 @@ jobs:
       matrix:
         php-version: ['8.1', '8.2', '8.3'] # https://www.php.net/supported-versions.php
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
@@ -33,7 +33,7 @@ jobs:
     name: PHP_CodeSniffer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: composer install --prefer-dist --no-progress
       - name: Configure PHPCS
         run: ./vendor/squizlabs/php_codesniffer/bin/phpcs --config-set ignore_warnings_on_exit 1
