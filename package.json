@@ -2,7 +2,7 @@
   "name": "mapfile-generator",
   "devDependencies": {
     "neostandard": "^0.13",
-    "sass": "^1.103",
+    "sass": "^1.105",
     "webpack-cli": "^6.0"
   },
   "scripts": {
